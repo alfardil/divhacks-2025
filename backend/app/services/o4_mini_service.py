@@ -63,18 +63,18 @@ class OpenAIo4Service:
         data: str,
     ) -> AsyncGenerator[str, None]:
         """
-        Asynchronously streams a response from the OpenAI o4-mini model using SSE.
+        Asynchronously streams a response from the OpenAI o4-mini model.
 
         This function sends a system prompt and a user-formatted message to the OpenAI
         Chat Completions API with streaming enabled. It yields incremental chunks of
-        the model's response as they arrive.
+        the model's response as plain text as they arrive.
 
         Args:
             system_prompt (str): The system-level instructions for the model.
             data (str): Input string from client
 
         Yields:
-            str: Chunks of the model's response text as they are received.
+            str: Plain text chunks of the model's response as they are received.
 
         Raises:
             ValueError: If the API returns a non-200 response or the stream is malformed.
@@ -86,7 +86,7 @@ class OpenAIo4Service:
                     system_prompt=system_prompt,
                     data=str
                 ):
-                yield f"data: {json.dumps({'status': 'explanation_chunk', 'chunk': chunk})}"
+                yield chunk  # Direct text streaming
         """
 
         api_key = self.api_key

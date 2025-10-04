@@ -43,15 +43,19 @@ async def stream_test():
     data: str = "This is the test endpoint for your o4 mini call."
 
     async def generate_stream():
-        async for chunk in o4_service.call_o4_api_stream(system_prompt, data):
-            yield f"data: {chunk}\n\n"
+        try:
+            async for chunk in o4_service.call_o4_api_stream(system_prompt, data):
+                yield chunk
+        except Exception as e:
+            yield f"Error: {str(e)}"
 
     return StreamingResponse(
         generate_stream(),
-        media_type="text/event-stream",
+        media_type="text/plain",
         headers={
-            "X-Accel-Buffering": "no",
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Cache-Control",
         },
     )
