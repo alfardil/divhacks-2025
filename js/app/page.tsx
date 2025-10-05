@@ -183,13 +183,112 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          {/* Title Section */}
-          <div className="text-center mb-12">
-            <h1 className="text-6xl font-bold mb-4 text-white">
-              Gavel: Opik&apos;s LLM Court
-            </h1>
-            <p className="text-xl text-gray-300 mb-6">Code Evaluation System</p>
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          {/* Title Section with Legal Decorations */}
+          <div className="flex items-center justify-between mb-12">
+            {/* Left Side Legal Decorations */}
+            <div className="flex items-center space-x-8 opacity-60">
+              {/* Scales of Justice */}
+              <div className="w-16 h-16">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-400">
+                  {/* Base */}
+                  <rect x="45" y="80" width="10" height="20" fill="currentColor" />
+                  {/* Pillar */}
+                  <rect x="47" y="20" width="6" height="60" fill="currentColor" />
+                  {/* Crossbar */}
+                  <rect x="20" y="25" width="60" height="4" fill="currentColor" />
+                  {/* Left Scale */}
+                  <circle cx="30" cy="35" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+                  <path d="M 30 35 L 30 25" stroke="currentColor" strokeWidth="2" />
+                  {/* Right Scale */}
+                  <circle cx="70" cy="35" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+                  <path d="M 70 35 L 70 25" stroke="currentColor" strokeWidth="2" />
+                </svg>
+              </div>
+              
+              {/* Gavel */}
+              <div className="w-16 h-16">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-300">
+                  {/* Gavel Head */}
+                  <rect x="20" y="20" width="20" height="20" rx="3" fill="currentColor" />
+                  {/* Gavel Handle */}
+                  <rect x="28" y="40" width="4" height="35" fill="currentColor" />
+                  {/* Base */}
+                  <rect x="15" y="75" width="30" height="8" rx="2" fill="currentColor" />
+                </svg>
+              </div>
+              
+              {/* Law Books */}
+              <div className="w-16 h-16">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-500">
+                  {/* Book 1 */}
+                  <rect x="15" y="25" width="20" height="30" rx="2" fill="currentColor" />
+                  <rect x="17" y="27" width="16" height="26" rx="1" fill="#8B4513" />
+                  {/* Book 2 */}
+                  <rect x="25" y="20" width="20" height="30" rx="2" fill="currentColor" />
+                  <rect x="27" y="22" width="16" height="26" rx="1" fill="#8B4513" />
+                  {/* Book 3 */}
+                  <rect x="35" y="15" width="20" height="30" rx="2" fill="currentColor" />
+                  <rect x="37" y="17" width="16" height="26" rx="1" fill="#8B4513" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Center Title */}
+            <div className="text-center flex-1">
+              <h1 className="text-6xl font-bold mb-4 text-white">
+                Gavel: Opik&apos;s LLM Court
+              </h1>
+              <p className="text-xl text-gray-300 mb-6">Code Evaluation System</p>
+            </div>
+
+            {/* Right Side Legal Decorations */}
+            <div className="flex items-center space-x-8 opacity-60">
+              {/* Podium */}
+              <div className="w-16 h-16">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-400">
+                  {/* Podium Base */}
+                  <rect x="20" y="60" width="60" height="25" rx="5" fill="currentColor" />
+                  {/* Podium Top */}
+                  <rect x="25" y="40" width="50" height="25" rx="3" fill="currentColor" />
+                  {/* Podium Stand */}
+                  <rect x="45" y="20" width="10" height="25" fill="currentColor" />
+                  {/* Microphone */}
+                  <circle cx="50" cy="15" r="3" fill="#8B4513" />
+                  <rect x="49" y="15" width="2" height="8" fill="#8B4513" />
+                </svg>
+              </div>
+              
+              {/* Courtroom Seal */}
+              <div className="w-16 h-16">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-300">
+                  {/* Outer Circle */}
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="3" />
+                  {/* Inner Circle */}
+                  <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="2" />
+                  {/* Center Star */}
+                  <polygon points="50,20 55,35 70,35 58,45 63,60 50,50 37,60 42,45 30,35 45,35" fill="currentColor" />
+                  {/* Text Ring */}
+                  <text x="50" y="75" textAnchor="middle" fontSize="8" fill="currentColor" className="font-bold">COURT OF CODE</text>
+                </svg>
+              </div>
+              
+              {/* Legal Scroll */}
+              <div className="w-16 h-16">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-500">
+                  {/* Scroll Body */}
+                  <rect x="25" y="30" width="50" height="40" rx="3" fill="currentColor" />
+                  {/* Scroll Rollers */}
+                  <rect x="20" y="25" width="8" height="50" rx="4" fill="#8B4513" />
+                  <rect x="72" y="25" width="8" height="50" rx="4" fill="#8B4513" />
+                  {/* Text Lines */}
+                  <rect x="30" y="40" width="40" height="2" fill="#8B4513" />
+                  <rect x="30" y="45" width="35" height="2" fill="#8B4513" />
+                  <rect x="30" y="50" width="38" height="2" fill="#8B4513" />
+                  <rect x="30" y="55" width="32" height="2" fill="#8B4513" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           {/* Judge Selection Section - Centered under title */}
@@ -763,116 +862,141 @@ export default function Home() {
       </div>
 
       <div className="max-w-6xl mx-auto p-8">
-        {/* Present Evidence - Glassmorphic Podium View */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 mb-8 border border-white/20 relative overflow-hidden">
-          {/* Glassmorphic background overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl"></div>
-          
-          {/* Top-down podium perspective effect */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/10 rounded-2xl"></div>
-          <div className="absolute -top-2 -left-2 w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-2xl transform rotate-1"></div>
-          <div className="absolute -top-1 -right-1 w-full h-full bg-gradient-to-bl from-white/5 to-transparent rounded-2xl transform -rotate-1"></div>
-          
-          <div className="relative z-10">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center drop-shadow-lg">
+        {/* Courtroom Desk - Top Down View */}
+        <div className="relative mb-8">
+          {/* Dark Brown Wooden Desk Surface - More Square */}
+          <div className="bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-900 rounded-lg p-8 shadow-2xl relative overflow-hidden max-w-6xl mx-auto">
+            {/* Darker wood grain texture */}
+            <div className="absolute inset-0 opacity-30">
+              <div className="w-full h-full" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='wood' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 50 Q 25 30 50 50 T 100 50' stroke='%238B4513' stroke-width='2' fill='none' opacity='0.4'/%3E%3Cpath d='M0 60 Q 25 40 50 60 T 100 60' stroke='%23A0522D' stroke-width='1' fill='none' opacity='0.3'/%3E%3Cpath d='M0 70 Q 25 50 50 70 T 100 70' stroke='%238B4513' stroke-width='1.5' fill='none' opacity='0.35'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23wood)'/%3E%3C/svg%3E")`,
+              }} />
+            </div>
+            
+            {/* Desk edge shadow */}
+            <div className="absolute inset-0 rounded-lg shadow-inner"></div>
+            
+            {/* Present Evidence Title */}
+            <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow-lg relative z-10">
               Present Evidence
             </h2>
             
-            <div className="space-y-6">
-              {/* File Upload Area */}
+            {/* Papers on Desk */}
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Paper 1 - File Upload */}
               <div className="relative">
-                <input
-                  type="file"
-                  id="file-upload"
-                  className="hidden"
-                  accept=".py,.js,.ts,.java,.cpp,.c,.h,.hpp,.cs,.php,.rb,.go,.rs,.kt,.swift,.scala,.r,.m,.pl,.sh,.sql,.html,.css,.xml,.json,.yaml,.yml,.md,.txt"
-                  onChange={handleFileUpload}
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-gray-400 rounded-xl cursor-pointer bg-gray-700/30 hover:bg-gray-700/50 hover:border-gray-300 transition-all duration-300 group"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      className="w-12 h-12 mb-4 text-gray-400 group-hover:text-gray-300 transition-colors duration-300"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
+                {/* Paper shadow */}
+                <div className="absolute -bottom-2 -right-2 w-full h-full bg-gray-800 rounded-lg transform rotate-1"></div>
+                {/* Paper */}
+                <div className="relative bg-white rounded-lg p-6 shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+                  {/* Paper lines */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="w-full h-full" style={{
+                      backgroundImage: `repeating-linear-gradient(transparent, transparent 24px, #e5e7eb 24px, #e5e7eb 25px)`,
+                    }} />
+                  </div>
+                  
+                  <div className="relative z-10">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Upload</h3>
+                    <input
+                      type="file"
+                      id="file-upload"
+                      className="hidden"
+                      accept=".py,.js,.ts,.java,.cpp,.c,.h,.hpp,.cs,.php,.rb,.go,.rs,.kt,.swift,.scala,.r,.m,.pl,.sh,.sql,.html,.css,.xml,.json,.yaml,.yml,.md,.txt"
+                      onChange={handleFileUpload}
+                    />
+                    <label
+                      htmlFor="file-upload"
+                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-gray-400 transition-all duration-300 group"
                     >
-                      <path
+                      <svg
+                        className="w-8 h-8 mb-2 text-gray-400 group-hover:text-gray-600 transition-colors duration-300"
+                        fill="none"
                         stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p className="mb-2 text-lg text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                      <span className="font-semibold">Click to upload</span> or drag and drop
-                    </p>
-                    <p className="text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
-                      Code files, documents, or any evidence
-                    </p>
-                  </div>
-                </label>
-              </div>
-
-              {/* Or Divider */}
-              <div className="flex items-center">
-                <div className="flex-1 border-t border-gray-600"></div>
-                <span className="px-4 text-gray-400 text-sm font-medium">OR</span>
-                <div className="flex-1 border-t border-gray-600"></div>
-              </div>
-
-              {/* Code Input Area */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-300 mb-3">
-                  Write Code Directly
-                </label>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">
-                      Programming Language
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      <p className="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
+                        Click to upload files
+                      </p>
                     </label>
-                    <select
-                      value={language}
-                      onChange={(e) => setLanguage(e.target.value)}
-                      className="w-full max-w-xs bg-gray-700 border border-gray-500 rounded-lg px-4 py-3 text-white focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200"
-                    >
-                      <option value="python">Python</option>
-                      <option value="javascript">JavaScript</option>
-                      <option value="typescript">TypeScript</option>
-                      <option value="java">Java</option>
-                      <option value="cpp">C++</option>
-                    </select>
                   </div>
-                  <textarea
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    className="w-full h-40 p-6 bg-gray-900 text-gray-100 border border-gray-500 rounded-lg font-mono text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none resize-none transition-all duration-200"
-                    placeholder="// Enter your code here..."
-                    style={{
-                      fontFamily: "monospace",
-                      lineHeight: "1.6",
-                    }}
-                  />
                 </div>
               </div>
- 
-              <div className="flex justify-center">
-                <button
-                  onClick={submitToSelectedJudges}
-                  disabled={
-                    loading ||
-                    (!code.trim() && !uploadedFile) ||
-                    Object.values(selectedJudges).every((v) => !v)
-                  }
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200"
-                >
-                  {loading ? "Judges Deliberating..." : "Present Evidence to Jury"}
-                </button>
+
+              {/* Paper 2 - Large Code Writing Area */}
+              <div className="relative lg:col-span-2">
+                {/* Paper shadow */}
+                <div className="absolute -bottom-2 -right-2 w-full h-full bg-gray-800 rounded-lg transform -rotate-1"></div>
+                {/* Paper */}
+                <div className="relative bg-white rounded-lg p-6 shadow-lg transform rotate-1 hover:rotate-0 transition-transform duration-300 h-full">
+                  {/* Paper lines */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="w-full h-full" style={{
+                      backgroundImage: `repeating-linear-gradient(transparent, transparent 24px, #e5e7eb 24px, #e5e7eb 25px)`,
+                    }} />
+                  </div>
+                  
+                  <div className="relative z-10 h-full flex flex-col">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Write</h3>
+                    <div className="flex-1 flex flex-col space-y-3">
+                      <select
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
+                        className="w-full max-w-xs bg-white border border-gray-300 rounded px-3 py-2 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200"
+                      >
+                        <option value="python">Python</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="typescript">TypeScript</option>
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                      </select>
+                      <textarea
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                        className="flex-1 w-full p-4 bg-white text-gray-800 border border-gray-300 rounded font-mono text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none resize-none transition-all duration-200"
+                        placeholder="// Write your code here..."
+                        style={{
+                          fontFamily: "monospace",
+                          lineHeight: "1.6",
+                          minHeight: "400px",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Pen on the right side */}
+            <div className="absolute top-8 right-8 z-20">
+              <div className="relative">
+                {/* Pen shadow */}
+                <div className="absolute top-1 left-1 w-2 h-16 bg-gray-800 rounded-full transform rotate-12"></div>
+                {/* Pen */}
+                <div className="relative w-2 h-16 bg-gradient-to-b from-gray-600 to-gray-800 rounded-full transform rotate-12 shadow-lg">
+                  {/* Pen tip */}
+                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-3 bg-gray-900 rounded-full"></div>
+                  {/* Pen clip */}
+                  <div className="absolute top-2 -left-1 w-1 h-8 bg-gray-700 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Submit Button - Like a Court Stamp */}
+            <div className="flex justify-center mt-8 relative z-10">
+              <button
+                onClick={submitToSelectedJudges}
+                disabled={
+                  loading ||
+                  (!code.trim() && !uploadedFile) ||
+                  Object.values(selectedJudges).every((v) => !v)
+                }
+                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-500 disabled:to-gray-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200 border-4 border-white"
+              >
+                {loading ? "Judges Deliberating..." : "⚖️ Present Evidence to Jury"}
+              </button>
             </div>
           </div>
         </div>
