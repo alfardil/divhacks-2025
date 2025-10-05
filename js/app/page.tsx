@@ -170,7 +170,7 @@ export default function Home() {
           {/* Title Section */}
           <div className="text-center mb-12">
             <h1 className="text-6xl font-bold mb-4 text-white">
-              Gavel: Opik's LLM Court
+              Gavel: Opik&apos;s LLM Court
             </h1>
             <p className="text-xl text-gray-300 mb-6">Code Evaluation System</p>
           </div>
