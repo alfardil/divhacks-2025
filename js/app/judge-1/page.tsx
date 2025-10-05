@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { buildApiUrl, API_ENDPOINTS } from "@/lib/api-config";
 
 interface JudgeResponse {
   judge_id: string;
@@ -34,7 +35,7 @@ export default function Judge1Page() {
 
     try {
       const res = await fetch(
-        "http://localhost:8000/frontend-jury/evaluate-with-judge-1",
+        buildApiUrl(API_ENDPOINTS.FRONTEND_JURY.EVALUATE_WITH_JUDGE_1),
         {
           method: "POST",
           headers: {
@@ -61,7 +62,7 @@ export default function Judge1Page() {
 
     try {
       const res = await fetch(
-        "http://localhost:8000/frontend-jury/test-judge-1"
+        buildApiUrl(API_ENDPOINTS.FRONTEND_JURY.TEST_JUDGE_1)
       );
       const data = await res.json();
       setVerdict(data);

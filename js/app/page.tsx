@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { buildApiUrl, API_ENDPOINTS } from "@/lib/api-config";
 
 interface JudgeResponse {
   judge_id: string;
@@ -63,7 +64,7 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        "http://localhost:8000/frontend-jury/evaluate-selected-judges",
+        buildApiUrl(API_ENDPOINTS.FRONTEND_JURY.EVALUATE_SELECTED_JUDGES),
         {
           method: "POST",
           headers: {
@@ -99,7 +100,7 @@ export default function Home() {
     setChatResponse("");
 
     try {
-      const res = await fetch("http://localhost:8000/gemini/chat", {
+      const res = await fetch(buildApiUrl(API_ENDPOINTS.GEMINI.CHAT), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,23 +158,28 @@ export default function Home() {
       <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white py-12 relative overflow-hidden">
         {/* Subtle pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="w-full h-full" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='dots' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23ffffff'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23dots)'/%3E%3C/svg%3E")`,
-          }} />
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='dots' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23ffffff'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23dots)'/%3E%3C/svg%3E")`,
+            }}
+          />
         </div>
-        
+
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           {/* Title Section */}
           <div className="text-center mb-12">
-            <h1 className="text-6xl font-bold mb-4 text-white" style={{ 
-              fontFamily: 'serif',
-              textShadow: '2px 2px 0px #374151, -1px -1px 0px #374151, 1px -1px 0px #374151, -1px 1px 0px #374151'
-            }}>
+            <h1
+              className="text-6xl font-bold mb-4 text-white"
+              style={{
+                fontFamily: "serif",
+                textShadow:
+                  "2px 2px 0px #374151, -1px -1px 0px #374151, 1px -1px 0px #374151, -1px 1px 0px #374151",
+              }}
+            >
               LLM Court
             </h1>
-            <p className="text-xl text-gray-300 mb-6">
-              Code Evaluation System
-            </p>
+            <p className="text-xl text-gray-300 mb-6">Code Evaluation System</p>
             <div className="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-300 text-sm font-medium">
               <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse"></div>
               Opik Powered
@@ -185,226 +191,560 @@ export default function Home() {
             <div className="flex space-x-8">
               <div className="text-center">
                 {/* Custom SVG Avatar for Bob */}
-                <div className="mb-4 transition-all duration-300" style={{
-                  opacity: selectedJudges.judge_1 ? 1 : 0.4,
-                  transform: selectedJudges.judge_1 ? 'scale(1.05)' : 'scale(1)'
-                }}>
+                <div
+                  className="mb-4 transition-all duration-300"
+                  style={{
+                    opacity: selectedJudges.judge_1 ? 1 : 0.4,
+                    transform: selectedJudges.judge_1
+                      ? "scale(1.05)"
+                      : "scale(1)",
+                  }}
+                >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
                       {/* Bob - Guy with Pen and Paper */}
                       {/* Head */}
-                      <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2"/>
+                      <circle
+                        cx="50"
+                        cy="32"
+                        r="16"
+                        fill="#D2B48C"
+                        stroke="#8B4513"
+                        strokeWidth="2"
+                      />
                       {/* Hair */}
-                      <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513"/>
+                      <path
+                        d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20"
+                        fill="#8B4513"
+                      />
                       {/* Eyes */}
-                      <circle cx="44" cy="28" r="2.5" fill="#000"/>
-                      <circle cx="56" cy="28" r="2.5" fill="#000"/>
-                      <circle cx="44.5" cy="27.5" r="1" fill="#fff"/>
-                      <circle cx="56.5" cy="27.5" r="1" fill="#fff"/>
+                      <circle cx="44" cy="28" r="2.5" fill="#000" />
+                      <circle cx="56" cy="28" r="2.5" fill="#000" />
+                      <circle cx="44.5" cy="27.5" r="1" fill="#fff" />
+                      <circle cx="56.5" cy="27.5" r="1" fill="#fff" />
                       {/* Nose */}
-                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F"/>
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
                       {/* Mouth */}
-                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      <path
+                        d="M 46 36 Q 50 39 54 36"
+                        stroke="#8B4513"
+                        strokeWidth="1.5"
+                        fill="none"
+                      />
                       {/* Body - Casual Shirt */}
-                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#3B82F6" stroke="#1E40AF" strokeWidth="2"/>
+                      <rect
+                        x="35"
+                        y="48"
+                        width="30"
+                        height="45"
+                        rx="8"
+                        fill="#3B82F6"
+                        stroke="#1E40AF"
+                        strokeWidth="2"
+                      />
                       {/* Arms */}
-                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
-                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      <rect
+                        x="28"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#D2B48C"
+                      />
+                      <rect
+                        x="64"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#D2B48C"
+                      />
                       {/* Hands */}
-                      <circle cx="32" cy="85" r="4" fill="#D2B48C"/>
-                      <circle cx="68" cy="85" r="4" fill="#D2B48C"/>
+                      <circle cx="32" cy="85" r="4" fill="#D2B48C" />
+                      <circle cx="68" cy="85" r="4" fill="#D2B48C" />
                       {/* Pen in right hand */}
-                      <rect x="70" y="80" width="2" height="8" fill="#000"/>
-                      <rect x="69" y="78" width="4" height="2" fill="#FF0000"/>
+                      <rect x="70" y="80" width="2" height="8" fill="#000" />
+                      <rect x="69" y="78" width="4" height="2" fill="#FF0000" />
                       {/* Paper in left hand */}
-                      <rect x="25" y="75" width="12" height="15" rx="1" fill="#FFFFFF" stroke="#000" strokeWidth="1"/>
-                      <rect x="27" y="77" width="8" height="1" fill="#000"/>
-                      <rect x="27" y="79" width="6" height="1" fill="#000"/>
-                      <rect x="27" y="81" width="7" height="1" fill="#000"/>
+                      <rect
+                        x="25"
+                        y="75"
+                        width="12"
+                        height="15"
+                        rx="1"
+                        fill="#FFFFFF"
+                        stroke="#000"
+                        strokeWidth="1"
+                      />
+                      <rect x="27" y="77" width="8" height="1" fill="#000" />
+                      <rect x="27" y="79" width="6" height="1" fill="#000" />
+                      <rect x="27" y="81" width="7" height="1" fill="#000" />
                     </svg>
                   </div>
                 </div>
-                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_1 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
-                  <div className={`text-sm font-bold ${selectedJudges.judge_1 ? 'text-white' : 'text-gray-400'}`}>
+                <div
+                  className={`px-4 py-3 rounded-xl border transition-all duration-300 ${
+                    selectedJudges.judge_1
+                      ? "bg-gray-700/50 border-gray-500 shadow-lg"
+                      : "bg-gray-800/30 border-gray-600"
+                  }`}
+                >
+                  <div
+                    className={`text-sm font-bold ${
+                      selectedJudges.judge_1 ? "text-white" : "text-gray-400"
+                    }`}
+                  >
                     Bob
                   </div>
-                  <div className={`text-xs ${selectedJudges.judge_1 ? 'text-gray-300' : 'text-gray-500'}`}>
+                  <div
+                    className={`text-xs ${
+                      selectedJudges.judge_1 ? "text-gray-300" : "text-gray-500"
+                    }`}
+                  >
                     Prompt Quality
                   </div>
                 </div>
                 <button
-                  onClick={() => toggleJudge('judge_1')}
-                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_1 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                  onClick={() => toggleJudge("judge_1")}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
+                    selectedJudges.judge_1
+                      ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
+                      : "bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600"
+                  }`}
                 >
-                  {selectedJudges.judge_1 ? 'Selected' : 'Select'}
+                  {selectedJudges.judge_1 ? "Selected" : "Select"}
                 </button>
               </div>
 
               <div className="text-center">
                 {/* Custom SVG Avatar for Bobby */}
-                <div className="mb-4 transition-all duration-300" style={{
-                  opacity: selectedJudges.judge_2 ? 1 : 0.4,
-                  transform: selectedJudges.judge_2 ? 'scale(1.05)' : 'scale(1)'
-                }}>
+                <div
+                  className="mb-4 transition-all duration-300"
+                  style={{
+                    opacity: selectedJudges.judge_2 ? 1 : 0.4,
+                    transform: selectedJudges.judge_2
+                      ? "scale(1.05)"
+                      : "scale(1)",
+                  }}
+                >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
                       {/* Bobby - Scientist with Goggles */}
                       {/* Head */}
-                      <circle cx="50" cy="32" r="16" fill="#F4C2A1" stroke="#D2691E" strokeWidth="2"/>
+                      <circle
+                        cx="50"
+                        cy="32"
+                        r="16"
+                        fill="#F4C2A1"
+                        stroke="#D2691E"
+                        strokeWidth="2"
+                      />
                       {/* Hair */}
-                      <path d="M 35 20 Q 50 10 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513"/>
+                      <path
+                        d="M 35 20 Q 50 10 65 20 Q 60 25 50 25 Q 40 25 35 20"
+                        fill="#8B4513"
+                      />
                       {/* Goggles */}
-                      <circle cx="44" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2"/>
-                      <circle cx="56" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2"/>
-                      <rect x="50" y="22" width="0" height="12" stroke="#000" strokeWidth="2"/>
-                      <circle cx="44" cy="28" r="4" fill="#87CEEB" opacity="0.7"/>
-                      <circle cx="56" cy="28" r="4" fill="#87CEEB" opacity="0.7"/>
+                      <circle
+                        cx="44"
+                        cy="28"
+                        r="6"
+                        fill="none"
+                        stroke="#000"
+                        strokeWidth="2"
+                      />
+                      <circle
+                        cx="56"
+                        cy="28"
+                        r="6"
+                        fill="none"
+                        stroke="#000"
+                        strokeWidth="2"
+                      />
+                      <rect
+                        x="50"
+                        y="22"
+                        width="0"
+                        height="12"
+                        stroke="#000"
+                        strokeWidth="2"
+                      />
+                      <circle
+                        cx="44"
+                        cy="28"
+                        r="4"
+                        fill="#87CEEB"
+                        opacity="0.7"
+                      />
+                      <circle
+                        cx="56"
+                        cy="28"
+                        r="4"
+                        fill="#87CEEB"
+                        opacity="0.7"
+                      />
                       {/* Nose */}
-                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#D2691E"/>
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#D2691E" />
                       {/* Mouth */}
-                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      <path
+                        d="M 46 36 Q 50 39 54 36"
+                        stroke="#8B4513"
+                        strokeWidth="1.5"
+                        fill="none"
+                      />
                       {/* Body - Lab Coat */}
-                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#000" strokeWidth="2"/>
+                      <rect
+                        x="35"
+                        y="48"
+                        width="30"
+                        height="45"
+                        rx="8"
+                        fill="#FFFFFF"
+                        stroke="#000"
+                        strokeWidth="2"
+                      />
                       {/* Lab Coat Buttons */}
-                      <circle cx="50" cy="55" r="1" fill="#000"/>
-                      <circle cx="50" cy="65" r="1" fill="#000"/>
-                      <circle cx="50" cy="75" r="1" fill="#000"/>
+                      <circle cx="50" cy="55" r="1" fill="#000" />
+                      <circle cx="50" cy="65" r="1" fill="#000" />
+                      <circle cx="50" cy="75" r="1" fill="#000" />
                       {/* Arms */}
-                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#F4C2A1"/>
-                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#F4C2A1"/>
+                      <rect
+                        x="28"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#F4C2A1"
+                      />
+                      <rect
+                        x="64"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#F4C2A1"
+                      />
                       {/* Hands */}
-                      <circle cx="32" cy="85" r="4" fill="#F4C2A1"/>
-                      <circle cx="68" cy="85" r="4" fill="#F4C2A1"/>
+                      <circle cx="32" cy="85" r="4" fill="#F4C2A1" />
+                      <circle cx="68" cy="85" r="4" fill="#F4C2A1" />
                       {/* Test Tube */}
-                      <rect x="70" y="75" width="3" height="12" fill="#87CEEB" stroke="#000" strokeWidth="1"/>
-                      <rect x="69" y="72" width="5" height="3" fill="#000"/>
+                      <rect
+                        x="70"
+                        y="75"
+                        width="3"
+                        height="12"
+                        fill="#87CEEB"
+                        stroke="#000"
+                        strokeWidth="1"
+                      />
+                      <rect x="69" y="72" width="5" height="3" fill="#000" />
                     </svg>
                   </div>
                 </div>
-                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_2 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
-                  <div className={`text-sm font-bold ${selectedJudges.judge_2 ? 'text-white' : 'text-gray-400'}`}>
+                <div
+                  className={`px-4 py-3 rounded-xl border transition-all duration-300 ${
+                    selectedJudges.judge_2
+                      ? "bg-gray-700/50 border-gray-500 shadow-lg"
+                      : "bg-gray-800/30 border-gray-600"
+                  }`}
+                >
+                  <div
+                    className={`text-sm font-bold ${
+                      selectedJudges.judge_2 ? "text-white" : "text-gray-400"
+                    }`}
+                  >
                     Bobby
                   </div>
-                  <div className={`text-xs ${selectedJudges.judge_2 ? 'text-gray-300' : 'text-gray-500'}`}>
+                  <div
+                    className={`text-xs ${
+                      selectedJudges.judge_2 ? "text-gray-300" : "text-gray-500"
+                    }`}
+                  >
                     Database Optimization
                   </div>
                 </div>
                 <button
-                  onClick={() => toggleJudge('judge_2')}
-                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_2 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                  onClick={() => toggleJudge("judge_2")}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
+                    selectedJudges.judge_2
+                      ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
+                      : "bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600"
+                  }`}
                 >
-                  {selectedJudges.judge_2 ? 'Selected' : 'Select'}
+                  {selectedJudges.judge_2 ? "Selected" : "Select"}
                 </button>
               </div>
 
               <div className="text-center">
                 {/* Custom SVG Avatar for Bobert */}
-                <div className="mb-4 transition-all duration-300" style={{
-                  opacity: selectedJudges.judge_3 ? 1 : 0.4,
-                  transform: selectedJudges.judge_3 ? 'scale(1.05)' : 'scale(1)'
-                }}>
+                <div
+                  className="mb-4 transition-all duration-300"
+                  style={{
+                    opacity: selectedJudges.judge_3 ? 1 : 0.4,
+                    transform: selectedJudges.judge_3
+                      ? "scale(1.05)"
+                      : "scale(1)",
+                  }}
+                >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
                       {/* Bobert - Guy in Sunglasses, Tie and Suit */}
                       {/* Head */}
-                      <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2"/>
+                      <circle
+                        cx="50"
+                        cy="32"
+                        r="16"
+                        fill="#D2B48C"
+                        stroke="#8B4513"
+                        strokeWidth="2"
+                      />
                       {/* Hair */}
-                      <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513"/>
+                      <path
+                        d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20"
+                        fill="#8B4513"
+                      />
                       {/* Sunglasses */}
-                      <rect x="40" y="25" width="8" height="6" rx="3" fill="#000"/>
-                      <rect x="52" y="25" width="8" height="6" rx="3" fill="#000"/>
-                      <rect x="48" y="27" width="4" height="2" fill="#000"/>
+                      <rect
+                        x="40"
+                        y="25"
+                        width="8"
+                        height="6"
+                        rx="3"
+                        fill="#000"
+                      />
+                      <rect
+                        x="52"
+                        y="25"
+                        width="8"
+                        height="6"
+                        rx="3"
+                        fill="#000"
+                      />
+                      <rect x="48" y="27" width="4" height="2" fill="#000" />
                       {/* Nose */}
-                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F"/>
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
                       {/* Mouth */}
-                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      <path
+                        d="M 46 36 Q 50 39 54 36"
+                        stroke="#8B4513"
+                        strokeWidth="1.5"
+                        fill="none"
+                      />
                       {/* Body - Suit */}
-                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#000000" stroke="#333" strokeWidth="2"/>
+                      <rect
+                        x="35"
+                        y="48"
+                        width="30"
+                        height="45"
+                        rx="8"
+                        fill="#000000"
+                        stroke="#333"
+                        strokeWidth="2"
+                      />
                       {/* Tie */}
-                      <rect x="48" y="48" width="4" height="20" fill="#FF0000"/>
-                      <rect x="47" y="48" width="6" height="8" fill="#FF0000"/>
+                      <rect
+                        x="48"
+                        y="48"
+                        width="4"
+                        height="20"
+                        fill="#FF0000"
+                      />
+                      <rect x="47" y="48" width="6" height="8" fill="#FF0000" />
                       {/* Arms */}
-                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
-                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      <rect
+                        x="28"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#D2B48C"
+                      />
+                      <rect
+                        x="64"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#D2B48C"
+                      />
                       {/* Hands */}
-                      <circle cx="32" cy="85" r="4" fill="#D2B48C"/>
-                      <circle cx="68" cy="85" r="4" fill="#D2B48C"/>
+                      <circle cx="32" cy="85" r="4" fill="#D2B48C" />
+                      <circle cx="68" cy="85" r="4" fill="#D2B48C" />
                     </svg>
                   </div>
                 </div>
-                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_3 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
-                  <div className={`text-sm font-bold ${selectedJudges.judge_3 ? 'text-white' : 'text-gray-400'}`}>
+                <div
+                  className={`px-4 py-3 rounded-xl border transition-all duration-300 ${
+                    selectedJudges.judge_3
+                      ? "bg-gray-700/50 border-gray-500 shadow-lg"
+                      : "bg-gray-800/30 border-gray-600"
+                  }`}
+                >
+                  <div
+                    className={`text-sm font-bold ${
+                      selectedJudges.judge_3 ? "text-white" : "text-gray-400"
+                    }`}
+                  >
                     Bobert
                   </div>
-                  <div className={`text-xs ${selectedJudges.judge_3 ? 'text-gray-300' : 'text-gray-500'}`}>
+                  <div
+                    className={`text-xs ${
+                      selectedJudges.judge_3 ? "text-gray-300" : "text-gray-500"
+                    }`}
+                  >
                     Security & Safety
                   </div>
                 </div>
                 <button
-                  onClick={() => toggleJudge('judge_3')}
-                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_3 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                  onClick={() => toggleJudge("judge_3")}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
+                    selectedJudges.judge_3
+                      ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
+                      : "bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600"
+                  }`}
                 >
-                  {selectedJudges.judge_3 ? 'Selected' : 'Select'}
+                  {selectedJudges.judge_3 ? "Selected" : "Select"}
                 </button>
               </div>
 
               <div className="text-center">
                 {/* Custom SVG Avatar for Bro */}
-                <div className="mb-4 transition-all duration-300" style={{
-                  opacity: selectedJudges.judge_4 ? 1 : 0.4,
-                  transform: selectedJudges.judge_4 ? 'scale(1.05)' : 'scale(1)'
-                }}>
+                <div
+                  className="mb-4 transition-all duration-300"
+                  style={{
+                    opacity: selectedJudges.judge_4 ? 1 : 0.4,
+                    transform: selectedJudges.judge_4
+                      ? "scale(1.05)"
+                      : "scale(1)",
+                  }}
+                >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
                       {/* Bro - Bank Robber with Mask, Hat and Striped Shirt */}
                       {/* Head */}
-                      <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2"/>
+                      <circle
+                        cx="50"
+                        cy="32"
+                        r="16"
+                        fill="#D2B48C"
+                        stroke="#8B4513"
+                        strokeWidth="2"
+                      />
                       {/* Hat */}
-                      <rect x="40" y="15" width="20" height="8" rx="4" fill="#000"/>
-                      <rect x="35" y="20" width="30" height="3" fill="#000"/>
+                      <rect
+                        x="40"
+                        y="15"
+                        width="20"
+                        height="8"
+                        rx="4"
+                        fill="#000"
+                      />
+                      <rect x="35" y="20" width="30" height="3" fill="#000" />
                       {/* Mask */}
-                      <rect x="35" y="25" width="30" height="12" rx="6" fill="#000"/>
-                      <circle cx="44" cy="31" r="2" fill="#FFF"/>
-                      <circle cx="56" cy="31" r="2" fill="#FFF"/>
+                      <rect
+                        x="35"
+                        y="25"
+                        width="30"
+                        height="12"
+                        rx="6"
+                        fill="#000"
+                      />
+                      <circle cx="44" cy="31" r="2" fill="#FFF" />
+                      <circle cx="56" cy="31" r="2" fill="#FFF" />
                       {/* Nose */}
-                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F"/>
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
                       {/* Mouth */}
-                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      <path
+                        d="M 46 36 Q 50 39 54 36"
+                        stroke="#8B4513"
+                        strokeWidth="1.5"
+                        fill="none"
+                      />
                       {/* Body - Striped Shirt */}
-                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#000" strokeWidth="2"/>
+                      <rect
+                        x="35"
+                        y="48"
+                        width="30"
+                        height="45"
+                        rx="8"
+                        fill="#FFFFFF"
+                        stroke="#000"
+                        strokeWidth="2"
+                      />
                       {/* Stripes */}
-                      <rect x="35" y="50" width="30" height="3" fill="#000"/>
-                      <rect x="35" y="58" width="30" height="3" fill="#000"/>
-                      <rect x="35" y="66" width="30" height="3" fill="#000"/>
-                      <rect x="35" y="74" width="30" height="3" fill="#000"/>
-                      <rect x="35" y="82" width="30" height="3" fill="#000"/>
+                      <rect x="35" y="50" width="30" height="3" fill="#000" />
+                      <rect x="35" y="58" width="30" height="3" fill="#000" />
+                      <rect x="35" y="66" width="30" height="3" fill="#000" />
+                      <rect x="35" y="74" width="30" height="3" fill="#000" />
+                      <rect x="35" y="82" width="30" height="3" fill="#000" />
                       {/* Arms */}
-                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
-                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      <rect
+                        x="28"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#D2B48C"
+                      />
+                      <rect
+                        x="64"
+                        y="55"
+                        width="8"
+                        height="25"
+                        rx="4"
+                        fill="#D2B48C"
+                      />
                       {/* Hands */}
-                      <circle cx="32" cy="85" r="4" fill="#D2B48C"/>
-                      <circle cx="68" cy="85" r="4" fill="#D2B48C"/>
+                      <circle cx="32" cy="85" r="4" fill="#D2B48C" />
+                      <circle cx="68" cy="85" r="4" fill="#D2B48C" />
                       {/* Money Bag */}
-                      <rect x="25" y="75" width="8" height="12" rx="2" fill="#8B4513" stroke="#000" strokeWidth="1"/>
-                      <rect x="26" y="77" width="6" height="1" fill="#000"/>
-                      <rect x="26" y="79" width="6" height="1" fill="#000"/>
-                      <rect x="26" y="81" width="6" height="1" fill="#000"/>
+                      <rect
+                        x="25"
+                        y="75"
+                        width="8"
+                        height="12"
+                        rx="2"
+                        fill="#8B4513"
+                        stroke="#000"
+                        strokeWidth="1"
+                      />
+                      <rect x="26" y="77" width="6" height="1" fill="#000" />
+                      <rect x="26" y="79" width="6" height="1" fill="#000" />
+                      <rect x="26" y="81" width="6" height="1" fill="#000" />
                     </svg>
                   </div>
                 </div>
-                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_4 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
-                  <div className={`text-sm font-bold ${selectedJudges.judge_4 ? 'text-white' : 'text-gray-400'}`}>
+                <div
+                  className={`px-4 py-3 rounded-xl border transition-all duration-300 ${
+                    selectedJudges.judge_4
+                      ? "bg-gray-700/50 border-gray-500 shadow-lg"
+                      : "bg-gray-800/30 border-gray-600"
+                  }`}
+                >
+                  <div
+                    className={`text-sm font-bold ${
+                      selectedJudges.judge_4 ? "text-white" : "text-gray-400"
+                    }`}
+                  >
                     Bro
                   </div>
-                  <div className={`text-xs ${selectedJudges.judge_4 ? 'text-gray-300' : 'text-gray-500'}`}>
+                  <div
+                    className={`text-xs ${
+                      selectedJudges.judge_4 ? "text-gray-300" : "text-gray-500"
+                    }`}
+                  >
                     Cost & Efficiency
                   </div>
                 </div>
                 <button
-                  onClick={() => toggleJudge('judge_4')}
-                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_4 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                  onClick={() => toggleJudge("judge_4")}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
+                    selectedJudges.judge_4
+                      ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
+                      : "bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600"
+                  }`}
                 >
-                  {selectedJudges.judge_4 ? 'Selected' : 'Select'}
+                  {selectedJudges.judge_4 ? "Selected" : "Select"}
                 </button>
               </div>
             </div>
@@ -418,7 +758,7 @@ export default function Home() {
           <h2 className="text-2xl font-bold text-white mb-6 text-center">
             Submit Code for Evaluation
           </h2>
-            
+
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-3">
@@ -436,7 +776,7 @@ export default function Home() {
                 <option value="cpp">C++</option>
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-3">
                 Code to Evaluate
@@ -446,17 +786,21 @@ export default function Home() {
                 onChange={(e) => setCode(e.target.value)}
                 className="w-full h-80 p-6 bg-gray-900 text-gray-100 border border-gray-500 rounded-lg font-mono text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none resize-none transition-all duration-200"
                 placeholder="// Enter your code here..."
-                style={{ 
-                  fontFamily: 'monospace',
-                  lineHeight: '1.6'
+                style={{
+                  fontFamily: "monospace",
+                  lineHeight: "1.6",
                 }}
               />
             </div>
-            
+
             <div className="flex justify-center">
               <button
                 onClick={submitToSelectedJudges}
-                disabled={loading || !code.trim() || Object.values(selectedJudges).every(v => !v)}
+                disabled={
+                  loading ||
+                  !code.trim() ||
+                  Object.values(selectedJudges).every((v) => !v)
+                }
                 className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200"
               >
                 {loading ? "Judges Deliberating..." : "Submit to Selected Jury"}
@@ -474,18 +818,28 @@ export default function Home() {
                 <h2 className="text-3xl font-bold text-white mb-6">
                   Court Verdict
                 </h2>
-                
-                <div className={`inline-block px-8 py-4 rounded-xl text-2xl font-bold border-2 ${getVerdictColor(verdict.verdict || 'UNKNOWN')}`}>
-                  {(verdict.verdict || 'UNKNOWN').replace('_', ' ')}
+
+                <div
+                  className={`inline-block px-8 py-4 rounded-xl text-2xl font-bold border-2 ${getVerdictColor(
+                    verdict.verdict || "UNKNOWN"
+                  )}`}
+                >
+                  {(verdict.verdict || "UNKNOWN").replace("_", " ")}
                 </div>
-                
+
                 <div className="mt-6">
-                  <span className="text-2xl font-semibold text-gray-300">Score: </span>
-                  <span className={`text-3xl font-bold ${getScoreColor(verdict.overall_score || 0)}`}>
+                  <span className="text-2xl font-semibold text-gray-300">
+                    Score:{" "}
+                  </span>
+                  <span
+                    className={`text-3xl font-bold ${getScoreColor(
+                      verdict.overall_score || 0
+                    )}`}
+                  >
                     {verdict.overall_score || 0}/10
                   </span>
                 </div>
-                
+
                 <div className="mt-4 text-gray-400">
                   <p className="text-sm">Case ID: {verdict.case_id}</p>
                   <p className="italic text-gray-300">{verdict.summary}</p>
@@ -495,49 +849,75 @@ export default function Home() {
 
             {/* Individual Judge Analysis */}
             {verdict.judges.map((judge, index) => (
-              <div key={index} className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-600">
+              <div
+                key={index}
+                className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-600"
+              >
                 {/* Judge Header */}
                 <div className="flex items-center space-x-6 mb-8">
                   <div className="text-5xl">
-                    {judge.judge_id === 'judge_1' ? '👨‍⚖️' : 
-                     judge.judge_id === 'judge_2' ? '👩‍⚖️' :
-                     judge.judge_id === 'judge_3' ? '🛡️' : '⚡'}
+                    {judge.judge_id === "judge_1"
+                      ? "👨‍⚖️"
+                      : judge.judge_id === "judge_2"
+                      ? "👩‍⚖️"
+                      : judge.judge_id === "judge_3"
+                      ? "🛡️"
+                      : "⚡"}
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-white">
-                      {judge.judge_id === 'judge_1' ? 'Bob' : 
-                       judge.judge_id === 'judge_2' ? 'Bobby' :
-                       judge.judge_id === 'judge_3' ? 'Bobert' : 'Bro'} - {judge.judge_name.split(' - ')[1]}
+                      {judge.judge_id === "judge_1"
+                        ? "Bob"
+                        : judge.judge_id === "judge_2"
+                        ? "Bobby"
+                        : judge.judge_id === "judge_3"
+                        ? "Bobert"
+                        : "Bro"}{" "}
+                      - {judge.judge_name.split(" - ")[1]}
                     </h3>
                     <p className="text-gray-300 text-lg">
-                      {judge.judge_id === 'judge_1' ? 'Prompt Engineering Specialist' : 
-                       judge.judge_id === 'judge_2' ? 'Database Optimization Expert' :
-                       judge.judge_id === 'judge_3' ? 'Security & Safety Auditor' : 'Cost & Efficiency Analyst'}
+                      {judge.judge_id === "judge_1"
+                        ? "Prompt Engineering Specialist"
+                        : judge.judge_id === "judge_2"
+                        ? "Database Optimization Expert"
+                        : judge.judge_id === "judge_3"
+                        ? "Security & Safety Auditor"
+                        : "Cost & Efficiency Analyst"}
                     </p>
                   </div>
                   <div className="text-right">
-                    <span className={`inline-block px-4 py-2 rounded-lg text-lg font-semibold border-2 ${getVerdictColor(judge.verdict || 'UNKNOWN')}`}>
-                      {(judge.verdict || 'UNKNOWN').replace('_', ' ')}
+                    <span
+                      className={`inline-block px-4 py-2 rounded-lg text-lg font-semibold border-2 ${getVerdictColor(
+                        judge.verdict || "UNKNOWN"
+                      )}`}
+                    >
+                      {(judge.verdict || "UNKNOWN").replace("_", " ")}
                     </span>
                     <div className="mt-2">
-                      <span className="text-lg font-semibold text-gray-300">Score: </span>
-                      <span className={`text-2xl font-bold ${getScoreColor(judge.score || 0)}`}>
+                      <span className="text-lg font-semibold text-gray-300">
+                        Score:{" "}
+                      </span>
+                      <span
+                        className={`text-2xl font-bold ${getScoreColor(
+                          judge.score || 0
+                        )}`}
+                      >
                         {judge.score || 0}/10
                       </span>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Analysis */}
                 <div className="mb-8 p-6 bg-gray-900 rounded-xl border border-gray-500">
                   <h4 className="font-semibold text-white mb-4 text-lg">
                     Analysis
                   </h4>
                   <div className="text-gray-300 text-sm leading-relaxed">
-                    {judge.reasoning.split('\n').slice(0, 3).join('\n')}
+                    {judge.reasoning.split("\n").slice(0, 3).join("\n")}
                   </div>
                 </div>
-                
+
                 {/* Issues Found */}
                 {judge.issues.length > 0 && (
                   <div className="mb-8">
@@ -546,20 +926,28 @@ export default function Home() {
                     </h4>
                     <ul className="space-y-3">
                       {judge.issues.slice(0, 3).map((issue, i) => (
-                        <li key={i} className="p-4 bg-red-900/30 rounded-lg border-l-4 border-red-400 text-red-200 text-sm">
+                        <li
+                          key={i}
+                          className="p-4 bg-red-900/30 rounded-lg border-l-4 border-red-400 text-red-200 text-sm"
+                        >
                           {issue}
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Advice */}
                 <div className="p-6 bg-blue-900/30 rounded-xl border border-blue-400">
                   <h4 className="font-semibold text-blue-200 mb-3 text-lg">
-                    {judge.judge_id === 'judge_1' ? 'Bob' : 
-                     judge.judge_id === 'judge_2' ? 'Bobby' :
-                     judge.judge_id === 'judge_3' ? 'Bobert' : 'Bro'} Advice
+                    {judge.judge_id === "judge_1"
+                      ? "Bob"
+                      : judge.judge_id === "judge_2"
+                      ? "Bobby"
+                      : judge.judge_id === "judge_3"
+                      ? "Bobert"
+                      : "Bro"}{" "}
+                    Advice
                   </h4>
                   <p className="text-blue-100">
                     {judge.advice || "No specific advice provided"}
@@ -574,8 +962,12 @@ export default function Home() {
         <div className="mt-12 text-center">
           <div className="bg-gray-800 rounded-xl p-6 border border-gray-600">
             <div className="text-gray-300">
-              <p className="text-lg font-semibold">Opik Powered Evaluation System</p>
-              <p className="text-sm mt-2 text-gray-400">All LLM calls tracked and analyzed</p>
+              <p className="text-lg font-semibold">
+                Opik Powered Evaluation System
+              </p>
+              <p className="text-sm mt-2 text-gray-400">
+                All LLM calls tracked and analyzed
+              </p>
             </div>
           </div>
         </div>
@@ -597,9 +989,7 @@ export default function Home() {
             <div className="h-full flex flex-col">
               {/* Chat Header */}
               <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-500">
-                <h3 className="text-white font-semibold">
-                  Gemini Chat
-                </h3>
+                <h3 className="text-white font-semibold">Gemini Chat</h3>
                 <button
                   onClick={() => setChatOpen(false)}
                   className="text-gray-400 hover:text-white"
@@ -611,7 +1001,9 @@ export default function Home() {
               {/* Chat Response */}
               <div className="flex-1 mb-3 p-3 bg-gray-900 rounded-lg border border-gray-500 overflow-y-auto">
                 <div className="text-gray-300 text-sm">
-                  {chatLoading ? "Thinking..." : chatResponse || "Ask me anything!"}
+                  {chatLoading
+                    ? "Thinking..."
+                    : chatResponse || "Ask me anything!"}
                 </div>
               </div>
 
@@ -621,7 +1013,7 @@ export default function Home() {
                   type="text"
                   value={chatMessage}
                   onChange={(e) => setChatMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && sendGeminiMessage()}
+                  onKeyPress={(e) => e.key === "Enter" && sendGeminiMessage()}
                   placeholder="Type message..."
                   className="w-full p-3 bg-gray-700 text-white border border-gray-500 rounded-lg text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-300"
                 />
