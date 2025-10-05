@@ -21,7 +21,12 @@ app.include_router(gemini.router)
 
 
 # add public frontend url later for cors
-origins = ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173"]
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:5173",
+    "https://divhacks-2025.vercel.app/",
+]
 
 # CORS
 app.add_middleware(
