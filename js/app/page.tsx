@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface JudgeResponse {
   judge_id: string;
@@ -121,277 +121,291 @@ export default function Home() {
   const getVerdictColor = (verdict: string) => {
     switch (verdict) {
       case "GOOD":
-        return "text-green-600 bg-green-100";
+        return "bg-green-900/50 text-green-200 border-green-400";
+      case "OPTIMIZED":
+        return "bg-green-900/50 text-green-200 border-green-400";
+      case "SECURE":
+        return "bg-green-900/50 text-green-200 border-green-400";
+      case "EFFICIENT":
+        return "bg-green-900/50 text-green-200 border-green-400";
       case "NEEDS_IMPROVEMENT":
-        return "text-yellow-600 bg-yellow-100";
+        return "bg-yellow-900/50 text-yellow-200 border-yellow-400";
+      case "NEEDS_OPTIMIZATION":
+        return "bg-yellow-900/50 text-yellow-200 border-yellow-400";
+      case "VULNERABLE":
+        return "bg-red-900/50 text-red-200 border-red-400";
+      case "INEFFICIENT":
+        return "bg-red-900/50 text-red-200 border-red-400";
       case "EVALUATION_ERROR":
-        return "text-red-600 bg-red-100";
+        return "bg-red-900/50 text-red-200 border-red-400";
       case "UNKNOWN":
-        return "text-gray-600 bg-gray-100";
+        return "bg-amber-900/50 text-amber-200 border-amber-400";
       default:
-        return "text-gray-600 bg-gray-100";
+        return "bg-amber-900/50 text-amber-200 border-amber-400";
     }
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 8) return "text-green-600";
-    if (score >= 6) return "text-yellow-600";
-    return "text-red-600";
+    if (score >= 8) return "text-green-400";
+    if (score >= 6) return "text-yellow-400";
+    return "text-red-400";
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* 8-bit Court Header */}
-      <div className="bg-gradient-to-r from-amber-800 to-amber-900 text-white py-12 relative overflow-hidden">
-        {/* 8-bit pixel pattern background */}
-        <div className="absolute inset-0 opacity-20">
-          <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='pixel' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Crect width='10' height='10' fill='%23ffffff'/%3E%3Crect x='10' y='10' width='10' height='10' fill='%23ffffff'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23pixel)'/%3E%3C/svg%3E")`,
-            }}
-          />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
+      {/* Dark Court Header */}
+      <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white py-12 relative overflow-hidden">
+        {/* Subtle pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="w-full h-full" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='dots' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23ffffff'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23dots)'/%3E%3C/svg%3E")`,
+          }} />
         </div>
-
+        
         <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="flex items-center justify-center space-x-8">
-            {/* 8-bit Judge Characters with Selection */}
-            <div className="flex space-x-4">
-              <div className="text-center">
-                <div
-                  className="text-5xl mb-3 filter drop-shadow-lg"
-                  style={{
-                    fontFamily: "monospace",
-                    textShadow:
-                      "4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000",
-                    opacity: selectedJudges.judge_1 ? 1 : 0.5,
-                  }}
-                >
-                  👨‍💻
-                </div>
-                <div
-                  className={`px-2 py-1 rounded-lg border-2 ${
-                    selectedJudges.judge_1
-                      ? "bg-black bg-opacity-50 border-yellow-400"
-                      : "bg-gray-600 bg-opacity-50 border-gray-500"
-                  }`}
-                >
-                  <div
-                    className={`text-sm font-bold ${
-                      selectedJudges.judge_1
-                        ? "text-yellow-300"
-                        : "text-gray-400"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    JUDGE 1
-                  </div>
-                  <div
-                    className={`text-xs ${
-                      selectedJudges.judge_1
-                        ? "text-yellow-200"
-                        : "text-gray-500"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    PROMPT
-                  </div>
-                </div>
-                <button
-                  onClick={() => toggleJudge("judge_1")}
-                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${
-                    selectedJudges.judge_1
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-600 text-gray-300"
-                  }`}
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {selectedJudges.judge_1 ? "SELECTED" : "SELECT"}
-                </button>
-              </div>
-
-              <div className="text-center">
-                <div
-                  className="text-5xl mb-3 filter drop-shadow-lg"
-                  style={{
-                    fontFamily: "monospace",
-                    textShadow:
-                      "4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000",
-                    opacity: selectedJudges.judge_2 ? 1 : 0.5,
-                  }}
-                >
-                  👩‍💼
-                </div>
-                <div
-                  className={`px-2 py-1 rounded-lg border-2 ${
-                    selectedJudges.judge_2
-                      ? "bg-black bg-opacity-50 border-yellow-400"
-                      : "bg-gray-600 bg-opacity-50 border-gray-500"
-                  }`}
-                >
-                  <div
-                    className={`text-sm font-bold ${
-                      selectedJudges.judge_2
-                        ? "text-yellow-300"
-                        : "text-gray-400"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    JUDGE 2
-                  </div>
-                  <div
-                    className={`text-xs ${
-                      selectedJudges.judge_2
-                        ? "text-yellow-200"
-                        : "text-gray-500"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    DATABASE
-                  </div>
-                </div>
-                <button
-                  onClick={() => toggleJudge("judge_2")}
-                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${
-                    selectedJudges.judge_2
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-600 text-gray-300"
-                  }`}
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {selectedJudges.judge_2 ? "SELECTED" : "SELECT"}
-                </button>
-              </div>
-
-              <div className="text-center">
-                <div
-                  className="text-5xl mb-3 filter drop-shadow-lg"
-                  style={{
-                    fontFamily: "monospace",
-                    textShadow:
-                      "4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000",
-                    opacity: selectedJudges.judge_3 ? 1 : 0.5,
-                  }}
-                >
-                  🛡️
-                </div>
-                <div
-                  className={`px-2 py-1 rounded-lg border-2 ${
-                    selectedJudges.judge_3
-                      ? "bg-black bg-opacity-50 border-yellow-400"
-                      : "bg-gray-600 bg-opacity-50 border-gray-500"
-                  }`}
-                >
-                  <div
-                    className={`text-sm font-bold ${
-                      selectedJudges.judge_3
-                        ? "text-yellow-300"
-                        : "text-gray-400"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    JUDGE 3
-                  </div>
-                  <div
-                    className={`text-xs ${
-                      selectedJudges.judge_3
-                        ? "text-yellow-200"
-                        : "text-gray-500"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    SECURITY
-                  </div>
-                </div>
-                <button
-                  onClick={() => toggleJudge("judge_3")}
-                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${
-                    selectedJudges.judge_3
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-600 text-gray-300"
-                  }`}
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {selectedJudges.judge_3 ? "SELECTED" : "SELECT"}
-                </button>
-              </div>
-
-              <div className="text-center">
-                <div
-                  className="text-5xl mb-3 filter drop-shadow-lg"
-                  style={{
-                    fontFamily: "monospace",
-                    textShadow:
-                      "4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000",
-                    opacity: selectedJudges.judge_4 ? 1 : 0.5,
-                  }}
-                >
-                  ⚡
-                </div>
-                <div
-                  className={`px-2 py-1 rounded-lg border-2 ${
-                    selectedJudges.judge_4
-                      ? "bg-black bg-opacity-50 border-yellow-400"
-                      : "bg-gray-600 bg-opacity-50 border-gray-500"
-                  }`}
-                >
-                  <div
-                    className={`text-sm font-bold ${
-                      selectedJudges.judge_4
-                        ? "text-yellow-300"
-                        : "text-gray-400"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    JUDGE 4
-                  </div>
-                  <div
-                    className={`text-xs ${
-                      selectedJudges.judge_4
-                        ? "text-yellow-200"
-                        : "text-gray-500"
-                    }`}
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    EFFICIENCY
-                  </div>
-                </div>
-                <button
-                  onClick={() => toggleJudge("judge_4")}
-                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${
-                    selectedJudges.judge_4
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-600 text-gray-300"
-                  }`}
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {selectedJudges.judge_4 ? "SELECTED" : "SELECT"}
-                </button>
-              </div>
+          {/* Title Section */}
+          <div className="text-center mb-12">
+            <h1 className="text-6xl font-bold mb-4 text-white" style={{ 
+              fontFamily: 'serif',
+              textShadow: '2px 2px 0px #374151, -1px -1px 0px #374151, 1px -1px 0px #374151, -1px 1px 0px #374151'
+            }}>
+              LLM Court
+            </h1>
+            <p className="text-xl text-gray-300 mb-6">
+              Code Evaluation System
+            </p>
+            <div className="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-300 text-sm font-medium">
+              <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse"></div>
+              Opik Powered
             </div>
+          </div>
 
-            <div className="text-center">
-              <h1
-                className="text-6xl font-bold mb-4"
-                style={{
-                  fontFamily: "monospace",
-                  textShadow:
-                    "4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000",
-                }}
-              >
-                LLM COURT
-              </h1>
-              <p
-                className="text-2xl text-yellow-200"
-                style={{ fontFamily: "monospace" }}
-              >
-                CODE EVALUATION SYSTEM
-              </p>
-              <div
-                className="mt-4 bg-red-600 text-white px-6 py-2 rounded-lg border-2 border-red-400 inline-block"
-                style={{ fontFamily: "monospace" }}
-              >
-                OPIK POWERED
+          {/* Judge Selection Section - Centered under title */}
+          <div className="flex justify-center">
+            <div className="flex space-x-8">
+              <div className="text-center">
+                {/* Custom SVG Avatar for Bob */}
+                <div className="mb-4 transition-all duration-300" style={{
+                  opacity: selectedJudges.judge_1 ? 1 : 0.4,
+                  transform: selectedJudges.judge_1 ? 'scale(1.05)' : 'scale(1)'
+                }}>
+                  <div className="w-24 h-24 mx-auto">
+                    <svg viewBox="0 0 100 100" className="w-full h-full">
+                      {/* Bob - Guy with Pen and Paper */}
+                      {/* Head */}
+                      <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2"/>
+                      {/* Hair */}
+                      <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513"/>
+                      {/* Eyes */}
+                      <circle cx="44" cy="28" r="2.5" fill="#000"/>
+                      <circle cx="56" cy="28" r="2.5" fill="#000"/>
+                      <circle cx="44.5" cy="27.5" r="1" fill="#fff"/>
+                      <circle cx="56.5" cy="27.5" r="1" fill="#fff"/>
+                      {/* Nose */}
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F"/>
+                      {/* Mouth */}
+                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      {/* Body - Casual Shirt */}
+                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#3B82F6" stroke="#1E40AF" strokeWidth="2"/>
+                      {/* Arms */}
+                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      {/* Hands */}
+                      <circle cx="32" cy="85" r="4" fill="#D2B48C"/>
+                      <circle cx="68" cy="85" r="4" fill="#D2B48C"/>
+                      {/* Pen in right hand */}
+                      <rect x="70" y="80" width="2" height="8" fill="#000"/>
+                      <rect x="69" y="78" width="4" height="2" fill="#FF0000"/>
+                      {/* Paper in left hand */}
+                      <rect x="25" y="75" width="12" height="15" rx="1" fill="#FFFFFF" stroke="#000" strokeWidth="1"/>
+                      <rect x="27" y="77" width="8" height="1" fill="#000"/>
+                      <rect x="27" y="79" width="6" height="1" fill="#000"/>
+                      <rect x="27" y="81" width="7" height="1" fill="#000"/>
+                    </svg>
+                  </div>
+                </div>
+                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_1 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_1 ? 'text-white' : 'text-gray-400'}`}>
+                    Bob
+                  </div>
+                  <div className={`text-xs ${selectedJudges.judge_1 ? 'text-gray-300' : 'text-gray-500'}`}>
+                    Prompt Quality
+                  </div>
+                </div>
+                <button
+                  onClick={() => toggleJudge('judge_1')}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_1 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                >
+                  {selectedJudges.judge_1 ? 'Selected' : 'Select'}
+                </button>
+              </div>
+
+              <div className="text-center">
+                {/* Custom SVG Avatar for Bobby */}
+                <div className="mb-4 transition-all duration-300" style={{
+                  opacity: selectedJudges.judge_2 ? 1 : 0.4,
+                  transform: selectedJudges.judge_2 ? 'scale(1.05)' : 'scale(1)'
+                }}>
+                  <div className="w-24 h-24 mx-auto">
+                    <svg viewBox="0 0 100 100" className="w-full h-full">
+                      {/* Bobby - Scientist with Goggles */}
+                      {/* Head */}
+                      <circle cx="50" cy="32" r="16" fill="#F4C2A1" stroke="#D2691E" strokeWidth="2"/>
+                      {/* Hair */}
+                      <path d="M 35 20 Q 50 10 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513"/>
+                      {/* Goggles */}
+                      <circle cx="44" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2"/>
+                      <circle cx="56" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2"/>
+                      <rect x="50" y="22" width="0" height="12" stroke="#000" strokeWidth="2"/>
+                      <circle cx="44" cy="28" r="4" fill="#87CEEB" opacity="0.7"/>
+                      <circle cx="56" cy="28" r="4" fill="#87CEEB" opacity="0.7"/>
+                      {/* Nose */}
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#D2691E"/>
+                      {/* Mouth */}
+                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      {/* Body - Lab Coat */}
+                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#000" strokeWidth="2"/>
+                      {/* Lab Coat Buttons */}
+                      <circle cx="50" cy="55" r="1" fill="#000"/>
+                      <circle cx="50" cy="65" r="1" fill="#000"/>
+                      <circle cx="50" cy="75" r="1" fill="#000"/>
+                      {/* Arms */}
+                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#F4C2A1"/>
+                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#F4C2A1"/>
+                      {/* Hands */}
+                      <circle cx="32" cy="85" r="4" fill="#F4C2A1"/>
+                      <circle cx="68" cy="85" r="4" fill="#F4C2A1"/>
+                      {/* Test Tube */}
+                      <rect x="70" y="75" width="3" height="12" fill="#87CEEB" stroke="#000" strokeWidth="1"/>
+                      <rect x="69" y="72" width="5" height="3" fill="#000"/>
+                    </svg>
+                  </div>
+                </div>
+                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_2 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_2 ? 'text-white' : 'text-gray-400'}`}>
+                    Bobby
+                  </div>
+                  <div className={`text-xs ${selectedJudges.judge_2 ? 'text-gray-300' : 'text-gray-500'}`}>
+                    Database Optimization
+                  </div>
+                </div>
+                <button
+                  onClick={() => toggleJudge('judge_2')}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_2 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                >
+                  {selectedJudges.judge_2 ? 'Selected' : 'Select'}
+                </button>
+              </div>
+
+              <div className="text-center">
+                {/* Custom SVG Avatar for Bobert */}
+                <div className="mb-4 transition-all duration-300" style={{
+                  opacity: selectedJudges.judge_3 ? 1 : 0.4,
+                  transform: selectedJudges.judge_3 ? 'scale(1.05)' : 'scale(1)'
+                }}>
+                  <div className="w-24 h-24 mx-auto">
+                    <svg viewBox="0 0 100 100" className="w-full h-full">
+                      {/* Bobert - Guy in Sunglasses, Tie and Suit */}
+                      {/* Head */}
+                      <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2"/>
+                      {/* Hair */}
+                      <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513"/>
+                      {/* Sunglasses */}
+                      <rect x="40" y="25" width="8" height="6" rx="3" fill="#000"/>
+                      <rect x="52" y="25" width="8" height="6" rx="3" fill="#000"/>
+                      <rect x="48" y="27" width="4" height="2" fill="#000"/>
+                      {/* Nose */}
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F"/>
+                      {/* Mouth */}
+                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      {/* Body - Suit */}
+                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#000000" stroke="#333" strokeWidth="2"/>
+                      {/* Tie */}
+                      <rect x="48" y="48" width="4" height="20" fill="#FF0000"/>
+                      <rect x="47" y="48" width="6" height="8" fill="#FF0000"/>
+                      {/* Arms */}
+                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      {/* Hands */}
+                      <circle cx="32" cy="85" r="4" fill="#D2B48C"/>
+                      <circle cx="68" cy="85" r="4" fill="#D2B48C"/>
+                    </svg>
+                  </div>
+                </div>
+                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_3 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_3 ? 'text-white' : 'text-gray-400'}`}>
+                    Bobert
+                  </div>
+                  <div className={`text-xs ${selectedJudges.judge_3 ? 'text-gray-300' : 'text-gray-500'}`}>
+                    Security & Safety
+                  </div>
+                </div>
+                <button
+                  onClick={() => toggleJudge('judge_3')}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_3 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                >
+                  {selectedJudges.judge_3 ? 'Selected' : 'Select'}
+                </button>
+              </div>
+
+              <div className="text-center">
+                {/* Custom SVG Avatar for Bro */}
+                <div className="mb-4 transition-all duration-300" style={{
+                  opacity: selectedJudges.judge_4 ? 1 : 0.4,
+                  transform: selectedJudges.judge_4 ? 'scale(1.05)' : 'scale(1)'
+                }}>
+                  <div className="w-24 h-24 mx-auto">
+                    <svg viewBox="0 0 100 100" className="w-full h-full">
+                      {/* Bro - Bank Robber with Mask, Hat and Striped Shirt */}
+                      {/* Head */}
+                      <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2"/>
+                      {/* Hat */}
+                      <rect x="40" y="15" width="20" height="8" rx="4" fill="#000"/>
+                      <rect x="35" y="20" width="30" height="3" fill="#000"/>
+                      {/* Mask */}
+                      <rect x="35" y="25" width="30" height="12" rx="6" fill="#000"/>
+                      <circle cx="44" cy="31" r="2" fill="#FFF"/>
+                      <circle cx="56" cy="31" r="2" fill="#FFF"/>
+                      {/* Nose */}
+                      <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F"/>
+                      {/* Mouth */}
+                      <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none"/>
+                      {/* Body - Striped Shirt */}
+                      <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#000" strokeWidth="2"/>
+                      {/* Stripes */}
+                      <rect x="35" y="50" width="30" height="3" fill="#000"/>
+                      <rect x="35" y="58" width="30" height="3" fill="#000"/>
+                      <rect x="35" y="66" width="30" height="3" fill="#000"/>
+                      <rect x="35" y="74" width="30" height="3" fill="#000"/>
+                      <rect x="35" y="82" width="30" height="3" fill="#000"/>
+                      {/* Arms */}
+                      <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C"/>
+                      {/* Hands */}
+                      <circle cx="32" cy="85" r="4" fill="#D2B48C"/>
+                      <circle cx="68" cy="85" r="4" fill="#D2B48C"/>
+                      {/* Money Bag */}
+                      <rect x="25" y="75" width="8" height="12" rx="2" fill="#8B4513" stroke="#000" strokeWidth="1"/>
+                      <rect x="26" y="77" width="6" height="1" fill="#000"/>
+                      <rect x="26" y="79" width="6" height="1" fill="#000"/>
+                      <rect x="26" y="81" width="6" height="1" fill="#000"/>
+                    </svg>
+                  </div>
+                </div>
+                <div className={`px-4 py-3 rounded-xl border transition-all duration-300 ${selectedJudges.judge_4 ? 'bg-gray-700/50 border-gray-500 shadow-lg' : 'bg-gray-800/30 border-gray-600'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_4 ? 'text-white' : 'text-gray-400'}`}>
+                    Bro
+                  </div>
+                  <div className={`text-xs ${selectedJudges.judge_4 ? 'text-gray-300' : 'text-gray-500'}`}>
+                    Cost & Efficiency
+                  </div>
+                </div>
+                <button
+                  onClick={() => toggleJudge('judge_4')}
+                  className={`mt-3 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${selectedJudges.judge_4 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-700 hover:bg-gray-600 text-gray-300 border border-gray-600'}`}
+                >
+                  {selectedJudges.judge_4 ? 'Selected' : 'Select'}
+                </button>
               </div>
             </div>
           </div>
@@ -399,313 +413,205 @@ export default function Home() {
       </div>
 
       <div className="max-w-6xl mx-auto p-8">
-        {/* Code Submission Area - 8-bit Style */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl p-8 mb-8 border-4 border-yellow-400 relative">
-          {/* 8-bit border effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
-
-          <div className="relative z-10">
-            <h2
-              className="text-3xl font-bold text-yellow-300 mb-6 text-center"
-              style={{ fontFamily: "monospace" }}
-            >
-              [ SUBMIT CODE FOR EVALUATION ]
-            </h2>
-
-            <div className="space-y-6">
-              <div>
-                <label
-                  className="block text-lg font-bold text-yellow-200 mb-3"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  SELECT LANGUAGE:
-                </label>
-                <select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  className="w-full max-w-xs bg-gray-700 text-white border-2 border-yellow-400 rounded-lg px-4 py-3 font-mono text-lg focus:border-yellow-300 focus:outline-none"
-                >
-                  <option value="python">PYTHON</option>
-                  <option value="javascript">JAVASCRIPT</option>
-                  <option value="typescript">TYPESCRIPT</option>
-                  <option value="java">JAVA</option>
-                  <option value="cpp">C++</option>
-                </select>
-              </div>
-
-              <div>
-                <label
-                  className="block text-lg font-bold text-yellow-200 mb-3"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  ENTER CODE:
-                </label>
-                <textarea
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="w-full h-80 p-6 bg-black text-green-400 border-2 border-yellow-400 rounded-lg font-mono text-sm focus:border-yellow-300 focus:outline-none resize-none"
-                  placeholder="// Enter your code here..."
-                  style={{
-                    fontFamily: "monospace",
-                    lineHeight: "1.5",
-                  }}
-                />
-              </div>
-
-              <div className="flex justify-center">
-                <button
-                  onClick={submitToSelectedJudges}
-                  disabled={
-                    loading ||
-                    !code.trim() ||
-                    Object.values(selectedJudges).every((v) => !v)
-                  }
-                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-bold text-xl border-2 border-red-400 disabled:border-gray-500 transform hover:scale-105 transition-all duration-200"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {loading
-                    ? "[ JUDGES DELIBERATING... ]"
-                    : "[ SUBMIT TO SELECTED JURY ]"}
-                </button>
-              </div>
+        {/* Code Submission Area - Dark Style */}
+        <div className="bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 border border-gray-600">
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">
+            Submit Code for Evaluation
+          </h2>
+            
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-3">
+                Programming Language
+              </label>
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="w-full max-w-xs bg-gray-700 border border-gray-500 rounded-lg px-4 py-3 text-white focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200"
+              >
+                <option value="python">Python</option>
+                <option value="javascript">JavaScript</option>
+                <option value="typescript">TypeScript</option>
+                <option value="java">Java</option>
+                <option value="cpp">C++</option>
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-semibold text-gray-300 mb-3">
+                Code to Evaluate
+              </label>
+              <textarea
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="w-full h-80 p-6 bg-gray-900 text-gray-100 border border-gray-500 rounded-lg font-mono text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none resize-none transition-all duration-200"
+                placeholder="// Enter your code here..."
+                style={{ 
+                  fontFamily: 'monospace',
+                  lineHeight: '1.6'
+                }}
+              />
+            </div>
+            
+            <div className="flex justify-center">
+              <button
+                onClick={submitToSelectedJudges}
+                disabled={loading || !code.trim() || Object.values(selectedJudges).every(v => !v)}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200"
+              >
+                {loading ? "Judges Deliberating..." : "Submit to Selected Jury"}
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Judge Verdict Display - 8-bit Style */}
+        {/* Judge Verdict Display - Dark Style */}
         {verdict && (
           <div className="space-y-8">
             {/* Overall Verdict */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl p-8 border-4 border-yellow-400 relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
-
-              <div className="relative z-10 text-center">
-                <h2
-                  className="text-4xl font-bold text-yellow-300 mb-6"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  [ COURT VERDICT ]
+            <div className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-600">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-white mb-6">
+                  Court Verdict
                 </h2>
-
-                <div
-                  className={`inline-block px-8 py-4 rounded-lg text-3xl font-bold border-4 ${getVerdictColor(
-                    verdict.verdict || "UNKNOWN"
-                  )}`}
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {(verdict.verdict || "UNKNOWN").replace("_", " ")}
+                
+                <div className={`inline-block px-8 py-4 rounded-xl text-2xl font-bold border-2 ${getVerdictColor(verdict.verdict || 'UNKNOWN')}`}>
+                  {(verdict.verdict || 'UNKNOWN').replace('_', ' ')}
                 </div>
-
+                
                 <div className="mt-6">
-                  <span
-                    className="text-3xl font-bold text-yellow-200"
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    SCORE:{" "}
-                  </span>
-                  <span
-                    className={`text-4xl font-bold ${getScoreColor(
-                      verdict.overall_score || 0
-                    )}`}
-                    style={{ fontFamily: "monospace" }}
-                  >
+                  <span className="text-2xl font-semibold text-gray-300">Score: </span>
+                  <span className={`text-3xl font-bold ${getScoreColor(verdict.overall_score || 0)}`}>
                     {verdict.overall_score || 0}/10
                   </span>
                 </div>
-
-                <div
-                  className="mt-4 text-yellow-200"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  <p>CASE ID: {verdict.case_id}</p>
-                  <p className="italic">{verdict.summary}</p>
+                
+                <div className="mt-4 text-gray-400">
+                  <p className="text-sm">Case ID: {verdict.case_id}</p>
+                  <p className="italic text-gray-300">{verdict.summary}</p>
                 </div>
               </div>
             </div>
 
-            {/* Judge 1 Detailed Analysis */}
+            {/* Individual Judge Analysis */}
             {verdict.judges.map((judge, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl p-8 border-4 border-blue-400 relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-300 to-blue-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
-
-                <div className="relative z-10">
-                  {/* Judge Header */}
-                  <div className="flex items-center space-x-6 mb-8">
-                    <div className="text-6xl">
-                      {judge.judge_id === "judge_1"
-                        ? "👨‍💻"
-                        : judge.judge_id === "judge_2"
-                        ? "👩‍💼"
-                        : judge.judge_id === "judge_3"
-                        ? "🛡️"
-                        : "⚡"}
-                    </div>
-                    <div>
-                      <h3
-                        className="text-3xl font-bold text-blue-300"
-                        style={{ fontFamily: "monospace" }}
-                      >
-                        {judge.judge_name}
-                      </h3>
-                      <p
-                        className="text-blue-200 text-lg"
-                        style={{ fontFamily: "monospace" }}
-                      >
-                        {judge.judge_id === "judge_1"
-                          ? "PROMPT ENGINEERING SPECIALIST"
-                          : judge.judge_id === "judge_2"
-                          ? "DATABASE OPTIMIZATION EXPERT"
-                          : judge.judge_id === "judge_3"
-                          ? "SECURITY & SAFETY AUDITOR"
-                          : "COST & EFFICIENCY ANALYST"}
-                      </p>
-                    </div>
-                    <span
-                      className={`ml-auto px-6 py-3 rounded-lg text-xl font-bold border-2 ${getVerdictColor(
-                        judge.verdict || "UNKNOWN"
-                      )}`}
-                      style={{ fontFamily: "monospace" }}
-                    >
-                      {(judge.verdict || "UNKNOWN").replace("_", " ")}
-                    </span>
+              <div key={index} className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-600">
+                {/* Judge Header */}
+                <div className="flex items-center space-x-6 mb-8">
+                  <div className="text-5xl">
+                    {judge.judge_id === 'judge_1' ? '👨‍⚖️' : 
+                     judge.judge_id === 'judge_2' ? '👩‍⚖️' :
+                     judge.judge_id === 'judge_3' ? '🛡️' : '⚡'}
                   </div>
-
-                  {/* Score */}
-                  <div className="mb-8 text-center">
-                    <span
-                      className="text-2xl font-bold text-blue-200"
-                      style={{ fontFamily: "monospace" }}
-                    >
-                      SCORE:{" "}
-                    </span>
-                    <span
-                      className={`text-3xl font-bold ${getScoreColor(
-                        judge.score || 0
-                      )}`}
-                      style={{ fontFamily: "monospace" }}
-                    >
-                      {judge.score || 0}/10
-                    </span>
-                  </div>
-
-                  {/* Concise Analysis - Only 3 Lines */}
-                  <div className="mb-8 p-6 bg-black bg-opacity-50 rounded-lg border-2 border-green-400">
-                    <h4
-                      className="font-bold text-green-300 mb-4 text-xl"
-                      style={{ fontFamily: "monospace" }}
-                    >
-                      [ QUICK ANALYSIS ]
-                    </h4>
-                    <div className="text-green-200 text-sm font-mono leading-relaxed">
-                      {judge.reasoning.split("\n").slice(0, 3).join("\n")}
-                    </div>
-                  </div>
-
-                  {/* Issues Found - Max 3 */}
-                  {judge.issues.length > 0 && (
-                    <div className="mb-8">
-                      <h4
-                        className="font-bold text-red-300 mb-4 text-xl"
-                        style={{ fontFamily: "monospace" }}
-                      >
-                        [ TOP ISSUES: {Math.min(judge.issues.length, 3)} ]
-                      </h4>
-                      <ul className="space-y-2">
-                        {judge.issues.slice(0, 3).map((issue, i) => (
-                          <li
-                            key={i}
-                            className="p-3 bg-red-900 bg-opacity-50 rounded border-l-4 border-red-400 text-red-200 font-mono text-sm"
-                          >
-                            {issue}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Advice */}
-                  <div className="p-6 bg-blue-900 bg-opacity-50 rounded-lg border-2 border-blue-400">
-                    <h4
-                      className="font-bold text-blue-300 mb-3 text-xl"
-                      style={{ fontFamily: "monospace" }}
-                    >
-                      [{" "}
-                      {judge.judge_id === "judge_1"
-                        ? "JUDGE 1"
-                        : judge.judge_id === "judge_2"
-                        ? "JUDGE 2"
-                        : judge.judge_id === "judge_3"
-                        ? "JUDGE 3"
-                        : "JUDGE 4"}{" "}
-                      ADVICE ]
-                    </h4>
-                    <p className="text-blue-200 font-mono">
-                      {judge.advice || "No specific advice provided"}
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-white">
+                      {judge.judge_id === 'judge_1' ? 'Bob' : 
+                       judge.judge_id === 'judge_2' ? 'Bobby' :
+                       judge.judge_id === 'judge_3' ? 'Bobert' : 'Bro'} - {judge.judge_name.split(' - ')[1]}
+                    </h3>
+                    <p className="text-gray-300 text-lg">
+                      {judge.judge_id === 'judge_1' ? 'Prompt Engineering Specialist' : 
+                       judge.judge_id === 'judge_2' ? 'Database Optimization Expert' :
+                       judge.judge_id === 'judge_3' ? 'Security & Safety Auditor' : 'Cost & Efficiency Analyst'}
                     </p>
                   </div>
+                  <div className="text-right">
+                    <span className={`inline-block px-4 py-2 rounded-lg text-lg font-semibold border-2 ${getVerdictColor(judge.verdict || 'UNKNOWN')}`}>
+                      {(judge.verdict || 'UNKNOWN').replace('_', ' ')}
+                    </span>
+                    <div className="mt-2">
+                      <span className="text-lg font-semibold text-gray-300">Score: </span>
+                      <span className={`text-2xl font-bold ${getScoreColor(judge.score || 0)}`}>
+                        {judge.score || 0}/10
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Analysis */}
+                <div className="mb-8 p-6 bg-gray-900 rounded-xl border border-gray-500">
+                  <h4 className="font-semibold text-white mb-4 text-lg">
+                    Analysis
+                  </h4>
+                  <div className="text-gray-300 text-sm leading-relaxed">
+                    {judge.reasoning.split('\n').slice(0, 3).join('\n')}
+                  </div>
+                </div>
+                
+                {/* Issues Found */}
+                {judge.issues.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="font-semibold text-white mb-4 text-lg">
+                      Top Issues ({Math.min(judge.issues.length, 3)})
+                    </h4>
+                    <ul className="space-y-3">
+                      {judge.issues.slice(0, 3).map((issue, i) => (
+                        <li key={i} className="p-4 bg-red-900/30 rounded-lg border-l-4 border-red-400 text-red-200 text-sm">
+                          {issue}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                {/* Advice */}
+                <div className="p-6 bg-blue-900/30 rounded-xl border border-blue-400">
+                  <h4 className="font-semibold text-blue-200 mb-3 text-lg">
+                    {judge.judge_id === 'judge_1' ? 'Bob' : 
+                     judge.judge_id === 'judge_2' ? 'Bobby' :
+                     judge.judge_id === 'judge_3' ? 'Bobert' : 'Bro'} Advice
+                  </h4>
+                  <p className="text-blue-100">
+                    {judge.advice || "No specific advice provided"}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* 8-bit Footer */}
+        {/* Dark Footer */}
         <div className="mt-12 text-center">
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg p-6 border-4 border-yellow-400 relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
-            <div
-              className="relative z-10 text-yellow-200"
-              style={{ fontFamily: "monospace" }}
-            >
-              <p className="text-lg">[ OPIK POWERED EVALUATION SYSTEM ]</p>
-              <p className="text-sm mt-2">
-                [ ALL LLM CALLS TRACKED AND ANALYZED ]
-              </p>
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-600">
+            <div className="text-gray-300">
+              <p className="text-lg font-semibold">Opik Powered Evaluation System</p>
+              <p className="text-sm mt-2 text-gray-400">All LLM calls tracked and analyzed</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Gemini Chatbot - Fixed Position Corner */}
+      {/* Gemini Chatbot - Dark Corner */}
       <div className="fixed bottom-4 right-4 z-50">
         {/* Chat Toggle Button */}
         <button
           onClick={() => setChatOpen(!chatOpen)}
-          className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white p-4 rounded-full shadow-lg border-2 border-purple-400 transform hover:scale-110 transition-all duration-200"
-          style={{ fontFamily: "monospace" }}
+          className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white p-4 rounded-full shadow-lg transform hover:scale-110 transition-all duration-200"
         >
           🤖
         </button>
 
         {/* Chat Window */}
         {chatOpen && (
-          <div className="absolute bottom-16 right-0 w-80 h-96 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl border-4 border-purple-400 p-4">
+          <div className="absolute bottom-16 right-0 w-80 h-96 bg-gray-800 rounded-xl shadow-2xl border border-gray-600 p-4">
             <div className="h-full flex flex-col">
               {/* Chat Header */}
-              <div className="flex items-center justify-between mb-3 pb-2 border-b border-purple-400">
-                <h3
-                  className="text-purple-300 font-bold"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  GEMINI CHAT
+              <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-500">
+                <h3 className="text-white font-semibold">
+                  Gemini Chat
                 </h3>
                 <button
                   onClick={() => setChatOpen(false)}
-                  className="text-purple-300 hover:text-white"
+                  className="text-gray-400 hover:text-white"
                 >
                   ✕
                 </button>
               </div>
 
               {/* Chat Response */}
-              <div className="flex-1 mb-3 p-3 bg-black bg-opacity-50 rounded border border-green-400 overflow-y-auto">
-                <div className="text-green-200 text-sm font-mono">
-                  {chatLoading
-                    ? "Thinking..."
-                    : chatResponse || "Ask me anything!"}
+              <div className="flex-1 mb-3 p-3 bg-gray-900 rounded-lg border border-gray-500 overflow-y-auto">
+                <div className="text-gray-300 text-sm">
+                  {chatLoading ? "Thinking..." : chatResponse || "Ask me anything!"}
                 </div>
               </div>
 
@@ -715,17 +621,16 @@ export default function Home() {
                   type="text"
                   value={chatMessage}
                   onChange={(e) => setChatMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && sendGeminiMessage()}
+                  onKeyPress={(e) => e.key === 'Enter' && sendGeminiMessage()}
                   placeholder="Type message..."
-                  className="w-full p-2 bg-gray-700 text-white border border-purple-400 rounded text-sm font-mono focus:outline-none focus:border-purple-300"
+                  className="w-full p-3 bg-gray-700 text-white border border-gray-500 rounded-lg text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-300"
                 />
                 <button
                   onClick={sendGeminiMessage}
                   disabled={chatLoading || !chatMessage.trim()}
-                  className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white py-2 rounded text-sm font-bold"
-                  style={{ fontFamily: "monospace" }}
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 >
-                  {chatLoading ? "SENDING..." : "SEND"}
+                  {chatLoading ? "Sending..." : "Send"}
                 </button>
               </div>
             </div>
