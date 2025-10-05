@@ -172,7 +172,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
       {/* Dark Court Header */}
-      <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white py-12 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-amber-800 via-amber-900 to-amber-800 text-white py-12 relative overflow-hidden">
         {/* Subtle pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
@@ -969,6 +969,7 @@ export default function Home() {
               </div>
             </div>
 
+            
             {/* Pen on the right side */}
             <div className="absolute top-8 right-8 z-20">
               <div className="relative">
@@ -995,7 +996,7 @@ export default function Home() {
                 }
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-500 disabled:to-gray-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200 border-4 border-white"
               >
-                {loading ? "Judges Deliberating..." : "⚖️ Present Evidence to Jury"}
+                {loading ? "Judges Deliberating..." : "Present Evidence to Jury"}
               </button>
             </div>
           </div>
@@ -1039,114 +1040,157 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Individual Judge Analysis */}
-            {verdict.judges.map((judge, index) => (
-              <div
-                key={index}
-                className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-600"
-              >
-                {/* Judge Header */}
-                <div className="flex items-center space-x-6 mb-8">
-                  <div className="text-5xl">
-                    {judge.judge_id === "judge_1"
-                      ? "👨‍⚖️"
-                      : judge.judge_id === "judge_2"
-                      ? "👩‍⚖️"
-                      : judge.judge_id === "judge_3"
-                      ? "🛡️"
-                      : "⚡"}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-white">
-                      {judge.judge_id === "judge_1"
-                        ? "Bob"
-                        : judge.judge_id === "judge_2"
-                        ? "Bobby"
-                        : judge.judge_id === "judge_3"
-                        ? "Bobert"
-                        : "Bro"}{" "}
-                      - {judge.judge_name.split(" - ")[1]}
-                    </h3>
-                    <p className="text-gray-300 text-lg">
-                      {judge.judge_id === "judge_1"
-                        ? "Prompt Engineering Specialist"
-                        : judge.judge_id === "judge_2"
-                        ? "Database Optimization Expert"
-                        : judge.judge_id === "judge_3"
-                        ? "Security & Safety Auditor"
-                        : "Cost & Efficiency Analyst"}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span
-                      className={`inline-block px-4 py-2 rounded-lg text-lg font-semibold border-2 ${getVerdictColor(
-                        judge.verdict || "UNKNOWN"
-                      )}`}
-                    >
-                      {(judge.verdict || "UNKNOWN").replace("_", " ")}
-                    </span>
-                    <div className="mt-2">
-                      <span className="text-lg font-semibold text-gray-300">
-                        Score:{" "}
-                      </span>
+            {/* Judge Avatars with Text Bubbles */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {verdict.judges.map((judge, index) => (
+                <div key={index} className="flex items-start space-x-4">
+                  {/* Judge Avatar */}
+                  <div className="flex-shrink-0">
+                    <div className="w-20 h-20">
+                      {judge.judge_id === "judge_1" ? (
+                        // Bob - Guy with Pen and Paper
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                          <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2" />
+                          <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513" />
+                          <circle cx="44" cy="28" r="2.5" fill="#000" />
+                          <circle cx="56" cy="28" r="2.5" fill="#000" />
+                          <circle cx="44.5" cy="27.5" r="1" fill="#fff" />
+                          <circle cx="56.5" cy="27.5" r="1" fill="#fff" />
+                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
+                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
+                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#3B82F6" stroke="#1E40AF" strokeWidth="2" />
+                          <rect x="40" y="55" width="20" height="15" rx="2" fill="#1E40AF" />
+                          <rect x="42" y="70" width="16" height="20" rx="2" fill="#8B4513" />
+                          <rect x="45" y="75" width="10" height="10" rx="1" fill="#D2B48C" />
+                          <rect x="60" y="50" width="8" height="12" rx="1" fill="#FFFFFF" stroke="#E5E7EB" strokeWidth="1" />
+                          <rect x="62" y="52" width="4" height="8" fill="#E5E7EB" />
+                          <rect x="65" y="45" width="1" height="8" fill="#8B4513" />
+                        </svg>
+                      ) : judge.judge_id === "judge_2" ? (
+                        // Bobby - Scientist with Goggles
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                          <circle cx="50" cy="32" r="16" fill="#F4C2A1" stroke="#D2691E" strokeWidth="2" />
+                          <path d="M 35 20 Q 50 10 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513" />
+                          <circle cx="44" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2" />
+                          <circle cx="56" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2" />
+                          <rect x="50" y="22" width="0" height="12" stroke="#000" strokeWidth="2" />
+                          <circle cx="44" cy="28" r="2" fill="#000" />
+                          <circle cx="56" cy="28" r="2" fill="#000" />
+                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
+                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
+                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#E5E7EB" strokeWidth="2" />
+                          <rect x="40" y="55" width="20" height="15" rx="2" fill="#E5E7EB" />
+                          <rect x="42" y="70" width="16" height="20" rx="2" fill="#8B4513" />
+                          <rect x="45" y="75" width="10" height="10" rx="1" fill="#D2B48C" />
+                          <rect x="60" y="50" width="8" height="12" rx="1" fill="#87CEEB" stroke="#4682B4" strokeWidth="1" />
+                          <rect x="62" y="52" width="4" height="8" fill="#4682B4" />
+                        </svg>
+                      ) : judge.judge_id === "judge_3" ? (
+                        // Bobert - Guy in Sunglasses, Tie and Suit
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                          <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2" />
+                          <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513" />
+                          <rect x="40" y="25" width="8" height="6" rx="3" fill="#000" />
+                          <rect x="52" y="25" width="8" height="6" rx="3" fill="#000" />
+                          <rect x="48" y="27" width="4" height="2" fill="#000" />
+                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
+                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
+                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#000000" stroke="#333333" strokeWidth="2" />
+                          <rect x="40" y="55" width="20" height="15" rx="2" fill="#333333" />
+                          <rect x="42" y="70" width="16" height="20" rx="2" fill="#8B4513" />
+                          <rect x="45" y="75" width="10" height="10" rx="1" fill="#D2B48C" />
+                          <rect x="48" y="55" width="4" height="15" fill="#DC143C" />
+                          <rect x="46" y="60" width="8" height="2" fill="#DC143C" />
+                        </svg>
+                      ) : (
+                        // Bro - Bank Robber with Mask, Hat and Striped Shirt
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                          <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2" />
+                          <rect x="40" y="15" width="20" height="8" rx="4" fill="#000" />
+                          <rect x="35" y="20" width="30" height="3" fill="#000" />
+                          <rect x="35" y="25" width="30" height="12" rx="6" fill="#000" />
+                          <circle cx="44" cy="31" r="2" fill="#FFF" />
+                          <circle cx="56" cy="31" r="2" fill="#FFF" />
+                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
+                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
+                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#000" strokeWidth="2" />
+                          <rect x="35" y="50" width="30" height="3" fill="#000" />
+                          <rect x="35" y="58" width="30" height="3" fill="#000" />
+                          <rect x="35" y="66" width="30" height="3" fill="#000" />
+                          <rect x="35" y="74" width="30" height="3" fill="#000" />
+                          <rect x="35" y="82" width="30" height="3" fill="#000" />
+                          <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C" />
+                          <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C" />
+                          <circle cx="32" cy="85" r="4" fill="#D2B48C" />
+                          <circle cx="68" cy="85" r="4" fill="#D2B48C" />
+                          <rect x="25" y="75" width="8" height="12" rx="2" fill="#8B4513" stroke="#000" strokeWidth="1" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="text-center mt-2">
+                      <p className="text-sm font-semibold text-white">
+                        {judge.judge_id === "judge_1" ? "Bob" : 
+                         judge.judge_id === "judge_2" ? "Bobby" : 
+                         judge.judge_id === "judge_3" ? "Bobert" : "Bro"}
+                      </p>
                       <span
-                        className={`text-2xl font-bold ${getScoreColor(
-                          judge.score || 0
+                        className={`inline-block px-2 py-1 rounded text-xs font-semibold border ${getVerdictColor(
+                          judge.verdict || "UNKNOWN"
                         )}`}
                       >
-                        {judge.score || 0}/10
+                        {(judge.verdict || "UNKNOWN").replace("_", " ")}
                       </span>
                     </div>
                   </div>
-                </div>
 
-                {/* Analysis */}
-                <div className="mb-8 p-6 bg-gray-900 rounded-xl border border-gray-500">
-                  <h4 className="font-semibold text-white mb-4 text-lg">
-                    Analysis
-                  </h4>
-                  <div className="text-gray-300 text-sm leading-relaxed">
-                    {judge.reasoning.split("\n").slice(0, 3).join("\n")}
+                  {/* Text Bubble */}
+                  <div className="flex-1">
+                    <div className="bg-gray-700 rounded-2xl p-4 relative">
+                      {/* Bubble tail */}
+                      <div className="absolute left-0 top-6 w-0 h-0 border-t-8 border-b-8 border-r-8 border-transparent border-r-gray-700 transform -translate-x-2"></div>
+                      
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-semibold text-white">
+                            {judge.judge_id === "judge_1" ? "Prompt Quality" :
+                             judge.judge_id === "judge_2" ? "Database Optimization" :
+                             judge.judge_id === "judge_3" ? "Security & Safety" : "Cost & Efficiency"}
+                          </h4>
+                          <span className={`text-lg font-bold ${getScoreColor(judge.score || 0)}`}>
+                            {judge.score || 0}/10
+                          </span>
+                        </div>
+                        
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          {judge.reasoning.split("\n").slice(0, 2).join(" ")}
+                        </p>
+                        
+                        {judge.issues.length > 0 && (
+                          <div className="mt-3">
+                            <p className="text-xs font-semibold text-red-300 mb-1">Issues Found:</p>
+                            <ul className="space-y-1">
+                              {judge.issues.slice(0, 2).map((issue, i) => (
+                                <li key={i} className="text-xs text-red-200 flex items-start">
+                                  <span className="text-red-400 mr-1">•</span>
+                                  <span>{issue}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        
+                        {judge.advice && (
+                          <div className="mt-3 p-2 bg-blue-900/30 rounded border border-blue-400">
+                            <p className="text-xs font-semibold text-blue-200 mb-1">Advice:</p>
+                            <p className="text-xs text-blue-100">{judge.advice}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                {/* Issues Found */}
-                {judge.issues.length > 0 && (
-                  <div className="mb-8">
-                    <h4 className="font-semibold text-white mb-4 text-lg">
-                      Top Issues ({Math.min(judge.issues.length, 3)})
-                    </h4>
-                    <ul className="space-y-3">
-                      {judge.issues.slice(0, 3).map((issue, i) => (
-                        <li
-                          key={i}
-                          className="p-4 bg-red-900/30 rounded-lg border-l-4 border-red-400 text-red-200 text-sm"
-                        >
-                          {issue}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Advice */}
-                <div className="p-6 bg-blue-900/30 rounded-xl border border-blue-400">
-                  <h4 className="font-semibold text-blue-200 mb-3 text-lg">
-                    {judge.judge_id === "judge_1"
-                      ? "Bob"
-                      : judge.judge_id === "judge_2"
-                      ? "Bobby"
-                      : judge.judge_id === "judge_3"
-                      ? "Bobert"
-                      : "Bro"}{" "}
-                    Advice
-                  </h4>
-                  <p className="text-blue-100">
-                    {judge.advice || "No specific advice provided"}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
 
