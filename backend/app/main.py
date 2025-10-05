@@ -26,6 +26,7 @@ origins = [
     "http://localhost:3001",
     "http://localhost:5173",
     "https://divhacks-2025.vercel.app/",
+    "https://divhacks-2025.vercel.app",
 ]
 
 # CORS
