@@ -1,10 +1,13 @@
-# DB Doc Generator
+# Dagger - Database Documentation Generator
 
 ```bash
-dbdoc generate test
+cd cli
+npm run install-global
 ```
 
-A powerful tool for generating Swagger-like documentation for database functions. Available as both a web interface and CLI tool.
+```bash
+dagger generate test
+```
 
 ## Features
 
@@ -52,26 +55,26 @@ A powerful tool for generating Swagger-like documentation for database functions
 
    # Or install globally and use anywhere
    npm run install-global
-   dbdoc generate
+   dagger generate
    ```
 
 ## CLI Usage
 
 ```bash
 # Generate docs for current directory
-dbdoc generate
+dagger generate
 
 # Generate docs for specific file
-dbdoc generate functions.ts
+dagger generate functions.ts
 
 # Specify output location
-dbdoc generate -o docs/my-docs.html
+dagger generate -o docs/my-docs.html
 
 # Generate JSON format
-dbdoc generate -f json -o functions.json
+dagger generate -f json -o functions.json
 
 # Verbose output
-dbdoc generate -v
+dagger generate -v
 ```
 
 ## What it Detects

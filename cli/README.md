@@ -1,13 +1,13 @@
-# DB Doc CLI
+# Dagger CLI
 
 A command-line tool for generating Swagger-like documentation for database functions.
 
-## Installation
+```bash
+npm run install-global
+```
 
 ```bash
-cd cli
-npm install
-npm run build
+dagger generate test
 ```
 
 ## Usage
@@ -54,7 +54,7 @@ node dist/index.js generate -v
 
 ## Interactive Mode
 
-When you run `dbdoc generate` without specifying a provider, you'll be prompted to choose between:
+When you run `dagger generate` without specifying a provider, you'll be prompted to choose between:
 
 - **OpenAI (GPT-4o-mini)** - Fast and reliable
 - **Gemini (2.0 Flash)** - Google's latest model

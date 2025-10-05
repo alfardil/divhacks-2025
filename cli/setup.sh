@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Setting up DB Doc CLI..."
+echo "Setting up Dagger CLI..."
 
 # Check if Node.js is installed
 if ! command -v node &> /dev/null; then
@@ -32,6 +32,6 @@ echo "   node dist/index.js generate"
 echo ""
 echo "3. (Optional) Install globally:"
 echo "   npm run install-global"
-echo "   # Then you can use: dbdoc generate"
+echo "   # Then you can use: dagger generate"
 echo ""
 

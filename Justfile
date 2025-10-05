@@ -9,4 +9,4 @@ py-dev *args:
     cd backend && uvicorn app.main:app --reload {{args}}
 
 gen *args:
-    pnpm i -g concurrently && concurrently "cd cli && pnpm run build" "dbdoc generate DatabaseFunctions {{args}}"
+    pnpm i -g concurrently && concurrently "cd cli && pnpm run build" "dagger generate DatabaseFunctions {{args}}"

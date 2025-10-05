@@ -15,7 +15,7 @@ import inquirer from "inquirer";
 const program = new Command();
 
 program
-  .name("dbdoc")
+  .name("dagger")
   .description("Generate database function documentation")
   .version("1.0.0");
 

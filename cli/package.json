@@ -1,10 +1,10 @@
 {
-  "name": "dbdoc-cli",
+  "name": "dagger-cli",
   "version": "1.0.0",
   "description": "CLI tool for generating database function documentation",
   "main": "dist/index.js",
   "bin": {
-    "dbdoc": "./dist/index.js"
+    "dagger": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
