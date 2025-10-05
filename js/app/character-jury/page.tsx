@@ -200,7 +200,7 @@ export default function CharacterJuryPage() {
                   {/* Reasoning */}
                   <div className="mb-4 p-3 bg-gray-50 rounded-md">
                     <h4 className="font-semibold text-gray-700 mb-2">💭 Reasoning:</h4>
-                    <p className="text-sm text-gray-600 italic">"{judge.reasoning}"</p>
+                    <p className="text-sm text-gray-600 italic">&ldquo;{judge.reasoning}&rdquo;</p>
                   </div>
                   
                   {/* Charges */}
@@ -218,7 +218,7 @@ export default function CharacterJuryPage() {
                   {/* Advice */}
                   <div className="p-3 bg-blue-50 rounded-md">
                     <h4 className="font-semibold text-blue-600 mb-2">💡 Advice:</h4>
-                    <p className="text-sm text-blue-800">"{judge.advice}"</p>
+                    <p className="text-sm text-blue-800">&ldquo;{judge.advice}&rdquo;</p>
                   </div>
                 </div>
               ))}

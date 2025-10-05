@@ -220,7 +220,7 @@ export default function Judge1Page() {
                 <div className="p-4 bg-blue-50 rounded-lg">
                   <h4 className="font-bold text-blue-600 mb-2">💡 Judge 1's Advice:</h4>
                   <p className="text-blue-800">
-                    {judge.advice || "No specific advice provided"}
+                    {judge.advice || &ldquo;No specific advice provided&rdquo;}
                   </p>
                 </div>
               </div>
