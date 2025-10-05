@@ -33,20 +33,29 @@ export default function Home() {
   const [chatMessage, setChatMessage] = useState("");
   const [chatResponse, setChatResponse] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
+  
+  // Jury selection state
+  const [selectedJudges, setSelectedJudges] = useState({
+    judge_1: true,
+    judge_2: true,
+    judge_3: true,
+    judge_4: true
+  });
 
-  const submitToAllJudges = async () => {
+  const submitToSelectedJudges = async () => {
     setLoading(true);
     setVerdict(null);
 
     try {
-      const res = await fetch("http://localhost:8000/frontend-jury/evaluate-all-judges", {
+      const res = await fetch("http://localhost:8000/frontend-jury/evaluate-selected-judges", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           code: code,
-          language: language
+          language: language,
+          selectedJudges: selectedJudges
         }),
       });
 
@@ -56,6 +65,13 @@ export default function Home() {
       console.error("Error:", error);
     }
     setLoading(false);
+  };
+
+  const toggleJudge = (judgeId: string) => {
+    setSelectedJudges(prev => ({
+      ...prev,
+      [judgeId]: !prev[judgeId as keyof typeof prev]
+    }));
   };
 
   const sendGeminiMessage = async () => {
@@ -114,74 +130,106 @@ export default function Home() {
         
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="flex items-center justify-center space-x-8">
-            {/* 8-bit Judge Characters */}
+            {/* 8-bit Judge Characters with Selection */}
             <div className="flex space-x-4">
               <div className="text-center">
                 <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
                   fontFamily: 'monospace',
-                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+                  opacity: selectedJudges.judge_1 ? 1 : 0.5
                 }}>
                   👨‍💻
                 </div>
-                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
-                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                <div className={`px-2 py-1 rounded-lg border-2 ${selectedJudges.judge_1 ? 'bg-black bg-opacity-50 border-yellow-400' : 'bg-gray-600 bg-opacity-50 border-gray-500'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_1 ? 'text-yellow-300' : 'text-gray-400'}`} style={{ fontFamily: 'monospace' }}>
                     JUDGE 1
                   </div>
-                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                  <div className={`text-xs ${selectedJudges.judge_1 ? 'text-yellow-200' : 'text-gray-500'}`} style={{ fontFamily: 'monospace' }}>
                     PROMPT
                   </div>
                 </div>
+                <button
+                  onClick={() => toggleJudge('judge_1')}
+                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${selectedJudges.judge_1 ? 'bg-green-600 text-white' : 'bg-gray-600 text-gray-300'}`}
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {selectedJudges.judge_1 ? 'SELECTED' : 'SELECT'}
+                </button>
               </div>
               
               <div className="text-center">
                 <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
                   fontFamily: 'monospace',
-                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+                  opacity: selectedJudges.judge_2 ? 1 : 0.5
                 }}>
                   👩‍💼
                 </div>
-                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
-                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                <div className={`px-2 py-1 rounded-lg border-2 ${selectedJudges.judge_2 ? 'bg-black bg-opacity-50 border-yellow-400' : 'bg-gray-600 bg-opacity-50 border-gray-500'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_2 ? 'text-yellow-300' : 'text-gray-400'}`} style={{ fontFamily: 'monospace' }}>
                     JUDGE 2
                   </div>
-                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                  <div className={`text-xs ${selectedJudges.judge_2 ? 'text-yellow-200' : 'text-gray-500'}`} style={{ fontFamily: 'monospace' }}>
                     DATABASE
                   </div>
                 </div>
+                <button
+                  onClick={() => toggleJudge('judge_2')}
+                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${selectedJudges.judge_2 ? 'bg-green-600 text-white' : 'bg-gray-600 text-gray-300'}`}
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {selectedJudges.judge_2 ? 'SELECTED' : 'SELECT'}
+                </button>
               </div>
               
               <div className="text-center">
                 <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
                   fontFamily: 'monospace',
-                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+                  opacity: selectedJudges.judge_3 ? 1 : 0.5
                 }}>
                   🛡️
                 </div>
-                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
-                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                <div className={`px-2 py-1 rounded-lg border-2 ${selectedJudges.judge_3 ? 'bg-black bg-opacity-50 border-yellow-400' : 'bg-gray-600 bg-opacity-50 border-gray-500'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_3 ? 'text-yellow-300' : 'text-gray-400'}`} style={{ fontFamily: 'monospace' }}>
                     JUDGE 3
                   </div>
-                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                  <div className={`text-xs ${selectedJudges.judge_3 ? 'text-yellow-200' : 'text-gray-500'}`} style={{ fontFamily: 'monospace' }}>
                     SECURITY
                   </div>
                 </div>
+                <button
+                  onClick={() => toggleJudge('judge_3')}
+                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${selectedJudges.judge_3 ? 'bg-green-600 text-white' : 'bg-gray-600 text-gray-300'}`}
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {selectedJudges.judge_3 ? 'SELECTED' : 'SELECT'}
+                </button>
               </div>
               
               <div className="text-center">
                 <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
                   fontFamily: 'monospace',
-                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+                  opacity: selectedJudges.judge_4 ? 1 : 0.5
                 }}>
                   ⚡
                 </div>
-                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
-                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                <div className={`px-2 py-1 rounded-lg border-2 ${selectedJudges.judge_4 ? 'bg-black bg-opacity-50 border-yellow-400' : 'bg-gray-600 bg-opacity-50 border-gray-500'}`}>
+                  <div className={`text-sm font-bold ${selectedJudges.judge_4 ? 'text-yellow-300' : 'text-gray-400'}`} style={{ fontFamily: 'monospace' }}>
                     JUDGE 4
                   </div>
-                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                  <div className={`text-xs ${selectedJudges.judge_4 ? 'text-yellow-200' : 'text-gray-500'}`} style={{ fontFamily: 'monospace' }}>
                     EFFICIENCY
                   </div>
                 </div>
+                <button
+                  onClick={() => toggleJudge('judge_4')}
+                  className={`mt-2 px-3 py-1 rounded text-xs font-bold ${selectedJudges.judge_4 ? 'bg-green-600 text-white' : 'bg-gray-600 text-gray-300'}`}
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {selectedJudges.judge_4 ? 'SELECTED' : 'SELECT'}
+                </button>
               </div>
             </div>
             
@@ -250,12 +298,12 @@ export default function Home() {
               
               <div className="flex justify-center">
                 <button
-                  onClick={submitToAllJudges}
-                  disabled={loading || !code.trim()}
+                  onClick={submitToSelectedJudges}
+                  disabled={loading || !code.trim() || Object.values(selectedJudges).every(v => !v)}
                   className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-bold text-xl border-2 border-red-400 disabled:border-gray-500 transform hover:scale-105 transition-all duration-200"
                   style={{ fontFamily: 'monospace' }}
                 >
-                  {loading ? "[ JUDGES DELIBERATING... ]" : "[ SUBMIT TO JURY ]"}
+                  {loading ? "[ JUDGES DELIBERATING... ]" : "[ SUBMIT TO SELECTED JURY ]"}
                 </button>
               </div>
             </div>
