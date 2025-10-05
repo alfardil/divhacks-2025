@@ -115,37 +115,71 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="flex items-center justify-center space-x-8">
             {/* 8-bit Judge Characters */}
-            <div className="flex space-x-8">
+            <div className="flex space-x-4">
               <div className="text-center">
-                <div className="text-6xl mb-4 filter drop-shadow-lg" style={{
+                <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
                   fontFamily: 'monospace',
                   textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
                 }}>
                   👨‍💻
                 </div>
-                <div className="bg-black bg-opacity-50 px-3 py-2 rounded-lg border-2 border-yellow-400">
-                  <div className="text-lg font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
+                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
                     JUDGE 1
                   </div>
                   <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
-                    PROMPT QUALITY
+                    PROMPT
                   </div>
                 </div>
               </div>
               
               <div className="text-center">
-                <div className="text-6xl mb-4 filter drop-shadow-lg" style={{
+                <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
                   fontFamily: 'monospace',
                   textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
                 }}>
                   👩‍💼
                 </div>
-                <div className="bg-black bg-opacity-50 px-3 py-2 rounded-lg border-2 border-yellow-400">
-                  <div className="text-lg font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
+                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
                     JUDGE 2
                   </div>
                   <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
-                    DATABASE OPT
+                    DATABASE
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
+                  fontFamily: 'monospace',
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                }}>
+                  🛡️
+                </div>
+                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
+                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                    JUDGE 3
+                  </div>
+                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                    SECURITY
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="text-5xl mb-3 filter drop-shadow-lg" style={{
+                  fontFamily: 'monospace',
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                }}>
+                  ⚡
+                </div>
+                <div className="bg-black bg-opacity-50 px-2 py-1 rounded-lg border-2 border-yellow-400">
+                  <div className="text-sm font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                    JUDGE 4
+                  </div>
+                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                    EFFICIENCY
                   </div>
                 </div>
               </div>
@@ -267,14 +301,18 @@ export default function Home() {
                   {/* Judge Header */}
                   <div className="flex items-center space-x-6 mb-8">
                     <div className="text-6xl">
-                      {judge.judge_id === 'judge_1' ? '👨‍💻' : '👩‍💼'}
+                      {judge.judge_id === 'judge_1' ? '👨‍💻' : 
+                       judge.judge_id === 'judge_2' ? '👩‍💼' :
+                       judge.judge_id === 'judge_3' ? '🛡️' : '⚡'}
                     </div>
                     <div>
                       <h3 className="text-3xl font-bold text-blue-300" style={{ fontFamily: 'monospace' }}>
                         {judge.judge_name}
                       </h3>
                       <p className="text-blue-200 text-lg" style={{ fontFamily: 'monospace' }}>
-                        {judge.judge_id === 'judge_1' ? 'PROMPT ENGINEERING SPECIALIST' : 'DATABASE OPTIMIZATION EXPERT'}
+                        {judge.judge_id === 'judge_1' ? 'PROMPT ENGINEERING SPECIALIST' : 
+                         judge.judge_id === 'judge_2' ? 'DATABASE OPTIMIZATION EXPERT' :
+                         judge.judge_id === 'judge_3' ? 'SECURITY & SAFETY AUDITOR' : 'COST & EFFICIENCY ANALYST'}
                       </p>
                     </div>
                     <span className={`ml-auto px-6 py-3 rounded-lg text-xl font-bold border-2 ${getVerdictColor(judge.verdict || 'UNKNOWN')}`} style={{ fontFamily: 'monospace' }}>
@@ -319,7 +357,9 @@ export default function Home() {
                   {/* Advice */}
                   <div className="p-6 bg-blue-900 bg-opacity-50 rounded-lg border-2 border-blue-400">
                     <h4 className="font-bold text-blue-300 mb-3 text-xl" style={{ fontFamily: 'monospace' }}>
-                      [ JUDGE 1 ADVICE ]
+                      [ {judge.judge_id === 'judge_1' ? 'JUDGE 1' : 
+                         judge.judge_id === 'judge_2' ? 'JUDGE 2' :
+                         judge.judge_id === 'judge_3' ? 'JUDGE 3' : 'JUDGE 4'} ADVICE ]
                     </h4>
                     <p className="text-blue-200 font-mono">
                       {judge.advice || "No specific advice provided"}
