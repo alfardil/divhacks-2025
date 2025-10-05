@@ -190,46 +190,157 @@ export default function Home() {
             <div className="flex items-center space-x-8 opacity-60">
               {/* Scales of Justice */}
               <div className="w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-400">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-amber-400"
+                >
                   {/* Base */}
-                  <rect x="45" y="80" width="10" height="20" fill="currentColor" />
+                  <rect
+                    x="45"
+                    y="80"
+                    width="10"
+                    height="20"
+                    fill="currentColor"
+                  />
                   {/* Pillar */}
-                  <rect x="47" y="20" width="6" height="60" fill="currentColor" />
+                  <rect
+                    x="47"
+                    y="20"
+                    width="6"
+                    height="60"
+                    fill="currentColor"
+                  />
                   {/* Crossbar */}
-                  <rect x="20" y="25" width="60" height="4" fill="currentColor" />
+                  <rect
+                    x="20"
+                    y="25"
+                    width="60"
+                    height="4"
+                    fill="currentColor"
+                  />
                   {/* Left Scale */}
-                  <circle cx="30" cy="35" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
-                  <path d="M 30 35 L 30 25" stroke="currentColor" strokeWidth="2" />
+                  <circle
+                    cx="30"
+                    cy="35"
+                    r="8"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M 30 35 L 30 25"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
                   {/* Right Scale */}
-                  <circle cx="70" cy="35" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
-                  <path d="M 70 35 L 70 25" stroke="currentColor" strokeWidth="2" />
+                  <circle
+                    cx="70"
+                    cy="35"
+                    r="8"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M 70 35 L 70 25"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
                 </svg>
               </div>
-              
+
               {/* Gavel */}
               <div className="w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-300">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-amber-300"
+                >
                   {/* Gavel Head */}
-                  <rect x="20" y="20" width="20" height="20" rx="3" fill="currentColor" />
+                  <rect
+                    x="20"
+                    y="20"
+                    width="20"
+                    height="20"
+                    rx="3"
+                    fill="currentColor"
+                  />
                   {/* Gavel Handle */}
-                  <rect x="28" y="40" width="4" height="35" fill="currentColor" />
+                  <rect
+                    x="28"
+                    y="40"
+                    width="4"
+                    height="35"
+                    fill="currentColor"
+                  />
                   {/* Base */}
-                  <rect x="15" y="75" width="30" height="8" rx="2" fill="currentColor" />
+                  <rect
+                    x="15"
+                    y="75"
+                    width="30"
+                    height="8"
+                    rx="2"
+                    fill="currentColor"
+                  />
                 </svg>
               </div>
-              
+
               {/* Law Books */}
               <div className="w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-500">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-amber-500"
+                >
                   {/* Book 1 */}
-                  <rect x="15" y="25" width="20" height="30" rx="2" fill="currentColor" />
-                  <rect x="17" y="27" width="16" height="26" rx="1" fill="#8B4513" />
+                  <rect
+                    x="15"
+                    y="25"
+                    width="20"
+                    height="30"
+                    rx="2"
+                    fill="currentColor"
+                  />
+                  <rect
+                    x="17"
+                    y="27"
+                    width="16"
+                    height="26"
+                    rx="1"
+                    fill="#8B4513"
+                  />
                   {/* Book 2 */}
-                  <rect x="25" y="20" width="20" height="30" rx="2" fill="currentColor" />
-                  <rect x="27" y="22" width="16" height="26" rx="1" fill="#8B4513" />
+                  <rect
+                    x="25"
+                    y="20"
+                    width="20"
+                    height="30"
+                    rx="2"
+                    fill="currentColor"
+                  />
+                  <rect
+                    x="27"
+                    y="22"
+                    width="16"
+                    height="26"
+                    rx="1"
+                    fill="#8B4513"
+                  />
                   {/* Book 3 */}
-                  <rect x="35" y="15" width="20" height="30" rx="2" fill="currentColor" />
-                  <rect x="37" y="17" width="16" height="26" rx="1" fill="#8B4513" />
+                  <rect
+                    x="35"
+                    y="15"
+                    width="20"
+                    height="30"
+                    rx="2"
+                    fill="currentColor"
+                  />
+                  <rect
+                    x="37"
+                    y="17"
+                    width="16"
+                    height="26"
+                    rx="1"
+                    fill="#8B4513"
+                  />
                 </svg>
               </div>
             </div>
@@ -239,48 +350,126 @@ export default function Home() {
               <h1 className="text-6xl font-bold mb-4 text-white">
                 Gavel: Opik&apos;s LLM Court
               </h1>
-              <p className="text-xl text-gray-300 mb-6">Code Evaluation System</p>
+              <p className="text-xl text-gray-300 mb-6">
+                Code Evaluation System
+              </p>
             </div>
 
             {/* Right Side Legal Decorations */}
             <div className="flex items-center space-x-8 opacity-60">
               {/* Podium */}
               <div className="w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-400">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-amber-400"
+                >
                   {/* Podium Base */}
-                  <rect x="20" y="60" width="60" height="25" rx="5" fill="currentColor" />
+                  <rect
+                    x="20"
+                    y="60"
+                    width="60"
+                    height="25"
+                    rx="5"
+                    fill="currentColor"
+                  />
                   {/* Podium Top */}
-                  <rect x="25" y="40" width="50" height="25" rx="3" fill="currentColor" />
+                  <rect
+                    x="25"
+                    y="40"
+                    width="50"
+                    height="25"
+                    rx="3"
+                    fill="currentColor"
+                  />
                   {/* Podium Stand */}
-                  <rect x="45" y="20" width="10" height="25" fill="currentColor" />
+                  <rect
+                    x="45"
+                    y="20"
+                    width="10"
+                    height="25"
+                    fill="currentColor"
+                  />
                   {/* Microphone */}
                   <circle cx="50" cy="15" r="3" fill="#8B4513" />
                   <rect x="49" y="15" width="2" height="8" fill="#8B4513" />
                 </svg>
               </div>
-              
+
               {/* Courtroom Seal */}
               <div className="w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-300">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-amber-300"
+                >
                   {/* Outer Circle */}
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="3" />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="45"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                  />
                   {/* Inner Circle */}
-                  <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="2" />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="35"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
                   {/* Center Star */}
-                  <polygon points="50,20 55,35 70,35 58,45 63,60 50,50 37,60 42,45 30,35 45,35" fill="currentColor" />
+                  <polygon
+                    points="50,20 55,35 70,35 58,45 63,60 50,50 37,60 42,45 30,35 45,35"
+                    fill="currentColor"
+                  />
                   {/* Text Ring */}
-                  <text x="50" y="75" textAnchor="middle" fontSize="8" fill="currentColor" className="font-bold">COURT OF CODE</text>
+                  <text
+                    x="50"
+                    y="75"
+                    textAnchor="middle"
+                    fontSize="8"
+                    fill="currentColor"
+                    className="font-bold"
+                  >
+                    COURT OF CODE
+                  </text>
                 </svg>
               </div>
-              
+
               {/* Legal Scroll */}
               <div className="w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-amber-500">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-amber-500"
+                >
                   {/* Scroll Body */}
-                  <rect x="25" y="30" width="50" height="40" rx="3" fill="currentColor" />
+                  <rect
+                    x="25"
+                    y="30"
+                    width="50"
+                    height="40"
+                    rx="3"
+                    fill="currentColor"
+                  />
                   {/* Scroll Rollers */}
-                  <rect x="20" y="25" width="8" height="50" rx="4" fill="#8B4513" />
-                  <rect x="72" y="25" width="8" height="50" rx="4" fill="#8B4513" />
+                  <rect
+                    x="20"
+                    y="25"
+                    width="8"
+                    height="50"
+                    rx="4"
+                    fill="#8B4513"
+                  />
+                  <rect
+                    x="72"
+                    y="25"
+                    width="8"
+                    height="50"
+                    rx="4"
+                    fill="#8B4513"
+                  />
                   {/* Text Lines */}
                   <rect x="30" y="40" width="40" height="2" fill="#8B4513" />
                   <rect x="30" y="45" width="35" height="2" fill="#8B4513" />
@@ -868,19 +1057,22 @@ export default function Home() {
           <div className="bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-900 rounded-lg p-8 shadow-2xl relative overflow-hidden max-w-6xl mx-auto">
             {/* Darker wood grain texture */}
             <div className="absolute inset-0 opacity-30">
-              <div className="w-full h-full" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='wood' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 50 Q 25 30 50 50 T 100 50' stroke='%238B4513' stroke-width='2' fill='none' opacity='0.4'/%3E%3Cpath d='M0 60 Q 25 40 50 60 T 100 60' stroke='%23A0522D' stroke-width='1' fill='none' opacity='0.3'/%3E%3Cpath d='M0 70 Q 25 50 50 70 T 100 70' stroke='%238B4513' stroke-width='1.5' fill='none' opacity='0.35'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23wood)'/%3E%3C/svg%3E")`,
-              }} />
+              <div
+                className="w-full h-full"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='wood' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 50 Q 25 30 50 50 T 100 50' stroke='%238B4513' stroke-width='2' fill='none' opacity='0.4'/%3E%3Cpath d='M0 60 Q 25 40 50 60 T 100 60' stroke='%23A0522D' stroke-width='1' fill='none' opacity='0.3'/%3E%3Cpath d='M0 70 Q 25 50 50 70 T 100 70' stroke='%238B4513' stroke-width='1.5' fill='none' opacity='0.35'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23wood)'/%3E%3C/svg%3E")`,
+                }}
+              />
             </div>
-            
+
             {/* Desk edge shadow */}
             <div className="absolute inset-0 rounded-lg shadow-inner"></div>
-            
+
             {/* Present Evidence Title */}
             <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow-lg relative z-10">
               Present Evidence
             </h2>
-            
+
             {/* Papers on Desk */}
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Paper 1 - File Upload */}
@@ -891,13 +1083,18 @@ export default function Home() {
                 <div className="relative bg-white rounded-lg p-6 shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300">
                   {/* Paper lines */}
                   <div className="absolute inset-0 opacity-10">
-                    <div className="w-full h-full" style={{
-                      backgroundImage: `repeating-linear-gradient(transparent, transparent 24px, #e5e7eb 24px, #e5e7eb 25px)`,
-                    }} />
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        backgroundImage: `repeating-linear-gradient(transparent, transparent 24px, #e5e7eb 24px, #e5e7eb 25px)`,
+                      }}
+                    />
                   </div>
-                  
+
                   <div className="relative z-10">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Upload</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      Upload
+                    </h3>
                     <input
                       type="file"
                       id="file-upload"
@@ -915,7 +1112,12 @@ export default function Home() {
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        />
                       </svg>
                       <p className="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
                         Click to upload files
@@ -933,13 +1135,18 @@ export default function Home() {
                 <div className="relative bg-white rounded-lg p-6 shadow-lg transform rotate-1 hover:rotate-0 transition-transform duration-300 h-full">
                   {/* Paper lines */}
                   <div className="absolute inset-0 opacity-10">
-                    <div className="w-full h-full" style={{
-                      backgroundImage: `repeating-linear-gradient(transparent, transparent 24px, #e5e7eb 24px, #e5e7eb 25px)`,
-                    }} />
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        backgroundImage: `repeating-linear-gradient(transparent, transparent 24px, #e5e7eb 24px, #e5e7eb 25px)`,
+                      }}
+                    />
                   </div>
-                  
+
                   <div className="relative z-10 h-full flex flex-col">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Write</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      Write
+                    </h3>
                     <div className="flex-1 flex flex-col space-y-3">
                       <select
                         value={language}
@@ -969,7 +1176,6 @@ export default function Home() {
               </div>
             </div>
 
-            
             {/* Pen on the right side */}
             <div className="absolute top-8 right-8 z-20">
               <div className="relative">
@@ -984,7 +1190,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             {/* Submit Button - Like a Court Stamp */}
             <div className="flex justify-center mt-8 relative z-10">
               <button
@@ -996,7 +1202,9 @@ export default function Home() {
                 }
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-500 disabled:to-gray-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200 border-4 border-white"
               >
-                {loading ? "Judges Deliberating..." : "Present Evidence to Jury"}
+                {loading
+                  ? "Judges Deliberating..."
+                  : "Present Evidence to Jury"}
               </button>
             </div>
           </div>
@@ -1050,88 +1258,434 @@ export default function Home() {
                       {judge.judge_id === "judge_1" ? (
                         // Bob - Guy with Pen and Paper
                         <svg viewBox="0 0 100 100" className="w-full h-full">
-                          <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2" />
-                          <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513" />
+                          <circle
+                            cx="50"
+                            cy="32"
+                            r="16"
+                            fill="#D2B48C"
+                            stroke="#8B4513"
+                            strokeWidth="2"
+                          />
+                          <path
+                            d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20"
+                            fill="#8B4513"
+                          />
                           <circle cx="44" cy="28" r="2.5" fill="#000" />
                           <circle cx="56" cy="28" r="2.5" fill="#000" />
                           <circle cx="44.5" cy="27.5" r="1" fill="#fff" />
                           <circle cx="56.5" cy="27.5" r="1" fill="#fff" />
-                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
-                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
-                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#3B82F6" stroke="#1E40AF" strokeWidth="2" />
-                          <rect x="40" y="55" width="20" height="15" rx="2" fill="#1E40AF" />
-                          <rect x="42" y="70" width="16" height="20" rx="2" fill="#8B4513" />
-                          <rect x="45" y="75" width="10" height="10" rx="1" fill="#D2B48C" />
-                          <rect x="60" y="50" width="8" height="12" rx="1" fill="#FFFFFF" stroke="#E5E7EB" strokeWidth="1" />
-                          <rect x="62" y="52" width="4" height="8" fill="#E5E7EB" />
-                          <rect x="65" y="45" width="1" height="8" fill="#8B4513" />
+                          <ellipse
+                            cx="50"
+                            cy="32"
+                            rx="1.5"
+                            ry="2"
+                            fill="#CD853F"
+                          />
+                          <path
+                            d="M 46 36 Q 50 39 54 36"
+                            stroke="#8B4513"
+                            strokeWidth="1.5"
+                            fill="none"
+                          />
+                          <rect
+                            x="35"
+                            y="48"
+                            width="30"
+                            height="45"
+                            rx="8"
+                            fill="#3B82F6"
+                            stroke="#1E40AF"
+                            strokeWidth="2"
+                          />
+                          <rect
+                            x="40"
+                            y="55"
+                            width="20"
+                            height="15"
+                            rx="2"
+                            fill="#1E40AF"
+                          />
+                          <rect
+                            x="42"
+                            y="70"
+                            width="16"
+                            height="20"
+                            rx="2"
+                            fill="#8B4513"
+                          />
+                          <rect
+                            x="45"
+                            y="75"
+                            width="10"
+                            height="10"
+                            rx="1"
+                            fill="#D2B48C"
+                          />
+                          <rect
+                            x="60"
+                            y="50"
+                            width="8"
+                            height="12"
+                            rx="1"
+                            fill="#FFFFFF"
+                            stroke="#E5E7EB"
+                            strokeWidth="1"
+                          />
+                          <rect
+                            x="62"
+                            y="52"
+                            width="4"
+                            height="8"
+                            fill="#E5E7EB"
+                          />
+                          <rect
+                            x="65"
+                            y="45"
+                            width="1"
+                            height="8"
+                            fill="#8B4513"
+                          />
                         </svg>
                       ) : judge.judge_id === "judge_2" ? (
                         // Bobby - Scientist with Goggles
                         <svg viewBox="0 0 100 100" className="w-full h-full">
-                          <circle cx="50" cy="32" r="16" fill="#F4C2A1" stroke="#D2691E" strokeWidth="2" />
-                          <path d="M 35 20 Q 50 10 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513" />
-                          <circle cx="44" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2" />
-                          <circle cx="56" cy="28" r="6" fill="none" stroke="#000" strokeWidth="2" />
-                          <rect x="50" y="22" width="0" height="12" stroke="#000" strokeWidth="2" />
+                          <circle
+                            cx="50"
+                            cy="32"
+                            r="16"
+                            fill="#F4C2A1"
+                            stroke="#D2691E"
+                            strokeWidth="2"
+                          />
+                          <path
+                            d="M 35 20 Q 50 10 65 20 Q 60 25 50 25 Q 40 25 35 20"
+                            fill="#8B4513"
+                          />
+                          <circle
+                            cx="44"
+                            cy="28"
+                            r="6"
+                            fill="none"
+                            stroke="#000"
+                            strokeWidth="2"
+                          />
+                          <circle
+                            cx="56"
+                            cy="28"
+                            r="6"
+                            fill="none"
+                            stroke="#000"
+                            strokeWidth="2"
+                          />
+                          <rect
+                            x="50"
+                            y="22"
+                            width="0"
+                            height="12"
+                            stroke="#000"
+                            strokeWidth="2"
+                          />
                           <circle cx="44" cy="28" r="2" fill="#000" />
                           <circle cx="56" cy="28" r="2" fill="#000" />
-                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
-                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
-                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#E5E7EB" strokeWidth="2" />
-                          <rect x="40" y="55" width="20" height="15" rx="2" fill="#E5E7EB" />
-                          <rect x="42" y="70" width="16" height="20" rx="2" fill="#8B4513" />
-                          <rect x="45" y="75" width="10" height="10" rx="1" fill="#D2B48C" />
-                          <rect x="60" y="50" width="8" height="12" rx="1" fill="#87CEEB" stroke="#4682B4" strokeWidth="1" />
-                          <rect x="62" y="52" width="4" height="8" fill="#4682B4" />
+                          <ellipse
+                            cx="50"
+                            cy="32"
+                            rx="1.5"
+                            ry="2"
+                            fill="#CD853F"
+                          />
+                          <path
+                            d="M 46 36 Q 50 39 54 36"
+                            stroke="#8B4513"
+                            strokeWidth="1.5"
+                            fill="none"
+                          />
+                          <rect
+                            x="35"
+                            y="48"
+                            width="30"
+                            height="45"
+                            rx="8"
+                            fill="#FFFFFF"
+                            stroke="#E5E7EB"
+                            strokeWidth="2"
+                          />
+                          <rect
+                            x="40"
+                            y="55"
+                            width="20"
+                            height="15"
+                            rx="2"
+                            fill="#E5E7EB"
+                          />
+                          <rect
+                            x="42"
+                            y="70"
+                            width="16"
+                            height="20"
+                            rx="2"
+                            fill="#8B4513"
+                          />
+                          <rect
+                            x="45"
+                            y="75"
+                            width="10"
+                            height="10"
+                            rx="1"
+                            fill="#D2B48C"
+                          />
+                          <rect
+                            x="60"
+                            y="50"
+                            width="8"
+                            height="12"
+                            rx="1"
+                            fill="#87CEEB"
+                            stroke="#4682B4"
+                            strokeWidth="1"
+                          />
+                          <rect
+                            x="62"
+                            y="52"
+                            width="4"
+                            height="8"
+                            fill="#4682B4"
+                          />
                         </svg>
                       ) : judge.judge_id === "judge_3" ? (
                         // Bobert - Guy in Sunglasses, Tie and Suit
                         <svg viewBox="0 0 100 100" className="w-full h-full">
-                          <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2" />
-                          <path d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20" fill="#8B4513" />
-                          <rect x="40" y="25" width="8" height="6" rx="3" fill="#000" />
-                          <rect x="52" y="25" width="8" height="6" rx="3" fill="#000" />
-                          <rect x="48" y="27" width="4" height="2" fill="#000" />
-                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
-                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
-                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#000000" stroke="#333333" strokeWidth="2" />
-                          <rect x="40" y="55" width="20" height="15" rx="2" fill="#333333" />
-                          <rect x="42" y="70" width="16" height="20" rx="2" fill="#8B4513" />
-                          <rect x="45" y="75" width="10" height="10" rx="1" fill="#D2B48C" />
-                          <rect x="48" y="55" width="4" height="15" fill="#DC143C" />
-                          <rect x="46" y="60" width="8" height="2" fill="#DC143C" />
+                          <circle
+                            cx="50"
+                            cy="32"
+                            r="16"
+                            fill="#D2B48C"
+                            stroke="#8B4513"
+                            strokeWidth="2"
+                          />
+                          <path
+                            d="M 35 20 Q 50 12 65 20 Q 60 25 50 25 Q 40 25 35 20"
+                            fill="#8B4513"
+                          />
+                          <rect
+                            x="40"
+                            y="25"
+                            width="8"
+                            height="6"
+                            rx="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="52"
+                            y="25"
+                            width="8"
+                            height="6"
+                            rx="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="48"
+                            y="27"
+                            width="4"
+                            height="2"
+                            fill="#000"
+                          />
+                          <ellipse
+                            cx="50"
+                            cy="32"
+                            rx="1.5"
+                            ry="2"
+                            fill="#CD853F"
+                          />
+                          <path
+                            d="M 46 36 Q 50 39 54 36"
+                            stroke="#8B4513"
+                            strokeWidth="1.5"
+                            fill="none"
+                          />
+                          <rect
+                            x="35"
+                            y="48"
+                            width="30"
+                            height="45"
+                            rx="8"
+                            fill="#000000"
+                            stroke="#333333"
+                            strokeWidth="2"
+                          />
+                          <rect
+                            x="40"
+                            y="55"
+                            width="20"
+                            height="15"
+                            rx="2"
+                            fill="#333333"
+                          />
+                          <rect
+                            x="42"
+                            y="70"
+                            width="16"
+                            height="20"
+                            rx="2"
+                            fill="#8B4513"
+                          />
+                          <rect
+                            x="45"
+                            y="75"
+                            width="10"
+                            height="10"
+                            rx="1"
+                            fill="#D2B48C"
+                          />
+                          <rect
+                            x="48"
+                            y="55"
+                            width="4"
+                            height="15"
+                            fill="#DC143C"
+                          />
+                          <rect
+                            x="46"
+                            y="60"
+                            width="8"
+                            height="2"
+                            fill="#DC143C"
+                          />
                         </svg>
                       ) : (
                         // Bro - Bank Robber with Mask, Hat and Striped Shirt
                         <svg viewBox="0 0 100 100" className="w-full h-full">
-                          <circle cx="50" cy="32" r="16" fill="#D2B48C" stroke="#8B4513" strokeWidth="2" />
-                          <rect x="40" y="15" width="20" height="8" rx="4" fill="#000" />
-                          <rect x="35" y="20" width="30" height="3" fill="#000" />
-                          <rect x="35" y="25" width="30" height="12" rx="6" fill="#000" />
+                          <circle
+                            cx="50"
+                            cy="32"
+                            r="16"
+                            fill="#D2B48C"
+                            stroke="#8B4513"
+                            strokeWidth="2"
+                          />
+                          <rect
+                            x="40"
+                            y="15"
+                            width="20"
+                            height="8"
+                            rx="4"
+                            fill="#000"
+                          />
+                          <rect
+                            x="35"
+                            y="20"
+                            width="30"
+                            height="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="35"
+                            y="25"
+                            width="30"
+                            height="12"
+                            rx="6"
+                            fill="#000"
+                          />
                           <circle cx="44" cy="31" r="2" fill="#FFF" />
                           <circle cx="56" cy="31" r="2" fill="#FFF" />
-                          <ellipse cx="50" cy="32" rx="1.5" ry="2" fill="#CD853F" />
-                          <path d="M 46 36 Q 50 39 54 36" stroke="#8B4513" strokeWidth="1.5" fill="none" />
-                          <rect x="35" y="48" width="30" height="45" rx="8" fill="#FFFFFF" stroke="#000" strokeWidth="2" />
-                          <rect x="35" y="50" width="30" height="3" fill="#000" />
-                          <rect x="35" y="58" width="30" height="3" fill="#000" />
-                          <rect x="35" y="66" width="30" height="3" fill="#000" />
-                          <rect x="35" y="74" width="30" height="3" fill="#000" />
-                          <rect x="35" y="82" width="30" height="3" fill="#000" />
-                          <rect x="28" y="55" width="8" height="25" rx="4" fill="#D2B48C" />
-                          <rect x="64" y="55" width="8" height="25" rx="4" fill="#D2B48C" />
+                          <ellipse
+                            cx="50"
+                            cy="32"
+                            rx="1.5"
+                            ry="2"
+                            fill="#CD853F"
+                          />
+                          <path
+                            d="M 46 36 Q 50 39 54 36"
+                            stroke="#8B4513"
+                            strokeWidth="1.5"
+                            fill="none"
+                          />
+                          <rect
+                            x="35"
+                            y="48"
+                            width="30"
+                            height="45"
+                            rx="8"
+                            fill="#FFFFFF"
+                            stroke="#000"
+                            strokeWidth="2"
+                          />
+                          <rect
+                            x="35"
+                            y="50"
+                            width="30"
+                            height="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="35"
+                            y="58"
+                            width="30"
+                            height="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="35"
+                            y="66"
+                            width="30"
+                            height="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="35"
+                            y="74"
+                            width="30"
+                            height="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="35"
+                            y="82"
+                            width="30"
+                            height="3"
+                            fill="#000"
+                          />
+                          <rect
+                            x="28"
+                            y="55"
+                            width="8"
+                            height="25"
+                            rx="4"
+                            fill="#D2B48C"
+                          />
+                          <rect
+                            x="64"
+                            y="55"
+                            width="8"
+                            height="25"
+                            rx="4"
+                            fill="#D2B48C"
+                          />
                           <circle cx="32" cy="85" r="4" fill="#D2B48C" />
                           <circle cx="68" cy="85" r="4" fill="#D2B48C" />
-                          <rect x="25" y="75" width="8" height="12" rx="2" fill="#8B4513" stroke="#000" strokeWidth="1" />
+                          <rect
+                            x="25"
+                            y="75"
+                            width="8"
+                            height="12"
+                            rx="2"
+                            fill="#8B4513"
+                            stroke="#000"
+                            strokeWidth="1"
+                          />
                         </svg>
                       )}
                     </div>
                     <div className="text-center mt-2">
                       <p className="text-sm font-semibold text-white">
-                        {judge.judge_id === "judge_1" ? "Bob" : 
-                         judge.judge_id === "judge_2" ? "Bobby" : 
-                         judge.judge_id === "judge_3" ? "Bobert" : "Bro"}
+                        {judge.judge_id === "judge_1"
+                          ? "Bob"
+                          : judge.judge_id === "judge_2"
+                          ? "Bobby"
+                          : judge.judge_id === "judge_3"
+                          ? "Bobert"
+                          : "Bro"}
                       </p>
                       <span
                         className={`inline-block px-2 py-1 rounded text-xs font-semibold border ${getVerdictColor(
@@ -1148,29 +1702,42 @@ export default function Home() {
                     <div className="bg-gray-700 rounded-2xl p-4 relative">
                       {/* Bubble tail */}
                       <div className="absolute left-0 top-6 w-0 h-0 border-t-8 border-b-8 border-r-8 border-transparent border-r-gray-700 transform -translate-x-2"></div>
-                      
+
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <h4 className="font-semibold text-white">
-                            {judge.judge_id === "judge_1" ? "Prompt Quality" :
-                             judge.judge_id === "judge_2" ? "Database Optimization" :
-                             judge.judge_id === "judge_3" ? "Security & Safety" : "Cost & Efficiency"}
+                            {judge.judge_id === "judge_1"
+                              ? "Prompt Quality"
+                              : judge.judge_id === "judge_2"
+                              ? "Database Optimization"
+                              : judge.judge_id === "judge_3"
+                              ? "Security & Safety"
+                              : "Cost & Efficiency"}
                           </h4>
-                          <span className={`text-lg font-bold ${getScoreColor(judge.score || 0)}`}>
+                          <span
+                            className={`text-lg font-bold ${getScoreColor(
+                              judge.score || 0
+                            )}`}
+                          >
                             {judge.score || 0}/10
                           </span>
                         </div>
-                        
+
                         <p className="text-gray-300 text-sm leading-relaxed">
                           {judge.reasoning.split("\n").slice(0, 2).join(" ")}
                         </p>
-                        
+
                         {judge.issues.length > 0 && (
                           <div className="mt-3">
-                            <p className="text-xs font-semibold text-red-300 mb-1">Issues Found:</p>
+                            <p className="text-xs font-semibold text-red-300 mb-1">
+                              Issues Found:
+                            </p>
                             <ul className="space-y-1">
                               {judge.issues.slice(0, 2).map((issue, i) => (
-                                <li key={i} className="text-xs text-red-200 flex items-start">
+                                <li
+                                  key={i}
+                                  className="text-xs text-red-200 flex items-start"
+                                >
                                   <span className="text-red-400 mr-1">•</span>
                                   <span>{issue}</span>
                                 </li>
@@ -1178,11 +1745,15 @@ export default function Home() {
                             </ul>
                           </div>
                         )}
-                        
+
                         {judge.advice && (
                           <div className="mt-3 p-2 bg-blue-900/30 rounded border border-blue-400">
-                            <p className="text-xs font-semibold text-blue-200 mb-1">Advice:</p>
-                            <p className="text-xs text-blue-100">{judge.advice}</p>
+                            <p className="text-xs font-semibold text-blue-200 mb-1">
+                              Advice:
+                            </p>
+                            <p className="text-xs text-blue-100">
+                              {judge.advice}
+                            </p>
                           </div>
                         )}
                       </div>
