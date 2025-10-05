@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-import { Command } from "commander";
 import chalk from "chalk";
-import ora from "ora";
-import { resolve, basename, dirname } from "path";
-import { writeFileSync, mkdirSync } from "fs";
 import { exec } from "child_process";
+import { Command } from "commander";
+import { mkdirSync, writeFileSync } from "fs";
+import inquirer from "inquirer";
+import ora from "ora";
+import { basename, dirname, resolve } from "path";
 import { promisify } from "util";
-import { FileDiscovery } from "./file-discovery";
+import { GeminiProvider, OpenAIProvider } from "./ai-providers";
 import { DatabaseAnalyzer } from "./analyzer";
+import { FileDiscovery } from "./file-discovery";
 import { HTMLGenerator } from "./html-generator";
 import { CliOptions } from "./types";
-import { OpenAIProvider, GeminiProvider } from "./ai-providers";
-import inquirer from "inquirer";
 
 const program = new Command();
 const execAsync = promisify(exec);
@@ -233,20 +233,60 @@ async function generateDocumentation(options: CliOptions) {
     console.log(chalk.gray(`  • Output file: ${outputPath}`));
 
     if (format === "html") {
-      console.log(chalk.yellow("\n🌐 Starting local server..."));
-      console.log(chalk.gray(`  • Serving from: ${outputDir}`));
-      console.log(chalk.gray(`  • Opening browser automatically`));
-
-      try {
-        // Run npx serve in the background
-        await execAsync(`npx serve ${outputDir} -o`);
-        console.log(chalk.green("✅ Server started successfully!"));
-      } catch (error) {
-        console.log(chalk.yellow("⚠️  Could not start server automatically."));
-        console.log(
-          chalk.gray("  • You can manually run: npx serve " + outputDir)
-        );
-        console.log(chalk.gray("  • Or open the file directly: " + outputPath));
+      console.log(chalk.yellow("\n🌐 HTML documentation generated!"));
+      console.log(chalk.gray(`  • Output file: ${outputPath}`));
+      console.log(chalk.gray(`  • Output directory: ${outputDir}`));
+      
+      // Ask user if they want to start a local server
+      const { startServer } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'startServer',
+          message: 'Would you like to start a local server to view the documentation?',
+          default: true
+        }
+      ]);
+      
+      if (startServer) {
+        console.log(chalk.yellow("\n🚀 Starting local server..."));
+        
+        try {
+          // Start the server on a specific port
+          const port = 3000;
+          const serverUrl = `http://localhost:${port}`;
+          
+          console.log(chalk.gray(`  • Starting server on port ${port}...`));
+          console.log(chalk.gray(`  • Serving from: ${outputDir}`));
+          
+          // Use spawn to run the server
+          const { spawn } = require('child_process');
+          const serverProcess = spawn('npx', ['serve', outputDir, '-l', port.toString()], {
+            stdio: ['ignore', 'pipe', 'pipe'],
+            detached: false
+          });
+          
+          // Wait a moment for server to start
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          console.log(chalk.green("✅ Server started successfully!"));
+          console.log(chalk.blue(`  • Server URL: ${serverUrl}`));
+          console.log(chalk.gray("  • Server is running. Press Ctrl+C to stop."));
+          
+          // Keep the process alive so the server keeps running
+          // The user can stop it with Ctrl+C
+          
+        } catch (error: any) {
+          console.log(chalk.yellow("⚠️  Could not start server."));
+          console.log(chalk.gray(`  • Error: ${error.message}`));
+          console.log(
+            chalk.gray("  • You can manually run: npx serve " + outputDir)
+          );
+          console.log(chalk.gray("  • Or open the file directly: " + outputPath));
+        }
+      } else {
+        console.log(chalk.gray("\n📁 To view your documentation:"));
+        console.log(chalk.gray(`  • Open the file directly: ${outputPath}`));
+        console.log(chalk.gray(`  • Or run: npx serve ${outputDir}`));
       }
     }
   } catch (error) {

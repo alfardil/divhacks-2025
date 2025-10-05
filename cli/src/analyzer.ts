@@ -1,5 +1,5 @@
-import { Spec, DatabaseFunction, SpecSchema } from "./types";
 import { AIProvider } from "./ai-providers";
+import { DatabaseFunction, Spec, SpecSchema } from "./types";
 
 export class DatabaseAnalyzer {
   private aiProvider: AIProvider;
@@ -95,18 +95,30 @@ export class DatabaseAnalyzer {
    * Normalize function object to ensure all required fields exist
    */
   private normalizeFunction(func: any): any {
+    // Helper function to normalize type field (handle arrays)
+    const normalizeType = (type: any): string => {
+      if (typeof type === 'string') {
+        return type;
+      }
+      if (Array.isArray(type)) {
+        // If it's an array, join with "|" for union types or take the first element
+        return type.length > 0 ? type[0] : "object";
+      }
+      return "object";
+    };
+
     return {
       opId: func.opId || "unknown",
       summary: func.summary || "",
       description: func.description || "",
       tags: Array.isArray(func.tags) ? func.tags : [],
       input: func.input ? {
-        type: func.input.type || "object",
+        type: normalizeType(func.input.type),
         properties: func.input.properties || {},
         required: func.input.required || []
       } : undefined,
       output: func.output ? {
-        type: func.output.type || "object",
+        type: normalizeType(func.output.type),
         properties: func.output.properties || {}
       } : undefined,
       engine: func.engine || "unknown",
