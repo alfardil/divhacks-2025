@@ -7,3 +7,6 @@ js-dev *args:
 
 py-dev *args:
     cd backend && uvicorn app.main:app --reload {{args}}
+
+gen *args:
+    pnpm i -g concurrently && concurrently "cd cli && pnpm run build" "dbdoc generate DatabaseFunctions {{args}}"

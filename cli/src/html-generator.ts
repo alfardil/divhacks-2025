@@ -198,10 +198,12 @@ export class HTMLGenerator {
             padding: 20px;
             cursor: pointer;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            align-items: flex-start;
             border-bottom: 1px solid #e0e0e0;
             transition: background-color 0.2s ease;
+            gap: 15px;
+            min-height: 60px;
+            position: relative;
         }
 
         .opblock-summary:hover {
@@ -213,10 +215,15 @@ export class HTMLGenerator {
             font-size: 12px;
             color: #999;
             transition: transform 0.3s ease;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 2;
         }
 
         .opblock.is-open .opblock-summary::after {
-            transform: rotate(180deg);
+            transform: translateY(-50%) rotate(180deg);
         }
 
         .opblock-summary-method {
@@ -226,6 +233,7 @@ export class HTMLGenerator {
             font-weight: bold;
             font-size: 12px;
             margin-right: 15px;
+            flex-shrink: 0;
         }
 
         /* Database operation colors */
@@ -246,14 +254,19 @@ export class HTMLGenerator {
         }
 
         .opblock-summary-path {
-            flex: 1;
             font-weight: 600;
             color: #333;
+            flex-shrink: 0;
+            margin-right: 15px;
         }
 
         .opblock-summary-description {
             color: #666;
             font-size: 14px;
+            flex: 1;
+            min-width: 0;
+            line-height: 1.4;
+            padding-right: 40px;
         }
 
         .opblock-body {
@@ -640,10 +653,27 @@ export class HTMLGenerator {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
+                min-height: auto;
             }
             
             .opblock-summary-method {
                 margin-right: 0;
+            }
+            
+            .opblock-summary-path,
+            .opblock-summary-description {
+                margin-right: 0;
+                padding-right: 40px;
+            }
+            
+            .opblock-summary::after {
+                top: 20px;
+                right: 20px;
+                transform: translateY(0);
+            }
+            
+            .opblock.is-open .opblock-summary::after {
+                transform: rotate(180deg);
             }
         }
     </style>
