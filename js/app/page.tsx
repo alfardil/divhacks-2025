@@ -43,6 +43,9 @@ export default function Home() {
     judge_4: true,
   });
 
+  // File upload state
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+
   // Read URL parameters on component mount
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -91,6 +94,20 @@ export default function Home() {
       ...prev,
       [judgeId]: !prev[judgeId as keyof typeof prev],
     }));
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setUploadedFile(file);
+      // Read file content and set it as code
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        setCode(content);
+      };
+      reader.readAsText(file);
+    }
   };
 
   const sendGeminiMessage = async () => {
@@ -746,58 +763,116 @@ export default function Home() {
       </div>
 
       <div className="max-w-6xl mx-auto p-8">
-        {/* Code Submission Area - Dark Style */}
-        <div className="bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 border border-gray-600">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">
-            Submit Code for Evaluation
-          </h2>
+        {/* Present Evidence - Glassmorphic Podium View */}
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 mb-8 border border-white/20 relative overflow-hidden">
+          {/* Glassmorphic background overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl"></div>
+          
+          {/* Top-down podium perspective effect */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/10 rounded-2xl"></div>
+          <div className="absolute -top-2 -left-2 w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-2xl transform rotate-1"></div>
+          <div className="absolute -top-1 -right-1 w-full h-full bg-gradient-to-bl from-white/5 to-transparent rounded-2xl transform -rotate-1"></div>
+          
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center drop-shadow-lg">
+              Present Evidence
+            </h2>
+            
+            <div className="space-y-6">
+              {/* File Upload Area */}
+              <div className="relative">
+                <input
+                  type="file"
+                  id="file-upload"
+                  className="hidden"
+                  accept=".py,.js,.ts,.java,.cpp,.c,.h,.hpp,.cs,.php,.rb,.go,.rs,.kt,.swift,.scala,.r,.m,.pl,.sh,.sql,.html,.css,.xml,.json,.yaml,.yml,.md,.txt"
+                  onChange={handleFileUpload}
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-gray-400 rounded-xl cursor-pointer bg-gray-700/30 hover:bg-gray-700/50 hover:border-gray-300 transition-all duration-300 group"
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg
+                      className="w-12 h-12 mb-4 text-gray-400 group-hover:text-gray-300 transition-colors duration-300"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      />
+                    </svg>
+                    <p className="mb-2 text-lg text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+                      <span className="font-semibold">Click to upload</span> or drag and drop
+                    </p>
+                    <p className="text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
+                      Code files, documents, or any evidence
+                    </p>
+                  </div>
+                </label>
+              </div>
 
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-3">
-                Programming Language
-              </label>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="w-full max-w-xs bg-gray-700 border border-gray-500 rounded-lg px-4 py-3 text-white focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200"
-              >
-                <option value="python">Python</option>
-                <option value="javascript">JavaScript</option>
-                <option value="typescript">TypeScript</option>
-                <option value="java">Java</option>
-                <option value="cpp">C++</option>
-              </select>
-            </div>
+              {/* Or Divider */}
+              <div className="flex items-center">
+                <div className="flex-1 border-t border-gray-600"></div>
+                <span className="px-4 text-gray-400 text-sm font-medium">OR</span>
+                <div className="flex-1 border-t border-gray-600"></div>
+              </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-3">
-                Code to Evaluate
-              </label>
-              <textarea
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="w-full h-80 p-6 bg-gray-900 text-gray-100 border border-gray-500 rounded-lg font-mono text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none resize-none transition-all duration-200"
-                placeholder="// Enter your code here..."
-                style={{
-                  fontFamily: "monospace",
-                  lineHeight: "1.6",
-                }}
-              />
-            </div>
-
-            <div className="flex justify-center">
-              <button
-                onClick={submitToSelectedJudges}
-                disabled={
-                  loading ||
-                  !code.trim() ||
-                  Object.values(selectedJudges).every((v) => !v)
-                }
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200"
-              >
-                {loading ? "Judges Deliberating..." : "Submit to Selected Jury"}
-              </button>
+              {/* Code Input Area */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-300 mb-3">
+                  Write Code Directly
+                </label>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                      Programming Language
+                    </label>
+                    <select
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
+                      className="w-full max-w-xs bg-gray-700 border border-gray-500 rounded-lg px-4 py-3 text-white focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200"
+                    >
+                      <option value="python">Python</option>
+                      <option value="javascript">JavaScript</option>
+                      <option value="typescript">TypeScript</option>
+                      <option value="java">Java</option>
+                      <option value="cpp">C++</option>
+                    </select>
+                  </div>
+                  <textarea
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    className="w-full h-40 p-6 bg-gray-900 text-gray-100 border border-gray-500 rounded-lg font-mono text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none resize-none transition-all duration-200"
+                    placeholder="// Enter your code here..."
+                    style={{
+                      fontFamily: "monospace",
+                      lineHeight: "1.6",
+                    }}
+                  />
+                </div>
+              </div>
+ 
+              <div className="flex justify-center">
+                <button
+                  onClick={submitToSelectedJudges}
+                  disabled={
+                    loading ||
+                    (!code.trim() && !uploadedFile) ||
+                    Object.values(selectedJudges).every((v) => !v)
+                  }
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 transition-all duration-200"
+                >
+                  {loading ? "Judges Deliberating..." : "Present Evidence to Jury"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
