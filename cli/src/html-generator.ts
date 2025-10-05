@@ -147,6 +147,39 @@ export class HTMLGenerator {
             padding: 0 20px;
         }
 
+        .entity-group {
+            margin-bottom: 40px;
+        }
+
+        .entity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .entity-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .entity-count {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .entity-functions {
+            margin-left: 0;
+        }
+
         .opblock {
             background: white;
             border-radius: 8px;
@@ -168,10 +201,22 @@ export class HTMLGenerator {
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.2s ease;
         }
 
         .opblock-summary:hover {
             background-color: #f8f9fa;
+        }
+
+        .opblock-summary::after {
+            content: "▼";
+            font-size: 12px;
+            color: #999;
+            transition: transform 0.3s ease;
+        }
+
+        .opblock.is-open .opblock-summary::after {
+            transform: rotate(180deg);
         }
 
         .opblock-summary-method {
@@ -215,12 +260,14 @@ export class HTMLGenerator {
             padding: 0 20px;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: all 0.3s ease-out;
+            opacity: 0;
         }
 
         .opblock.is-open .opblock-body {
             max-height: 2000px;
             padding: 20px;
+            opacity: 1;
         }
 
         .opblock-tag {
@@ -363,6 +410,54 @@ export class HTMLGenerator {
             overflow-x: auto;
         }
 
+        /* --- Improved Examples layout --- */
+        .examples-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 960px) {
+            .examples-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .example-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,.06);
+            overflow: hidden;
+        }
+        .example-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-bottom: 1px solid #e9ecef;
+            background: #fbfbfc;
+            font-weight: 600;
+            color: #444;
+        }
+        .copy-btn {
+            border: 1px solid #dee2e6;
+            background: #f6f8fa;
+            color: #556;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .copy-btn:active { transform: translateY(1px); }
+        .example-pre {
+            margin: 0;
+            padding: 12px;
+            background: #0f172a0d;
+            border-top: 0;
+            overflow: auto;
+            font-family: 'Monaco','Menlo',monospace;
+            font-size: 13px;
+            line-height: 1.55;
+            color: #333;
+        }
+
         .json-schema {
             background: #f8f9fa;
             border: 1px solid #e0e0e0;
@@ -444,6 +539,98 @@ export class HTMLGenerator {
             font-weight: bold;
         }
 
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .example-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .example-header span {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .example-pre {
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            overflow-x: auto;
+        }
+
+        .example-pre code {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .jury-button-section {
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .jury-submit-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(238, 90, 36, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .jury-submit-btn:hover {
+            background: linear-gradient(135deg, #ee5a24, #c23616);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(238, 90, 36, 0.4);
+        }
+
+        .jury-submit-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(238, 90, 36, 0.3);
+        }
+
         @media (max-width: 768px) {
             .operations {
                 padding: 0 10px;
@@ -478,7 +665,7 @@ export class HTMLGenerator {
         
         
         <div class="operations">
-            ${functions.map((func) => this.generateFunctionHTML(func)).join("")}
+            ${this.generateOrganizedFunctionsHTML(functions)}
         </div>
     </div>
 
@@ -487,6 +674,9 @@ export class HTMLGenerator {
         document.getElementById('searchInput').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const opblocks = document.querySelectorAll('.opblock');
+            const entityGroups = document.querySelectorAll('.entity-group');
+            
+            let hasVisibleFunctions = false;
             
             opblocks.forEach(opblock => {
                 const summary = opblock.querySelector('.opblock-summary-path').textContent.toLowerCase();
@@ -494,8 +684,21 @@ export class HTMLGenerator {
                 
                 if (summary.includes(searchTerm) || description.includes(searchTerm)) {
                     opblock.style.display = 'block';
+                    hasVisibleFunctions = true;
                 } else {
                     opblock.style.display = 'none';
+                }
+            });
+            
+            // Hide/show entity groups based on whether they have visible functions
+            entityGroups.forEach(entityGroup => {
+                const functions = entityGroup.querySelectorAll('.opblock');
+                const visibleFunctions = Array.from(functions).filter(func => func.style.display !== 'none');
+                
+                if (visibleFunctions.length > 0) {
+                    entityGroup.style.display = 'block';
+                } else {
+                    entityGroup.style.display = 'none';
                 }
             });
         });
@@ -506,79 +709,73 @@ export class HTMLGenerator {
             opblock.classList.toggle('is-open');
         }
 
-        // Color code JSON function
-        function colorCodeJson(jsonString) {
-            let result = jsonString;
-            
-            // Handle strings (both keys and values)
-            result = result.replace(/"([^"\\\\]|\\\\.)*"/g, function(match) {
-                // Check if it's a key (followed by colon)
-                if (result.indexOf(match + ':') !== -1) {
-                    return '<span class="json-key">' + match + '</span>';
-                }
-                return '<span class="json-string">' + match + '</span>';
-            });
-            
-            // Handle numbers
-            result = result.replace(/:\s*(\\d+(?:\\.\\d+)?)/g, ': <span class="json-number">$1</span>');
-            
-            // Handle booleans
-            result = result.replace(/:\s*(true|false)/g, ': <span class="json-boolean">$1</span>');
-            
-            // Handle null
-            result = result.replace(/:\s*null/g, ': <span class="json-null">null</span>');
-            
-            // Handle brackets and braces
-            result = result.replace(/[{}[\\]]/g, '<span class="json-bracket">$&</span>');
-            
-            // Handle colons
-            result = result.replace(/:/g, '<span class="json-colon">:</span>');
-            
-            // Handle commas
-            result = result.replace(/,/g, '<span class="json-comma">,</span>');
-            
-            return result;
-        }
-
-        // Color code JavaScript/TypeScript code function
-        function colorCodeCode(codeString) {
-            let result = codeString;
-            
-            // Handle comments
-            result = result.replace(/(\\/\\/.*$)/gm, '<span class="code-comment">$1</span>');
-            
-            // Handle strings
-            result = result.replace(/"([^"\\\\]|\\\\.)*"/g, '<span class="code-string">$&</span>');
-            result = result.replace(/'([^'\\\\]|\\\\.)*'/g, '<span class="code-string">$&</span>');
-            
-            // Handle numbers
-            result = result.replace(/\\b(\\d+(?:\\.\\d+)?)\\b/g, '<span class="code-number">$1</span>');
-            
-            // Handle keywords
-            const keywords = ['const', 'let', 'var', 'function', 'async', 'await', 'return', 'if', 'else', 'for', 'while', 'try', 'catch', 'throw', 'new', 'this', 'class', 'extends', 'import', 'export', 'from', 'default'];
-            keywords.forEach(function(keyword) {
-                const regex = new RegExp('\\\\b' + keyword + '\\\\b', 'g');
-                result = result.replace(regex, '<span class="code-keyword">' + keyword + '</span>');
-            });
-            
-            // Handle function calls
-            result = result.replace(/\\b([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*\\(/g, '<span class="code-function">$1</span>(');
-            
-            // Handle operators
-            result = result.replace(/([{}[\\](),;])/g, '<span class="code-bracket">$1</span>');
-            result = result.replace(/([=+\\-*/<>!&|])/g, '<span class="code-operator">$1</span>');
-            
-            return result;
-        }
         
         // Auto-expand first function
         const firstOpblock = document.querySelector('.opblock');
         if (firstOpblock) {
             firstOpblock.classList.add('is-open');
         }
+
+        // Copy buttons for example cards
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('.copy-btn');
+            if (!btn) return;
+            const raw = btn.getAttribute('data-copy') || '';
+            try {
+                await navigator.clipboard.writeText(raw);
+                const original = btn.textContent || 'Copy';
+                btn.textContent = 'Copied';
+                setTimeout(() => { btn.textContent = original; }, 900);
+            } catch (_) { /* no-op */ }
+        });
     </script>
 </body>
 </html>`;
+  }
+
+  /**
+   * Generate organized HTML for functions grouped by entity
+   */
+  private generateOrganizedFunctionsHTML(
+    functions: DatabaseFunction[]
+  ): string {
+    // Group functions by entity (the part before the first dot in opId)
+    const entityGroups: { [key: string]: DatabaseFunction[] } = {};
+
+    functions.forEach((func) => {
+      const entity = func.opId.split(".")[0] || "other";
+      if (!entityGroups[entity]) {
+        entityGroups[entity] = [];
+      }
+      entityGroups[entity].push(func);
+    });
+
+    // Sort entities alphabetically
+    const sortedEntities = Object.keys(entityGroups).sort();
+
+    // Generate HTML for each entity group
+    return sortedEntities
+      .map((entity) => {
+        const entityFunctions = entityGroups[entity];
+        return `
+        <div class="entity-group" data-entity="${entity}">
+          <div class="entity-header">
+            <h2 class="entity-title">${
+              entity.charAt(0).toUpperCase() + entity.slice(1)
+            } Functions</h2>
+            <span class="entity-count">${entityFunctions.length} function${
+          entityFunctions.length !== 1 ? "s" : ""
+        }</span>
+          </div>
+          <div class="entity-functions">
+            ${entityFunctions
+              .map((func) => this.generateFunctionHTML(func))
+              .join("")}
+          </div>
+        </div>
+      `;
+      })
+      .join("");
   }
 
   /**
@@ -675,6 +872,8 @@ export class HTMLGenerator {
                 <h4>Examples</h4>
                 ${this.generateExamples(func)}
             </div>
+            
+            ${this.generateJuryButton(func)}
         </div>
     </div>`;
   }
@@ -805,41 +1004,80 @@ export class HTMLGenerator {
   }
 
   /**
-   * Generate examples for a database function
+   * Generate examples for a database function - renders cards and grid layout
    */
   private generateExamples(func: DatabaseFunction): string {
     const examples = this.createExamples(func);
-    return examples
-      .map(
-        (example, idx) => `
-      <div class="example-section">
-        <div class="example-title">${example.title}</div>
-        <div class="example-code">${example.code}</div>
-      </div>
-    `
-      )
+    const cards = examples
+      .map((ex) => {
+        const safeCopy = this.escapeAttr(ex.code);
+        return `
+        <div class="example-card">
+          <div class="example-header">
+            <span>${ex.title}</span>
+            <button class="copy-btn" data-copy="${safeCopy}">Copy</button>
+          </div>
+          <pre class="example-pre"><code>${this.escapeHtml(
+            ex.code
+          )}</code></pre>
+        </div>
+      `;
+      })
       .join("");
+    return `<div class="examples-grid">${cards}</div>`;
   }
 
   /**
-   * Create examples for a database function
+   * Generate a button to submit the function code to the jury
+   */
+  private generateJuryButton(func: DatabaseFunction): string {
+    const functionCallExample = this.createExamples(func).find(
+      (ex) => ex.title === "Function Call"
+    );
+    if (!functionCallExample) {
+      return "";
+    }
+
+    const functionCode = functionCallExample.code;
+    const urlEncodedCode = encodeURIComponent(functionCode);
+    const juryUrl = `http://localhost:3000/?code=${urlEncodedCode}&language=typescript`;
+
+    return `
+      <div class="jury-button-section">
+        <button class="jury-submit-btn" onclick="window.open('${this.escapeAttr(
+          juryUrl
+        )}', '_blank')">
+          Submit to Jury
+        </button>
+      </div>
+    `;
+  }
+
+  /**
+   * Create examples for a database function, with format discriminator
    */
   private createExamples(
     func: DatabaseFunction
-  ): Array<{ title: string; code: string }> {
-    const examples = [];
+  ): Array<{ title: string; code: string; format: "code" | "json" }> {
+    const examples: Array<{
+      title: string;
+      code: string;
+      format: "code" | "json";
+    }> = [];
 
     // Function call example
     if (func.input) {
       const inputExample = this.generateInputExample(func);
       examples.push({
         title: "Function Call",
-        code: `// ${func.opId}\nconst result = await ${func.opId}(${inputExample});`,
+        code: `const result = await ${func.opId}(${inputExample});`,
+        format: "code",
       });
     } else {
       examples.push({
         title: "Function Call",
-        code: `// ${func.opId}\nconst result = await ${func.opId}();`,
+        code: `const result = await ${func.opId}();`,
+        format: "code",
       });
     }
 
@@ -848,6 +1086,7 @@ export class HTMLGenerator {
       examples.push({
         title: "Input Parameters",
         code: JSON.stringify(this.generateSampleInput(func.input), null, 2),
+        format: "json",
       });
     }
 
@@ -856,6 +1095,7 @@ export class HTMLGenerator {
       examples.push({
         title: "Expected Output",
         code: JSON.stringify(this.generateSampleOutput(func.output), null, 2),
+        format: "json",
       });
     }
 
@@ -866,11 +1106,31 @@ export class HTMLGenerator {
         examples.push({
           title: "Database Operations",
           code: dbExample,
+          format: "code",
         });
       }
     }
 
     return examples;
+  }
+
+  /**
+   * Escape a string for safe embedding in HTML attributes (for copy buttons)
+   */
+  private escapeAttr(s: string): string {
+    return s
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\u00A0/g, " "); // normalize non‑breaking spaces
+  }
+
+  /**
+   * Escape HTML content for safe display
+   */
+  private escapeHtml(s: string): string {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
   /**
@@ -886,18 +1146,65 @@ export class HTMLGenerator {
       if (prop.default !== undefined) {
         return `${key}: ${JSON.stringify(prop.default)}`;
       }
+
+      // Generate more realistic examples based on field names and types
+      const lowerKey = key.toLowerCase();
+
       if (prop.type === "string") {
-        return `${key}: "example_${key}"`;
+        // Generate realistic string examples based on field name
+        if (lowerKey.includes("query") || lowerKey.includes("search")) {
+          return `${key}: "search term"`;
+        } else if (lowerKey.includes("email")) {
+          return `${key}: "user@example.com"`;
+        } else if (lowerKey.includes("username") || lowerKey.includes("name")) {
+          return `${key}: "john_doe"`;
+        } else if (lowerKey.includes("id")) {
+          return `${key}: "123"`;
+        } else if (lowerKey.includes("password")) {
+          return `${key}: "secure_password"`;
+        } else if (lowerKey.includes("title")) {
+          return `${key}: "Example Title"`;
+        } else if (lowerKey.includes("description")) {
+          return `${key}: "Example description"`;
+        } else if (lowerKey.includes("difficulty")) {
+          return `${key}: "medium"`;
+        } else if (lowerKey.includes("status")) {
+          return `${key}: "active"`;
+        } else {
+          return `${key}: "${key}"`;
+        }
       }
+
       if (prop.type === "number" || prop.type === "integer") {
-        return `${key}: 1`;
+        // Generate realistic number examples based on field name
+        if (lowerKey.includes("limit") || lowerKey.includes("count")) {
+          return `${key}: 10`;
+        } else if (lowerKey.includes("page") || lowerKey.includes("offset")) {
+          return `${key}: 1`;
+        } else if (lowerKey.includes("score") || lowerKey.includes("rating")) {
+          return `${key}: 5`;
+        } else if (lowerKey.includes("age") || lowerKey.includes("years")) {
+          return `${key}: 25`;
+        } else {
+          return `${key}: 1`;
+        }
       }
+
       if (prop.type === "boolean") {
         return `${key}: true`;
       }
+
       if (prop.type === "array") {
-        return `${key}: ["item1", "item2"]`;
+        // Generate realistic array examples based on field name
+        if (lowerKey.includes("tag") || lowerKey.includes("category")) {
+          return `${key}: ["tag1", "tag2"]`;
+        } else if (lowerKey.includes("id")) {
+          return `${key}: ["1", "2", "3"]`;
+        } else {
+          return `${key}: ["item1", "item2"]`;
+        }
       }
+
       return `${key}: null`;
     });
 
@@ -916,13 +1223,55 @@ export class HTMLGenerator {
       if (typedProp.default !== undefined) {
         sample[key] = typedProp.default;
       } else if (typedProp.type === "string") {
-        sample[key] = `example_${key}`;
+        // Generate realistic string examples based on field name
+        const lowerKey = key.toLowerCase();
+        if (lowerKey.includes("query") || lowerKey.includes("search")) {
+          sample[key] = "search term";
+        } else if (lowerKey.includes("email")) {
+          sample[key] = "user@example.com";
+        } else if (lowerKey.includes("username") || lowerKey.includes("name")) {
+          sample[key] = "john_doe";
+        } else if (lowerKey.includes("id")) {
+          sample[key] = "123";
+        } else if (lowerKey.includes("password")) {
+          sample[key] = "secure_password";
+        } else if (lowerKey.includes("title")) {
+          sample[key] = "Example Title";
+        } else if (lowerKey.includes("description")) {
+          sample[key] = "Example description";
+        } else if (lowerKey.includes("difficulty")) {
+          sample[key] = "medium";
+        } else if (lowerKey.includes("status")) {
+          sample[key] = "active";
+        } else {
+          sample[key] = key;
+        }
       } else if (typedProp.type === "number" || typedProp.type === "integer") {
-        sample[key] = 1;
+        // Generate realistic number examples based on field name
+        const lowerKey = key.toLowerCase();
+        if (lowerKey.includes("limit") || lowerKey.includes("count")) {
+          sample[key] = 10;
+        } else if (lowerKey.includes("page") || lowerKey.includes("offset")) {
+          sample[key] = 1;
+        } else if (lowerKey.includes("score") || lowerKey.includes("rating")) {
+          sample[key] = 5;
+        } else if (lowerKey.includes("age") || lowerKey.includes("years")) {
+          sample[key] = 25;
+        } else {
+          sample[key] = 1;
+        }
       } else if (typedProp.type === "boolean") {
         sample[key] = true;
       } else if (typedProp.type === "array") {
-        sample[key] = ["item1", "item2"];
+        // Generate realistic array examples based on field name
+        const lowerKey = key.toLowerCase();
+        if (lowerKey.includes("tag") || lowerKey.includes("category")) {
+          sample[key] = ["tag1", "tag2"];
+        } else if (lowerKey.includes("id")) {
+          sample[key] = ["1", "2", "3"];
+        } else {
+          sample[key] = ["item1", "item2"];
+        }
       } else {
         sample[key] = null;
       }
@@ -963,33 +1312,31 @@ export class HTMLGenerator {
     let example = "";
 
     if (func.touches.read && func.touches.read.length > 0) {
-      example += `// Read operations:\n`;
       func.touches.read.forEach((table) => {
-        example += `// - SELECT * FROM ${table}\n`;
+        example += `SELECT * FROM ${table}\n`;
       });
     }
 
     if (func.touches.write && func.touches.write.length > 0) {
       if (example) example += "\n";
-      example += `// Write operations:\n`;
       func.touches.write.forEach((table) => {
         if (
           func.opId.toLowerCase().includes("create") ||
           func.opId.toLowerCase().includes("add")
         ) {
-          example += `// - INSERT INTO ${table}\n`;
+          example += `INSERT INTO ${table}\n`;
         } else if (
           func.opId.toLowerCase().includes("update") ||
           func.opId.toLowerCase().includes("edit")
         ) {
-          example += `// - UPDATE ${table}\n`;
+          example += `UPDATE ${table}\n`;
         } else if (
           func.opId.toLowerCase().includes("delete") ||
           func.opId.toLowerCase().includes("remove")
         ) {
-          example += `// - DELETE FROM ${table}\n`;
+          example += `DELETE FROM ${table}\n`;
         } else {
-          example += `// - MODIFY ${table}\n`;
+          example += `MODIFY ${table}\n`;
         }
       });
     }
