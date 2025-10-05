@@ -155,6 +155,16 @@ export default function GavelPage() {
     return "text-red-400";
   };
 
+  // Ensure we never render literal escape sequences like "\n"; convert to actual newlines
+  const formatMultiline = (text: string | undefined | null): string => {
+    if (!text) return "";
+    return text
+      .replace(/\\r/g, "")
+      .replace(/\\t/g, "\t")
+      .replace(/\\n/g, "\n")
+      .trim();
+  };
+
   const sanitizeOptimized = (text: string): string => {
     if (!text) return "";
     const fenceStart = text.indexOf("```");
@@ -443,8 +453,8 @@ export default function GavelPage() {
                 </div>
                 {/* Case ID intentionally omitted */}
                 {verdict.summary && (
-                  <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
-                    {verdict.summary}
+                  <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto whitespace-pre-wrap">
+                    {formatMultiline(verdict.summary)}
                   </p>
                 )}
               </div>
@@ -532,8 +542,8 @@ export default function GavelPage() {
                         <AlertCircle className="w-4 h-4 text-primary" />
                         Analysis
                       </h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {judge.reasoning}
+                      <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                        {formatMultiline(judge.reasoning)}
                       </p>
                     </div>
 
@@ -562,8 +572,8 @@ export default function GavelPage() {
                         <h4 className="text-sm font-semibold text-primary mb-2">
                           Recommendation
                         </h4>
-                        <p className="text-sm text-foreground">
-                          {judge.advice}
+                        <p className="text-sm text-foreground whitespace-pre-wrap">
+                          {formatMultiline(judge.advice)}
                         </p>
                       </div>
                     )}

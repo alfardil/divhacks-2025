@@ -5,6 +5,8 @@ import chalk from "chalk";
 import ora from "ora";
 import { resolve, basename, dirname } from "path";
 import { writeFileSync, mkdirSync } from "fs";
+import { exec } from "child_process";
+import { promisify } from "util";
 import { FileDiscovery } from "./file-discovery";
 import { DatabaseAnalyzer } from "./analyzer";
 import { HTMLGenerator } from "./html-generator";
@@ -13,6 +15,7 @@ import { OpenAIProvider, GeminiProvider } from "./ai-providers";
 import inquirer from "inquirer";
 
 const program = new Command();
+const execAsync = promisify(exec);
 
 program
   .name("dagger")
@@ -230,9 +233,21 @@ async function generateDocumentation(options: CliOptions) {
     console.log(chalk.gray(`  • Output file: ${outputPath}`));
 
     if (format === "html") {
-      console.log(chalk.yellow("\n🌐 To view your documentation:"));
-      console.log(chalk.gray(`  • Open ${outputPath} in your browser`));
-      console.log(chalk.gray(`  • Or serve it with: npx serve ${outputDir}`));
+      console.log(chalk.yellow("\n🌐 Starting local server..."));
+      console.log(chalk.gray(`  • Serving from: ${outputDir}`));
+      console.log(chalk.gray(`  • Opening browser automatically`));
+
+      try {
+        // Run npx serve in the background
+        await execAsync(`npx serve ${outputDir} -o`);
+        console.log(chalk.green("✅ Server started successfully!"));
+      } catch (error) {
+        console.log(chalk.yellow("⚠️  Could not start server automatically."));
+        console.log(
+          chalk.gray("  • You can manually run: npx serve " + outputDir)
+        );
+        console.log(chalk.gray("  • Or open the file directly: " + outputPath));
+      }
     }
   } catch (error) {
     spinner.fail();
