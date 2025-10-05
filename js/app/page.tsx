@@ -34,12 +34,12 @@ export default function Home() {
   const [chatResponse, setChatResponse] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
 
-  const submitToJudge1 = async () => {
+  const submitToAllJudges = async () => {
     setLoading(true);
     setVerdict(null);
 
     try {
-      const res = await fetch("http://localhost:8000/frontend-jury/evaluate-with-judge-1", {
+      const res = await fetch("http://localhost:8000/frontend-jury/evaluate-all-judges", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,20 +114,39 @@ export default function Home() {
         
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="flex items-center justify-center space-x-8">
-            {/* 8-bit Judge Character */}
-            <div className="text-center">
-              <div className="text-8xl mb-4 filter drop-shadow-lg" style={{
-                fontFamily: 'monospace',
-                textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
-              }}>
-                👨‍⚖️
-              </div>
-              <div className="bg-black bg-opacity-50 px-4 py-2 rounded-lg border-2 border-yellow-400">
-                <div className="text-2xl font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
-                  JUDGE 1
+            {/* 8-bit Judge Characters */}
+            <div className="flex space-x-8">
+              <div className="text-center">
+                <div className="text-6xl mb-4 filter drop-shadow-lg" style={{
+                  fontFamily: 'monospace',
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                }}>
+                  👨‍💻
                 </div>
-                <div className="text-sm text-yellow-200" style={{ fontFamily: 'monospace' }}>
-                  PROMPT QUALITY SPECIALIST
+                <div className="bg-black bg-opacity-50 px-3 py-2 rounded-lg border-2 border-yellow-400">
+                  <div className="text-lg font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                    JUDGE 1
+                  </div>
+                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                    PROMPT QUALITY
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="text-6xl mb-4 filter drop-shadow-lg" style={{
+                  fontFamily: 'monospace',
+                  textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+                }}>
+                  👩‍💼
+                </div>
+                <div className="bg-black bg-opacity-50 px-3 py-2 rounded-lg border-2 border-yellow-400">
+                  <div className="text-lg font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                    JUDGE 2
+                  </div>
+                  <div className="text-xs text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                    DATABASE OPT
+                  </div>
                 </div>
               </div>
             </div>
@@ -197,19 +216,19 @@ export default function Home() {
               
               <div className="flex justify-center">
                 <button
-                  onClick={submitToJudge1}
+                  onClick={submitToAllJudges}
                   disabled={loading || !code.trim()}
                   className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-bold text-xl border-2 border-red-400 disabled:border-gray-500 transform hover:scale-105 transition-all duration-200"
                   style={{ fontFamily: 'monospace' }}
                 >
-                  {loading ? "[ ANALYZING... ]" : "[ SUBMIT TO JUDGE 1 ]"}
+                  {loading ? "[ JUDGES DELIBERATING... ]" : "[ SUBMIT TO JURY ]"}
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Judge 1 Verdict Display - 8-bit Style */}
+        {/* Judge Verdict Display - 8-bit Style */}
         {verdict && (
           <div className="space-y-8">
             {/* Overall Verdict */}
@@ -218,7 +237,7 @@ export default function Home() {
               
               <div className="relative z-10 text-center">
                 <h2 className="text-4xl font-bold text-yellow-300 mb-6" style={{ fontFamily: 'monospace' }}>
-                  [ JUDGE 1 VERDICT ]
+                  [ COURT VERDICT ]
                 </h2>
                 
                 <div className={`inline-block px-8 py-4 rounded-lg text-3xl font-bold border-4 ${getVerdictColor(verdict.verdict || 'UNKNOWN')}`} style={{ fontFamily: 'monospace' }}>
@@ -247,13 +266,15 @@ export default function Home() {
                 <div className="relative z-10">
                   {/* Judge Header */}
                   <div className="flex items-center space-x-6 mb-8">
-                    <div className="text-6xl">👨‍💻</div>
+                    <div className="text-6xl">
+                      {judge.judge_id === 'judge_1' ? '👨‍💻' : '👩‍💼'}
+                    </div>
                     <div>
                       <h3 className="text-3xl font-bold text-blue-300" style={{ fontFamily: 'monospace' }}>
                         {judge.judge_name}
                       </h3>
                       <p className="text-blue-200 text-lg" style={{ fontFamily: 'monospace' }}>
-                        PROMPT ENGINEERING SPECIALIST
+                        {judge.judge_id === 'judge_1' ? 'PROMPT ENGINEERING SPECIALIST' : 'DATABASE OPTIMIZATION EXPERT'}
                       </p>
                     </div>
                     <span className={`ml-auto px-6 py-3 rounded-lg text-xl font-bold border-2 ${getVerdictColor(judge.verdict || 'UNKNOWN')}`} style={{ fontFamily: 'monospace' }}>
