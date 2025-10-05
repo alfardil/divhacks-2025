@@ -57,4 +57,5 @@ export interface CliOptions {
   format: "html" | "json";
   recursive: boolean;
   verbose: boolean;
+  provider: "openai" | "gemini";
 }

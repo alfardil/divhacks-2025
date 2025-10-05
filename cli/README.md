@@ -13,11 +13,19 @@ npm run build
 ## Usage
 
 ```bash
-# Set your OpenAI API key
-export OPENAI_API_KEY="your-api-key-here"
+# Set your API key (choose one)
+export OPENAI_API_KEY="your-openai-api-key-here"
+# OR
+export GEMINI_API_KEY="your-gemini-api-key-here"
 
-# Generate documentation for current directory
+# Generate documentation for current directory (will prompt to choose AI provider)
 node dist/index.js generate
+
+# Generate documentation using OpenAI
+node dist/index.js generate --provider openai
+
+# Generate documentation using Gemini
+node dist/index.js generate --provider gemini
 
 # Generate documentation for specific directory
 node dist/index.js generate /path/to/your/project
@@ -42,6 +50,16 @@ node dist/index.js generate -v
 - `-f, --format <format>` - Output format: html or json (default: html)
 - `-r, --recursive` - Search recursively (default: true)
 - `-v, --verbose` - Verbose output
+- `-p, --provider <provider>` - AI provider: openai or gemini (if not specified, will prompt to choose)
+
+## Interactive Mode
+
+When you run `dbdoc generate` without specifying a provider, you'll be prompted to choose between:
+
+- **OpenAI (GPT-4o-mini)** - Fast and reliable
+- **Gemini (2.0 Flash)** - Google's latest model
+
+This makes it easy to switch between providers without remembering command-line flags.
 
 ## What it detects
 

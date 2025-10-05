@@ -9,6 +9,8 @@ import { FileDiscovery } from "./file-discovery";
 import { DatabaseAnalyzer } from "./analyzer";
 import { HTMLGenerator } from "./html-generator";
 import { CliOptions } from "./types";
+import { OpenAIProvider, GeminiProvider } from "./ai-providers";
+import inquirer from "inquirer";
 
 const program = new Command();
 
@@ -25,13 +27,42 @@ program
   .option("-f, --format <format>", "Output format", "html")
   .option("-r, --recursive", "Search recursively", true)
   .option("-v, --verbose", "Verbose output")
+  .option("-p, --provider <provider>", "AI provider to use")
   .action(async (path: string, options: any) => {
+    let provider = options.provider;
+
+    // If no provider specified, prompt the user to choose
+    if (!provider) {
+      const answers = await inquirer.prompt([
+        {
+          type: "list",
+          name: "provider",
+          message: "Which AI provider would you like to use?",
+          choices: [
+            {
+              name: "OpenAI (GPT-4o-mini) - Fast and reliable",
+              value: "openai",
+              short: "OpenAI",
+            },
+            {
+              name: "Gemini (2.0 Flash) - Google's latest model",
+              value: "gemini",
+              short: "Gemini",
+            },
+          ],
+          default: "openai",
+        },
+      ]);
+      provider = answers.provider;
+    }
+
     const cliOptions: CliOptions = {
       input: resolve(path),
       output: options.output,
       format: options.format,
       recursive: options.recursive,
       verbose: options.verbose,
+      provider: provider,
     };
 
     try {
@@ -43,18 +74,46 @@ program
   });
 
 async function generateDocumentation(options: CliOptions) {
-  const { input, output, format, recursive, verbose } = options;
+  const { input, output, format, recursive, verbose, provider } = options;
 
   console.log(chalk.blue.bold("Database Functions Documentation Generator\n"));
 
-  // Check for OpenAI API key
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
+  // Check for appropriate API key based on provider
+  let apiKey: string;
+  let providerName: string;
+
+  if (provider === "openai") {
+    apiKey = process.env.OPENAI_API_KEY || "";
+    providerName = "OpenAI";
+    if (!apiKey) {
+      console.error(
+        chalk.red(
+          "Error: OPENAI_API_KEY environment variable is required for OpenAI provider"
+        )
+      );
+      console.log(chalk.yellow("Please set your OpenAI API key:"));
+      console.log(chalk.gray('export OPENAI_API_KEY="your-api-key-here"'));
+      process.exit(1);
+    }
+  } else if (provider === "gemini") {
+    apiKey = process.env.GEMINI_API_KEY || "";
+    providerName = "Gemini";
+    if (!apiKey) {
+      console.error(
+        chalk.red(
+          "Error: GEMINI_API_KEY environment variable is required for Gemini provider"
+        )
+      );
+      console.log(chalk.yellow("Please set your Gemini API key:"));
+      console.log(chalk.gray('export GEMINI_API_KEY="your-api-key-here"'));
+      process.exit(1);
+    }
+  } else {
     console.error(
-      chalk.red("Error: OPENAI_API_KEY environment variable is required")
+      chalk.red(
+        `Error: Invalid provider "${provider}". Use "openai" or "gemini".`
+      )
     );
-    console.log(chalk.yellow("Please set your OpenAI API key:"));
-    console.log(chalk.gray('export OPENAI_API_KEY="your-api-key-here"'));
     process.exit(1);
   }
 
@@ -107,9 +166,15 @@ async function generateDocumentation(options: CliOptions) {
     }
 
     // Step 2: Analyze files
-    spinner.text = "Analyzing database functions...";
+    spinner.text = `Analyzing database functions using ${providerName}...`;
 
-    const analyzer = new DatabaseAnalyzer(apiKey);
+    // Create appropriate AI provider
+    const aiProvider =
+      provider === "openai"
+        ? new OpenAIProvider(apiKey)
+        : new GeminiProvider(apiKey);
+
+    const analyzer = new DatabaseAnalyzer(aiProvider);
     const projectTitle = basename(input) || "Database Functions";
 
     const spec = await analyzer.analyzeWithStreaming(
@@ -160,6 +225,7 @@ async function generateDocumentation(options: CliOptions) {
     console.log(
       chalk.gray(`  • Functions documented: ${spec.functions.length}`)
     );
+    console.log(chalk.gray(`  • AI Provider: ${providerName}`));
     console.log(chalk.gray(`  • Output format: ${format.toUpperCase()}`));
     console.log(chalk.gray(`  • Output file: ${outputPath}`));
 
