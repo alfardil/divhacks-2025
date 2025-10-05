@@ -6,13 +6,15 @@ from typing import AsyncGenerator
 import tiktoken
 import aiohttp
 from openai import OpenAI
+from app.opik_config import get_tracked_openai_client
 
 
 class OpenAIo4Service:
     """Defines the OpenAI 4o object."""
 
     def __init__(self):
-        self.default_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        # Use Opik-tracked client for automatic LLM call logging
+        self.default_client = get_tracked_openai_client()
         self.model = "o4-mini-2025-04-16"
         self.encoding = tiktoken.get_encoding("o200k_base")
         self.api_key = os.getenv("OPENAI_API_KEY")

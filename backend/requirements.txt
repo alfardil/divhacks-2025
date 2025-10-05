@@ -3,3 +3,5 @@ openai
 aiohttp
 tiktoken
 dotenv
+opik
+google-generativeai

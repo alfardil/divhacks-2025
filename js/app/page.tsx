@@ -1,103 +1,385 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+
+interface JudgeResponse {
+  judge_id: string;
+  judge_name: string;
+  score: number;
+  verdict: string;
+  reasoning: string;
+  issues: string[];
+  advice: string;
+}
+
+interface FrontendJuryVerdict {
+  case_id: string;
+  overall_score: number;
+  verdict: string;
+  judges: JudgeResponse[];
+  summary: string;
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [code, setCode] = useState(`def hello_world():
+    print("Hello, World!")
+    return "success"`);
+  const [language, setLanguage] = useState("python");
+  const [loading, setLoading] = useState(false);
+  const [verdict, setVerdict] = useState<FrontendJuryVerdict | null>(null);
+  
+  // Gemini chatbot state
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatMessage, setChatMessage] = useState("");
+  const [chatResponse, setChatResponse] = useState("");
+  const [chatLoading, setChatLoading] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const submitToJudge1 = async () => {
+    setLoading(true);
+    setVerdict(null);
+
+    try {
+      const res = await fetch("http://localhost:8000/frontend-jury/evaluate-with-judge-1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: code,
+          language: language
+        }),
+      });
+
+      const data = await res.json();
+      setVerdict(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    setLoading(false);
+  };
+
+  const sendGeminiMessage = async () => {
+    if (!chatMessage.trim()) return;
+    
+    setChatLoading(true);
+    setChatResponse("");
+    
+    try {
+      const res = await fetch("http://localhost:8000/gemini/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: chatMessage
+        }),
+      });
+      
+      const data = await res.json();
+      setChatResponse(data.response || "No response");
+    } catch (error) {
+      setChatResponse(`Error: ${error}`);
+    }
+    
+    setChatLoading(false);
+  };
+
+
+  const getVerdictColor = (verdict: string) => {
+    switch (verdict) {
+      case "GOOD": return "text-green-600 bg-green-100";
+      case "NEEDS_IMPROVEMENT": return "text-yellow-600 bg-yellow-100";
+      case "EVALUATION_ERROR": return "text-red-600 bg-red-100";
+      case "UNKNOWN": return "text-gray-600 bg-gray-100";
+      default: return "text-gray-600 bg-gray-100";
+    }
+  };
+
+  const getScoreColor = (score: number) => {
+    if (score >= 8) return "text-green-600";
+    if (score >= 6) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* 8-bit Court Header */}
+      <div className="bg-gradient-to-r from-amber-800 to-amber-900 text-white py-12 relative overflow-hidden">
+        {/* 8-bit pixel pattern background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="w-full h-full" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='pixel' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Crect width='10' height='10' fill='%23ffffff'/%3E%3Crect x='10' y='10' width='10' height='10' fill='%23ffffff'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23pixel)'/%3E%3C/svg%3E")`,
+          }} />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <div className="flex items-center justify-center space-x-8">
+            {/* 8-bit Judge Character */}
+            <div className="text-center">
+              <div className="text-8xl mb-4 filter drop-shadow-lg" style={{
+                fontFamily: 'monospace',
+                textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+              }}>
+                👨‍⚖️
+              </div>
+              <div className="bg-black bg-opacity-50 px-4 py-2 rounded-lg border-2 border-yellow-400">
+                <div className="text-2xl font-bold text-yellow-300" style={{ fontFamily: 'monospace' }}>
+                  JUDGE 1
+                </div>
+                <div className="text-sm text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                  PROMPT QUALITY SPECIALIST
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <h1 className="text-6xl font-bold mb-4" style={{ 
+                fontFamily: 'monospace',
+                textShadow: '4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+              }}>
+                LLM COURT
+              </h1>
+              <p className="text-2xl text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                CODE EVALUATION SYSTEM
+              </p>
+              <div className="mt-4 bg-red-600 text-white px-6 py-2 rounded-lg border-2 border-red-400 inline-block" style={{ fontFamily: 'monospace' }}>
+                OPIK POWERED
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto p-8">
+        {/* Code Submission Area - 8-bit Style */}
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl p-8 mb-8 border-4 border-yellow-400 relative">
+          {/* 8-bit border effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
+          
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold text-yellow-300 mb-6 text-center" style={{ fontFamily: 'monospace' }}>
+              [ SUBMIT CODE FOR EVALUATION ]
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-lg font-bold text-yellow-200 mb-3" style={{ fontFamily: 'monospace' }}>
+                  SELECT LANGUAGE:
+                </label>
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="w-full max-w-xs bg-gray-700 text-white border-2 border-yellow-400 rounded-lg px-4 py-3 font-mono text-lg focus:border-yellow-300 focus:outline-none"
+                >
+                  <option value="python">PYTHON</option>
+                  <option value="javascript">JAVASCRIPT</option>
+                  <option value="typescript">TYPESCRIPT</option>
+                  <option value="java">JAVA</option>
+                  <option value="cpp">C++</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-lg font-bold text-yellow-200 mb-3" style={{ fontFamily: 'monospace' }}>
+                  ENTER CODE:
+                </label>
+                <textarea
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="w-full h-80 p-6 bg-black text-green-400 border-2 border-yellow-400 rounded-lg font-mono text-sm focus:border-yellow-300 focus:outline-none resize-none"
+                  placeholder="// Enter your code here..."
+                  style={{ 
+                    fontFamily: 'monospace',
+                    lineHeight: '1.5'
+                  }}
+                />
+              </div>
+              
+              <div className="flex justify-center">
+                <button
+                  onClick={submitToJudge1}
+                  disabled={loading || !code.trim()}
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 rounded-lg font-bold text-xl border-2 border-red-400 disabled:border-gray-500 transform hover:scale-105 transition-all duration-200"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {loading ? "[ ANALYZING... ]" : "[ SUBMIT TO JUDGE 1 ]"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Judge 1 Verdict Display - 8-bit Style */}
+        {verdict && (
+          <div className="space-y-8">
+            {/* Overall Verdict */}
+            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl p-8 border-4 border-yellow-400 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
+              
+              <div className="relative z-10 text-center">
+                <h2 className="text-4xl font-bold text-yellow-300 mb-6" style={{ fontFamily: 'monospace' }}>
+                  [ JUDGE 1 VERDICT ]
+                </h2>
+                
+                <div className={`inline-block px-8 py-4 rounded-lg text-3xl font-bold border-4 ${getVerdictColor(verdict.verdict || 'UNKNOWN')}`} style={{ fontFamily: 'monospace' }}>
+                  {(verdict.verdict || 'UNKNOWN').replace('_', ' ')}
+                </div>
+                
+                <div className="mt-6">
+                  <span className="text-3xl font-bold text-yellow-200" style={{ fontFamily: 'monospace' }}>SCORE: </span>
+                  <span className={`text-4xl font-bold ${getScoreColor(verdict.overall_score || 0)}`} style={{ fontFamily: 'monospace' }}>
+                    {verdict.overall_score || 0}/10
+                  </span>
+                </div>
+                
+                <div className="mt-4 text-yellow-200" style={{ fontFamily: 'monospace' }}>
+                  <p>CASE ID: {verdict.case_id}</p>
+                  <p className="italic">{verdict.summary}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Judge 1 Detailed Analysis */}
+            {verdict.judges.map((judge, index) => (
+              <div key={index} className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl p-8 border-4 border-blue-400 relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-300 to-blue-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
+                
+                <div className="relative z-10">
+                  {/* Judge Header */}
+                  <div className="flex items-center space-x-6 mb-8">
+                    <div className="text-6xl">👨‍💻</div>
+                    <div>
+                      <h3 className="text-3xl font-bold text-blue-300" style={{ fontFamily: 'monospace' }}>
+                        {judge.judge_name}
+                      </h3>
+                      <p className="text-blue-200 text-lg" style={{ fontFamily: 'monospace' }}>
+                        PROMPT ENGINEERING SPECIALIST
+                      </p>
+                    </div>
+                    <span className={`ml-auto px-6 py-3 rounded-lg text-xl font-bold border-2 ${getVerdictColor(judge.verdict || 'UNKNOWN')}`} style={{ fontFamily: 'monospace' }}>
+                      {(judge.verdict || 'UNKNOWN').replace('_', ' ')}
+                    </span>
+                  </div>
+                  
+                  {/* Score */}
+                  <div className="mb-8 text-center">
+                    <span className="text-2xl font-bold text-blue-200" style={{ fontFamily: 'monospace' }}>SCORE: </span>
+                    <span className={`text-3xl font-bold ${getScoreColor(judge.score || 0)}`} style={{ fontFamily: 'monospace' }}>
+                      {judge.score || 0}/10
+                    </span>
+                  </div>
+                  
+                  {/* Concise Analysis - Only 3 Lines */}
+                  <div className="mb-8 p-6 bg-black bg-opacity-50 rounded-lg border-2 border-green-400">
+                    <h4 className="font-bold text-green-300 mb-4 text-xl" style={{ fontFamily: 'monospace' }}>
+                      [ QUICK ANALYSIS ]
+                    </h4>
+                    <div className="text-green-200 text-sm font-mono leading-relaxed">
+                      {judge.reasoning.split('\n').slice(0, 3).join('\n')}
+                    </div>
+                  </div>
+                  
+                  {/* Issues Found - Max 3 */}
+                  {judge.issues.length > 0 && (
+                    <div className="mb-8">
+                      <h4 className="font-bold text-red-300 mb-4 text-xl" style={{ fontFamily: 'monospace' }}>
+                        [ TOP ISSUES: {Math.min(judge.issues.length, 3)} ]
+                      </h4>
+                      <ul className="space-y-2">
+                        {judge.issues.slice(0, 3).map((issue, i) => (
+                          <li key={i} className="p-3 bg-red-900 bg-opacity-50 rounded border-l-4 border-red-400 text-red-200 font-mono text-sm">
+                            {issue}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* Advice */}
+                  <div className="p-6 bg-blue-900 bg-opacity-50 rounded-lg border-2 border-blue-400">
+                    <h4 className="font-bold text-blue-300 mb-3 text-xl" style={{ fontFamily: 'monospace' }}>
+                      [ JUDGE 1 ADVICE ]
+                    </h4>
+                    <p className="text-blue-200 font-mono">
+                      {judge.advice || "No specific advice provided"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* 8-bit Footer */}
+        <div className="mt-12 text-center">
+          <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg p-6 border-4 border-yellow-400 relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg -z-10 transform translate-x-1 translate-y-1"></div>
+            <div className="relative z-10 text-yellow-200" style={{ fontFamily: 'monospace' }}>
+              <p className="text-lg">[ OPIK POWERED EVALUATION SYSTEM ]</p>
+              <p className="text-sm mt-2">[ ALL LLM CALLS TRACKED AND ANALYZED ]</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Gemini Chatbot - Fixed Position Corner */}
+      <div className="fixed bottom-4 right-4 z-50">
+        {/* Chat Toggle Button */}
+        <button
+          onClick={() => setChatOpen(!chatOpen)}
+          className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white p-4 rounded-full shadow-lg border-2 border-purple-400 transform hover:scale-110 transition-all duration-200"
+          style={{ fontFamily: 'monospace' }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          🤖
+        </button>
+
+        {/* Chat Window */}
+        {chatOpen && (
+          <div className="absolute bottom-16 right-0 w-80 h-96 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl border-4 border-purple-400 p-4">
+            <div className="h-full flex flex-col">
+              {/* Chat Header */}
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-purple-400">
+                <h3 className="text-purple-300 font-bold" style={{ fontFamily: 'monospace' }}>
+                  GEMINI CHAT
+                </h3>
+                <button
+                  onClick={() => setChatOpen(false)}
+                  className="text-purple-300 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Chat Response */}
+              <div className="flex-1 mb-3 p-3 bg-black bg-opacity-50 rounded border border-green-400 overflow-y-auto">
+                <div className="text-green-200 text-sm font-mono">
+                  {chatLoading ? "Thinking..." : chatResponse || "Ask me anything!"}
+                </div>
+              </div>
+
+              {/* Chat Input */}
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={chatMessage}
+                  onChange={(e) => setChatMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && sendGeminiMessage()}
+                  placeholder="Type message..."
+                  className="w-full p-2 bg-gray-700 text-white border border-purple-400 rounded text-sm font-mono focus:outline-none focus:border-purple-300"
+                />
+                <button
+                  onClick={sendGeminiMessage}
+                  disabled={chatLoading || !chatMessage.trim()}
+                  className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white py-2 rounded text-sm font-bold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {chatLoading ? "SENDING..." : "SEND"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
