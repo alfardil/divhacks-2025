@@ -5,3 +5,4 @@ tiktoken
 dotenv
 opik
 google-generativeai
+pydantic-settings==2.11.0

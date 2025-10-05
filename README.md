@@ -1,5 +1,9 @@
 # DB Doc Generator
 
+```bash
+dbdoc generate test
+```
+
 A powerful tool for generating Swagger-like documentation for database functions. Available as both a web interface and CLI tool.
 
 ## Features
@@ -130,4 +134,3 @@ npm run test
 ## License
 
 MIT
-

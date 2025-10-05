@@ -107,3 +107,5 @@ test-results.xml
 
 # Local development
 .local
+
+__pycache__/
