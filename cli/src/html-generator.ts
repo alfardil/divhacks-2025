@@ -1070,7 +1070,7 @@ export class HTMLGenerator {
 
     const functionCode = functionCallExample.code;
     const urlEncodedCode = encodeURIComponent(functionCode);
-    const juryUrl = `http://localhost:3000/?code=${urlEncodedCode}&language=typescript`;
+    const juryUrl = `https://divhacks-2025.vercel.app/?code=${urlEncodedCode}&language=typescript`;
 
     return `
       <div class="jury-button-section">

@@ -9,7 +9,7 @@ export const DatabaseFunctionSchema = z.object({
   input: z
     .object({
       type: z.string(),
-      properties: z.record(z.any()),
+      properties: z.record(z.any()).optional(),
       required: z.array(z.string()).optional(),
     })
     .optional(),

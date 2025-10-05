@@ -70,9 +70,44 @@ For each identified database function, provide:
 - summary: brief description
 - description: detailed explanation
 - tags: array of relevant tags
-- input: JSON schema for parameters
-- output: JSON schema for return value
+- input: JSON schema for parameters (if function has parameters, otherwise omit this field)
+- output: JSON schema for return value (if function returns data, otherwise omit this field)
 - engine: database engine used (e.g., "prisma", "sql", "raw-sql")
 - touches: object indicating what data is read/written (e.g., {"read": ["users"], "write": ["submissions"]})
 
-Return ONLY a valid JSON array of ALL database function objects. Do not miss any functions.`;
+CRITICAL: Return ONLY a valid JSON array. Ensure:
+- All strings are properly quoted and escaped
+- No trailing commas
+- All brackets and braces are properly closed
+- No unterminated strings
+- If a function has no parameters, omit the "input" field entirely
+- If a function returns void, omit the "output" field entirely
+
+Example format:
+[
+  {
+    "opId": "user.createUser",
+    "summary": "Creates a new user",
+    "description": "Creates a new user with the provided data",
+    "tags": ["user", "create"],
+    "input": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "email": {"type": "string"}
+      },
+      "required": ["name", "email"]
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"}
+      }
+    },
+    "engine": "prisma",
+    "touches": {"write": ["users"]}
+  }
+]
+
+Return ONLY the JSON array, nothing else.`;
