@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { buildApiUrl, API_ENDPOINTS } from "@/lib/api-config";
 import { Scale, Upload, Code2, CheckCircle2, AlertCircle } from "lucide-react";
@@ -76,6 +76,36 @@ export default function GavelPage() {
   const [optimizing, setOptimizing] = useState(false);
   const [optimizedCode, setOptimizedCode] = useState<string>("");
   const [copied, setCopied] = useState(false);
+
+  // Handle URL parameters on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const codeParam = urlParams.get("code");
+    const languageParam = urlParams.get("language");
+
+    if (codeParam) {
+      try {
+        const decodedCode = decodeURIComponent(codeParam);
+        setCode(decodedCode);
+      } catch (error) {
+        console.error("Error decoding code parameter:", error);
+      }
+    }
+
+    if (languageParam) {
+      // Validate language parameter against supported languages
+      const supportedLanguages = [
+        "python",
+        "javascript",
+        "typescript",
+        "java",
+        "cpp",
+      ];
+      if (supportedLanguages.includes(languageParam.toLowerCase())) {
+        setLanguage(languageParam.toLowerCase());
+      }
+    }
+  }, []);
 
   const toggleJudge = (judgeId: string) => {
     setSelectedJudges((prev) =>
