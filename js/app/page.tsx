@@ -1,7 +1,7 @@
 "use client";
 
+import { API_ENDPOINTS, buildApiUrl } from "@/lib/api-config";
 import { useEffect, useState } from "react";
-import { buildApiUrl, API_ENDPOINTS } from "@/lib/api-config";
 
 interface JudgeResponse {
   judge_id: string;
@@ -169,21 +169,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           {/* Title Section */}
           <div className="text-center mb-12">
-            <h1
-              className="text-6xl font-bold mb-4 text-white"
-              style={{
-                fontFamily: "serif",
-                textShadow:
-                  "2px 2px 0px #374151, -1px -1px 0px #374151, 1px -1px 0px #374151, -1px 1px 0px #374151",
-              }}
-            >
-              LLM Court
+            <h1 className="text-6xl font-bold mb-4 text-white">
+              Gavel: Opik's LLM Court
             </h1>
             <p className="text-xl text-gray-300 mb-6">Code Evaluation System</p>
-            <div className="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-300 text-sm font-medium">
-              <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse"></div>
-              Opik Powered
-            </div>
           </div>
 
           {/* Judge Selection Section - Centered under title */}
@@ -192,13 +181,14 @@ export default function Home() {
               <div className="text-center">
                 {/* Custom SVG Avatar for Bob */}
                 <div
-                  className="mb-4 transition-all duration-300"
+                  className="mb-4 transition-all duration-300 cursor-pointer"
                   style={{
                     opacity: selectedJudges.judge_1 ? 1 : 0.4,
                     transform: selectedJudges.judge_1
                       ? "scale(1.05)"
                       : "scale(1)",
                   }}
+                  onClick={() => toggleJudge("judge_1")}
                 >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -319,13 +309,14 @@ export default function Home() {
               <div className="text-center">
                 {/* Custom SVG Avatar for Bobby */}
                 <div
-                  className="mb-4 transition-all duration-300"
+                  className="mb-4 transition-all duration-300 cursor-pointer"
                   style={{
                     opacity: selectedJudges.judge_2 ? 1 : 0.4,
                     transform: selectedJudges.judge_2
                       ? "scale(1.05)"
                       : "scale(1)",
                   }}
+                  onClick={() => toggleJudge("judge_2")}
                 >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -478,13 +469,14 @@ export default function Home() {
               <div className="text-center">
                 {/* Custom SVG Avatar for Bobert */}
                 <div
-                  className="mb-4 transition-all duration-300"
+                  className="mb-4 transition-all duration-300 cursor-pointer"
                   style={{
                     opacity: selectedJudges.judge_3 ? 1 : 0.4,
                     transform: selectedJudges.judge_3
                       ? "scale(1.05)"
                       : "scale(1)",
                   }}
+                  onClick={() => toggleJudge("judge_3")}
                 >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -610,13 +602,14 @@ export default function Home() {
               <div className="text-center">
                 {/* Custom SVG Avatar for Bro */}
                 <div
-                  className="mb-4 transition-all duration-300"
+                  className="mb-4 transition-all duration-300 cursor-pointer"
                   style={{
                     opacity: selectedJudges.judge_4 ? 1 : 0.4,
                     transform: selectedJudges.judge_4
                       ? "scale(1.05)"
                       : "scale(1)",
                   }}
+                  onClick={() => toggleJudge("judge_4")}
                 >
                   <div className="w-24 h-24 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full">
