@@ -40,12 +40,12 @@ program
           message: "Which AI provider would you like to use?",
           choices: [
             {
-              name: "OpenAI (GPT-4o-mini) - Fast and reliable",
+              name: "OpenAI (GPT-4o-mini)",
               value: "openai",
               short: "OpenAI",
             },
             {
-              name: "Gemini (2.0 Flash) - Google's latest model",
+              name: "Gemini (2.0 Flash)",
               value: "gemini",
               short: "Gemini",
             },
