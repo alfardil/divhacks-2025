@@ -24,10 +24,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <script
+          src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"
+          defer
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"
+          defer
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.Prism=window.Prism||{};Prism.plugins.autoloader.languages_path='https://cdn.jsdelivr.net/npm/prismjs@1/components/';",
+          }}
+        />
       </body>
     </html>
   );

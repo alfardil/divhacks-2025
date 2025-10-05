@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
   },
   GEMINI: {
     CHAT: "/gemini/chat",
+    OPTIMIZE_CODE: "/gemini/optimize-code",
   },
   CHARACTER_JURY: {
     UPLOAD_FILE: "/character-jury/upload-file",
